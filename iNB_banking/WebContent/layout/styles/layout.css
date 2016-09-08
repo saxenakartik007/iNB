@@ -289,8 +289,8 @@ input:focus, textarea:focus, *:required:focus{border-color:#00C853;}
 
 
 /* Flexslider Overrides */
-.flex-control-paging li a{background-color:rgba(233,54,90,1);/* #00C853 */ border-color:rgba(233,54,90,0);/* #00C853 */}
-.flex-control-paging li a.flex-active{background-color:rgba(233,54,90,0);/* #00C853 */ border-color:rgba(233,54,90,1);/* #00C853 */}
+.flex-control-paging li a{background-color:#558B2F;/* #00C853 */ border-color:rgba(233,54,90,0);/* #00C853 */}
+.flex-control-paging li a.flex-active{background-color:rgba(233,54,90,0);/* #00C853 */ border-color:#558B2F;/* #00C853 */}
 
 
 /* Header */
