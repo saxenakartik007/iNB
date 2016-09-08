@@ -1,0 +1,15 @@
+<div class="col-md-5">
+<form name="loginform" novalidate>
+	<input type="text" class="form-control" ng-model="uname"  name="uname" placeholder="Enter username" required>
+	<p id="uval" class="text-danger" ng-show="loginform.uname.$touched && loginform.uname.$invalid">User name is required!</p>
+	<br>
+	<input type="password" class="form-control" ng-model="password"  name="password" placeholder="Enter password" required>
+	<p id="pval" class="text-danger" ng-show="loginform.password.$touched && loginform.password.$invalid">Password is required!</p>
+	<br>
+	<br>
+	<div class="text-danger">
+	{{errormsg}}
+	</div>
+	<input type="button" value="Login" ng-click="login()">
+</form>
+</div>
