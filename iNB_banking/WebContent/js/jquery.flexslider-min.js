@@ -19,17 +19,7 @@ $(window).load(function() {
     // All configuration settings / properties can be found here: https://github.com/woothemes/FlexSlider/wiki/FlexSlider-Properties
 
     // Homepage Slider
-    $('.basicslider').flexslider({
-        animation: "slide",
-        // animationLoop: true,
-        pauseOnHover: true,
-        controlNav: true,
-        directionNav: false,
-		smoothHeight: true,
-        start: function(slider) {
-            $('body').removeClass('loading');
-        }
-    });
+    
 
     // Carousel - Not Used, just an example
     /*$('.basiccarousel').flexslider({
