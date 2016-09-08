@@ -1,4 +1,51 @@
-<div class="col-md-5">
+<div class="wrapper row0">
+  <div id="topbar" class="hoc clear"> 
+    <div class="fl_left">
+      <ul class="nospace inline pushright">
+        <li><i class="fa fa-phone"></i> +91 1800 99 9999</li>
+        <li><i class="fa fa-envelope-o"></i> info@iNB.com</li>
+      </ul>
+    </div>
+    <div class="fl_right">
+      <ul class="faico clear">
+        <li><a class="faicon-facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="faicon-pinterest" href="#"><i class="fa fa-pinterest"></i></a></li>
+        <li><a class="faicon-twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="faicon-dribble" href="#"><i class="fa fa-dribbble"></i></a></li>
+        <li><a class="faicon-linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="faicon-google-plus" href="#"><i class="fa fa-google-plus"></i></a></li>
+        <li><a class="faicon-rss" href="#"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<div class="wrapper row2">
+  <header id="header" class="hoc clear"> 
+    <div id="logo" class="fl_left">
+      <h1><a href="#/">iNB</a></h1>
+   
+    </div>
+    <div id="quickinfo" class="fl_right">
+      <ul class="nospace inline">
+        <li><button type="button" class="btn medium inverse" ng-click="gotoHomePage()">Home &raquo;</button></li>
+        <li><button class="btn medium inverse">Register &raquo;</button></li>
+      </ul>
+    </div>
+  </header>
+</div>
+
+<div class="wrapper row3">
+<div class="hoc clear">
+<div class="fl_left" id="userloginform"  style="
+    padding: 51px;
+    border: 4px solid #4a9453;
+    margin-left: 5%;
+    text-align: center;
+    margin: 5%;
+">
+<h1>Login as User   <h1>
 <form name="loginform" novalidate>
 	<input type="text" class="form-control" ng-model="uname"  name="uname" placeholder="Enter username" required>
 	<p id="uval" class="text-danger" ng-show="loginform.uname.$touched && loginform.uname.$invalid">User name is required!</p>
@@ -10,6 +57,47 @@
 	<div class="text-danger">
 	{{errormsg}}
 	</div>
-	<input type="button" value="Login" ng-click="login()">
+	<input style="float: right;" type="button" value="Login" ng-click="loginAdmin()">
 </form>
+</div>
+
+
+
+<div class="fl_right" id="adminloginform"  style="
+    padding: 51px;
+    border: 4px solid #4a9453;
+    margin-right: 5%;
+    text-align: center;
+    margin: 5%;
+">
+<h1>Login as Admin   <h1>
+<form name="loginform" class="inputfrom" novalidate>
+	<input type="text" class="form-control" ng-model="uname"  name="uname" placeholder="Enter username" required>
+	<p id="uval" class="text-danger" ng-show="loginform.uname.$touched && loginform.uname.$invalid">User name is required!</p>
+	<br>
+	<input type="password" class="form-control" ng-model="password"  name="password" placeholder="Enter password" required>
+	<p id="pval" class="text-danger" ng-show="loginform.password.$touched && loginform.password.$invalid">Password is required!</p>
+	<br>
+	<br>
+	<div class="text-danger">
+	{{errormsg}}
+	</div>
+	<input style="float: right;" type="button" value="Login" ng-click="loginAdmin()">
+</form>
+</div>
+</div>
+</div>
+
+
+<div class="wrapper row10">
+  <div id="copyright" class="hoc clear"> 
+    <p class="fl_left">Copyright &copy; 2016 - All Rights Reserved - iNB</p>
+	  	<div class="fl_right">
+		  	<ul class="nospace inline">
+		    	<li><a href="">About Us </a></li>
+		    	<li><a href="">Contact Us </a></li>
+		    	<li><a href="">Terms and Conditions </a></li>
+		    </ul>
+	    </div>		
+   </div>
 </div>
