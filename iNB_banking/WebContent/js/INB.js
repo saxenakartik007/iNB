@@ -41,7 +41,7 @@ function mainController($scope,$http,$cookieStore,$location){
 			}
 		}).then(function successCallback(response) {
 			if(response.data.error!=null){
-				$scope.aloginformalert="no login";
+				$scope.aloginformalert="Username and password do not match";
 			}
 			else{
 				alert("Successfull response"+response.data.id);
@@ -50,8 +50,6 @@ function mainController($scope,$http,$cookieStore,$location){
 				$location.path('/admin');
 			}
 				
-		},function successCallback(response){
-			$scope.aloginformalert="no response";
 		});
 		}
 		else{
