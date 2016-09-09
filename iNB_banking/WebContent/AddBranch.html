@@ -22,3 +22,29 @@
 
 </div>
 </div></div>
+<div class="wrapper row3">
+<div class="hoc clear">
+<div class="font-x2 nospace" id="userloginform" style="margin: 20px; padding: 20px;" >
+
+<form name="AddBranchform" novalidate style="margin-bottom: 20px;">
+	<input type="text" class="form-control" ng-model="bifsc"  name="bifsc" placeholder="Enter IFSC code" required>
+	<p id="bifscval" class="text-danger" ng-show="loginform.bifsc.$touched && loginform.bifsc.$invalid">IFSC code is required!</p>
+	<br>
+	<input type="text" class="form-control" ng-model="bname"  name="bname" placeholder="Enter Branch Name" required>
+	<p id="bnameval" class="text-danger" ng-show="loginform.bname.$touched && loginform.bname.$invalid">Branch name is required!</p>
+	<br>
+	
+	<input type="text" class="form-control" ng-model="badd"  name="badd" placeholder="Enter Branch Address" required>
+	<p id="baddval" class="text-danger" ng-show="loginform.badd.$touched && loginform.badd.$invalid">Branch address is required!</p>
+	<br>
+	
+	<input type="number" maxlength="10" min="1000000000" class="form-control" ng-model="bcontact"  name="bcontact" placeholder="Enter Contact No." required>
+	<p id="bcontval" class="text-danger" ng-show="loginform.bcontact.$touched && loginform.bcontact.$invalid">Contact number is required!</p>
+	<br>
+	<br>
+	<div class="text-danger">
+	{{errormsg}}
+	</div>
+	<input style="float: right;" type="button"   class="btn medium inverse" value="ADD Branch" ng-click="loginAdmin()">
+</form>
+</div>
