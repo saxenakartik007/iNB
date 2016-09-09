@@ -5,11 +5,14 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
 	 $scope.loginAlertMessage = true;
-
+	 $scope.adminview=false;
+$scope.adminheading='Branch List';
 	
 	//getallbranches
 	$scope.getAllBranches=function(){
-		
+		$scope.adminheading='Branch List';
+		 $scope.adminview=false;
+		$scope.adminview=true;
 		var url='http://10.20.14.83:9000/branch';
 		$http.get(url).success(function(data,status){
 			$scope.branchDetails= data;	
@@ -19,6 +22,10 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	
 	//getbranchmanager
 	$scope.getBranchManagers=function(){
+		$scope.adminheading='Branch Managers List';
+		 $scope.adminview=true;
+
+		$scope.adminview=false;
 		var url='http://10.20.14.83:9000/branchmanager';
 		$http.get(url).success(function(data,status){
 			$scope.branchManagerDetails= data;	
@@ -27,7 +34,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	//getbranchmanager
 	
 	$scope.getAllBranches();
-	$scope.getBranchManagers();
+	//$scope.getBranchManagers();
 	
 	
 	//gotoadminpanel
