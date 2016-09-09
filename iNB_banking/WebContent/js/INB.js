@@ -25,7 +25,9 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	}
 	//getbranchmanager
 	
+	//callbranchfunction
 	$scope.getAllBranches();
+	//callbranchmanager
 	$scope.getBranchManagers();
 	
 	
@@ -37,6 +39,13 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.gotologinPage=function(){
 		$location.path("/login");
 	}
+	
+	//go to register page
+	$scope.gotoregisterpage=function(){
+		$location.path("/register");
+	}
+	
+	//gotocreateBranch
 	$scope.gotocreateBranch=function(){
 		$location.path("/addBranch");
 	}
@@ -203,29 +212,9 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 		
 	}
 	
-	//register user ends
 	
-	//user registration status starts
-/*	$scope.approve=function(status){
-		if(status==1)
-			alert("approved");
-		else
-			alert("rejectd");
-	}*/
-	//user registration status starts
 	
-	//getUnregisterdUsers starts
-//	$scope.getUnregisteredUsers=function(){
-//		$scope.unregisteredUsers=[];
-//		var url='http://10.20.14.83:9000/unregistereduser/details';
-//		$http.get(url).success(function(data,status){
-//			angular.forEach(data.data.something,function(value,key){
-////				$scope.unRegisteredUsers.push(value.something);
-////			})
-//			console.log(data)
-//		})
-//	};
-	//getUnregisteredUsers ends
+
 }
 
 inbapp.controller('MainController',mainController);
