@@ -33,7 +33,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 		var ifsc=$scope.bifsc;
 		var name=$scope.bname;
 		var add=$scope.badd;
-		var contact=$scope.contact;
+		var contact=$scope.bcontact;
 	
 		$http({
 					method : 'POST',
@@ -52,7 +52,6 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 				}).then(function successCallback(response) {
 					if(response.data['Exception ']=='BranchAlreadyExistException'){
 						console.log(response.data);
-						
 						mymessage("Branch Already Exists");	
 					}
 					else{
@@ -138,6 +137,46 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 		}
 	};
 	//login admin ends
+	
+	
+	
+	
+	
+	
+	
+	
+	///adminlogout
+	
+	$scope.logoutAdmin=function(){
+		$http({
+			method : 'PUT',
+			url :'http://10.20.14.83:9000/admin/logout',
+			headers : {
+				'Content-Type' : 'application/json',
+				'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+			},
+			data : {				
+				role: $cookieStore.get('role'),
+				id: $cookieStore.get('admintoken') 
+			}
+		}).then(function successCallback(response) {
+			console.log(response.data);
+			if(response.data.error!=null){
+				console.log(response.data);
+			console.log("An error occoured");
+			}
+			else{
+				$cookieStore.remove('role');
+				$cookieStore.remove('admintoken')
+				$location.path('/');
+		
+			}
+				
+		});
+	};
+	//admin logout ends
+	
+	
 	
 	
 	
