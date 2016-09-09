@@ -44,7 +44,6 @@ function mainController($scope,$http,$cookieStore,$location){
 				$scope.aloginformalert="Username and password do not match";
 			}
 			else{
-				alert("Successfull response"+response.data.id);
 				$cookieStore.put('role','admin');
 				$cookieStore.put('admintoken',response.data.id)
 				$location.path('/admin');
