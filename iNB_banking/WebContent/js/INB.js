@@ -2,7 +2,7 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 
 
 function mainController($scope,$http,$cookieStore,$location){
-	//login admin starts
+	
 	
 	$scope.gotologinPage=function(){
 		$location.path("/login");
@@ -11,11 +11,16 @@ function mainController($scope,$http,$cookieStore,$location){
 	$scope.createBranchMgr = function(){
 		$location.path("/BranchMgr");
 	}
+	
 	$scope.gotocreateBranch=function(){
-
 		$location.path("/addBranch");
 	}
 	
+	$scope.addbranchmgr = function(){
+		
+	}
+	
+	//login admin starts
 	$scope.loginAdmin=function(){
 		$http({
 			method : 'PUT',
@@ -119,7 +124,7 @@ inbapp.config(function($routeProvider){
 			controller: 'MainController',
 			templateUrl: 'BranchMgr.html'
 		})	
-		.when('/addBranch', {
+	.when('/addBranch', {
 			controller: 'MainController',
 			templateUrl: 'AddBranch.html'
 		})
