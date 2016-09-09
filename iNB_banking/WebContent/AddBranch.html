@@ -1,5 +1,5 @@
 
-<div class="wrapper row2">
+<div class="wrapper row1">
   <header id="header" class="hoc clear"> 
     <div id="logo" class="fl_left">
       <h1><a href="#/">iNB</a></h1>
@@ -8,43 +8,41 @@
     <div id="quickinfo" class="fl_right">
       <ul class="nospace inline">
         <li><button type="button" class="btn medium inverse" ng-click="gotoHomePage()">DashBoard &raquo;</button></li>
+          <li><button type="button" class="btn medium inverse" ng-click="">Sign Out &raquo;</button></li>
        
       </ul>
     </div>
   </header>
 </div>
-
-<div class="wrapper row2" style="height: 100%">
-<div class="hoc clear">
- <div class="center btmspace-50">
- 
-      <h3 class="font-x2 nospace">Add Branch</h3>
-
+<div class='wrapper row2'>
+<div class='hoc clear'>
+<h1  style='text-align:center; padding-top: 1.8% '>Add New Branch</h1>
 </div>
-</div></div>
+</div>
+
 <div class="wrapper row3">
 <div class="hoc clear">
-<div class="font-x2 nospace" id="userloginform" style="margin: 20px; padding: 20px;" >
+<div class="font-x2 nospace" id="userloginform" style="margin: 5%; padding: 5%;" >
 
-<form name="AddBranchform" novalidate style="margin-bottom: 20px;">
+<form name="AddBranchForm" novalidate style="margin-bottom: 20px;">
 	<input type="text" class="form-control" ng-model="bifsc"  name="bifsc" placeholder="Enter IFSC code" required>
-	<p id="bifscval" class="text-danger" ng-show="loginform.bifsc.$touched && loginform.bifsc.$invalid">IFSC code is required!</p>
+	<p style="font-size: .5em" id="bifscval" class="text-danger" ng-show="AddBranchForm.bifsc.$touched && AddBranchForm.bifsc.$invalid">IFSC code is required!</p>
 	<br>
 	<input type="text" class="form-control" ng-model="bname"  name="bname" placeholder="Enter Branch Name" required>
-	<p id="bnameval" class="text-danger" ng-show="loginform.bname.$touched && loginform.bname.$invalid">Branch name is required!</p>
+	<p style="font-size: .5em" id="bnameval" class="text-danger" ng-show="AddBranchForm.bname.$touched && AddBranchForm.bname.$invalid">Branch name is required!</p>
 	<br>
 	
 	<input type="text" class="form-control" ng-model="badd"  name="badd" placeholder="Enter Branch Address" required>
-	<p id="baddval" class="text-danger" ng-show="loginform.badd.$touched && loginform.badd.$invalid">Branch address is required!</p>
+	<p  style="font-size: .5em" id="baddval" class="text-danger" ng-show="AddBranchForm.badd.$touched && AddBranchForm.badd.$invalid">Branch address is required!</p>
 	<br>
 	
-	<input type="number" maxlength="10" min="1000000000" class="form-control" ng-model="bcontact"  name="bcontact" placeholder="Enter Contact No." required>
-	<p id="bcontval" class="text-danger" ng-show="loginform.bcontact.$touched && loginform.bcontact.$invalid">Contact number is required!</p>
+	<input type="number" maxlength="10" min="1000000000" max='9999999999'class="form-control" ng-model="bcontact"  name="bcontact" placeholder="Enter Contact No." required>
+	<p style="font-size: .5em" id="bcontval" class="text-danger" ng-show="AddBranchForm.bcontact.$touched && AddBranchForm.bcontact.$invalid">Contact number is required!</p>
 	<br>
 	<br>
 	<div class="text-danger">
 	{{errormsg}}
 	</div>
-	<input style="float: right;" type="button"   class="btn medium inverse" value="ADD Branch" ng-click="loginAdmin()">
+	<input style="float: right;" type="button"   class="btn medium inverse" value="ADD Branch" ng-click="addNewBranch()">
 </form>
 </div>

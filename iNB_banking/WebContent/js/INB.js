@@ -7,7 +7,7 @@ function mainController($scope,$http,$cookieStore,$location){
 	$scope.gotologinPage=function(){
 		$location.path("/login");
 	}
-	$scope.createBranch=function(){
+	$scope.gotocreateBranch=function(){
 		$location.path("/addBranch");
 	}
 	
