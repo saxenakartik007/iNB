@@ -59,12 +59,19 @@
 		</select>
 		<p id="pval" class="text-danger" ng-show="loginform.branch.$touched && loginform.branch.$invalid">Branch is required!</p>	
 	<br>
+		<select name="role" class="form-control"  ng-model="role" required>
+		<option value="" disabled selected hidden >Select role</option>
+		<option value="branch_manager">Branch Manager</option>
+		<option value="user">User</option>
+		</select>
+		<p id="pval" class="text-danger" ng-show="loginform.role.$touched && loginform.role.$invalid">Role is required!</p>	
 	<br>
-
+	<br>
+<br>
 	<div class="text-danger"  >
 	<p ng-model="loginformalert">{{loginformalert}}</p>	
 	</div>
-	<input style="float: right;" type="button" value="Login" ng-click="loginUser()">
+	<input style="float: right;" type="button" value="Login" ng-click="loginAction()">
 </form>
 </div>
 
