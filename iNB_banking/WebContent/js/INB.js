@@ -15,12 +15,11 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	}
 	//getallbranches
 	$scope.getAllBranches();
-	$location.path("/addBranch");
+	
 	
 	//gotoadminpanel
 	$scope.gotoAdminPanel=function(){
-		$location.path('/admin');
-	}
+		$location.path('/admin');	}
 	
 	//go to login page
 	$scope.gotologinPage=function(){
@@ -59,8 +58,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 					else{
 					var data = response.data;
 					console.log(response.data);
-					mymessage("Branch added");	
-						 $location.path('/admin');
+				
+						 mymessage("Branch added");	
 					}
 					
 				}, function errorCallback(response) {
@@ -93,6 +92,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 				$cookieStore.put('role','admin');
 				$cookieStore.put('admintoken',response.data.id)
 				$location.path('/admin');
+		
 			}
 				
 		});
@@ -176,7 +176,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	function mymessage(x){
 		$scope.mycustomMessage=x;
 		  $scope.loginAlertMessage=false; 
-	         $timeout(function () { $scope.loginAlertMessage = true; }, 3000);   
+	         $timeout(function () { $scope.loginAlertMessage = true;
+	         $location.path('/admin'); }, 3000);   
 		
 	}
 	
