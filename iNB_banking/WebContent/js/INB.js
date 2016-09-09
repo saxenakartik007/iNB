@@ -102,7 +102,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 					});
 		}
 		else{
-			$scope.loginformalert="Please enter credentials"
+			$scope.loginformalert="Please enter proper credentials"
 		}
 	}
 	//loginAction find user or bm ends
