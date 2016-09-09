@@ -11,7 +11,42 @@ function mainController($scope,$http,$cookieStore,$location){
 		$location.path("/addBranch");
 	}
 	
+	$scope.addNewBranch=function(){
+		var ifsc=$scope.bifsc;
+		var name=$scope.bname;
+		var add=$scope.badd;
+		var contact=$scope.contact;
 	
+
+
+		$http({
+					method : 'POST',
+					url : 'http://10.20.14.83:9000/branch',
+
+					headers : {
+						'Content-Type' : 'application/json',
+						'Access-Control-Allow-Origin': 'http:///10.20.14.83:9000'
+					},
+					data : {				
+						ifscCode: ifsc,
+						branchName: name,
+						address: add,
+						contact: contact
+					}
+				}).then(function successCallback(response) {
+					var data = response.data;
+					console.log(data);
+					alert("Branch Created");
+					$location.path('/admin');
+				}, function errorCallback(response) {
+					alert("An Error Occoured");
+					
+				});
+
+		
+		
+		
+	}
 	$scope.loginAdmin=function(){
 		$http({
 			method : 'PUT',
@@ -29,7 +64,7 @@ function mainController($scope,$http,$cookieStore,$location){
 				$scope.errormsg="no login";
 			}
 			else{
-				alert("Successfull response"+response.data.id);
+				bootbox.alert("Successfull response"+response.data.id);
 				
 				$cookieStore.put('role','admin');
 				$cookieStore.put('admintoken',response.data.id)
