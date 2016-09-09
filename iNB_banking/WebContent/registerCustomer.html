@@ -1,0 +1,50 @@
+<div class="col-md-5">
+<form name="mySignupForm" novalidate>
+			<div class="col-sm-10">
+					<input type="email" class="form-control"  ng-model="email" name="email" placeholder="Enter email" required>
+				<p id="emailval" class="text-danger" ng-show="mySignupForm.email.$touched && mySignupForm.email.$invalid">Email is required!</p>
+			</div>
+			<div class="col-sm-10">
+					<input type="text" class="form-control"  ng-model="firstname" name="firstname" placeholder="Enter your firstname" required>
+				<p id="fnameval" class="text-danger" ng-show="mySignupForm.firstname.$touched && mySignupForm.firstname.$invalid">Firstname is required!</p>
+			</div>
+			<div class="col-sm-10">
+					<input type="text" class="form-control"  ng-model="lastname" name="lastname" placeholder="Enter your lastname" required>
+				<p id="lnameval" class="text-danger" ng-show="mySignupForm.lastname.$touched && mySignupForm.lastname.$invalid">Lastname is required!</p>
+			</div>
+			<div class="col-sm-10">
+					<input type="date" class="form-control"  ng-model="dob" name="dob" required>
+				<p id="dobval" class="text-danger" ng-show="mySignupForm.dob.$touched && mySignupForm.dob.$invalid">Date of birth is required!</p>
+			</div>
+			<div class="col-sm-10">
+					<textarea ng-model="addr" name="addr" ng-minlength=4  ng-maxlength=50></textarea>
+					<p id="dateval" class="text-danger" ng-show="mySignupForm.addr.$touched && mySignupForm.addr.$invalid">Address is required!</p>
+			</div>
+			<div class="col-sm-10">
+					<input type="text" class="form-control"  ng-model="phone" name="phone" placeholder="Enter your phone number" required>
+				<p id="phoneval" class="text-danger" ng-show="mySignupForm.phone.$touched && mySignupForm.phone.$invalid">Phone number is required!</p>
+			</div>
+			<div class="col-sm-10">
+					<input type="text" class="form-control"  ng-model="custid" name="custid" placeholder="Enter any valid customer ID" required>
+				<p id="custidval" class="text-danger" ng-show="mySignupForm.custid.$touched && mySignupForm.custid.$invalid">Customer ID is required!</p>
+			</div>
+			<div class="col-sm-10">
+					<input type="text" class="form-control"  ng-model="username" name="username" placeholder="Enter your username" required>
+				<p id="unameval" class="text-danger" ng-show="mySignupForm.username.$touched && mySignupForm.username.$invalid">Username is required!</p>
+			</div>
+			<div class="col-sm-10">
+					<input type="password" class="form-control"  ng-model="password1" name="password1" placeholder="Enter your password" required>
+				<p id="pass1val" class="text-danger" ng-show="mySignupForm.password1.$touched && mySignupForm.password1.$invalid">Password is required!</p>
+			</div>
+			<div class="col-sm-10">
+					<input type="password" class="form-control"  ng-model="password2" name="password2" placeholder="Enter your password" required>
+				<p id="pass2val" class="text-danger" ng-show="mySignupForm.password2.$touched && mySignupForm.password2.$invalid">Re-entering of password is required!</p>
+			</div>
+	</div>
+	
+	<div class="text-danger">
+	{{errormsg}}
+	</div>
+	<input type="button" value="Login" ng-click="registerCustomer()">
+</form>
+</div>
