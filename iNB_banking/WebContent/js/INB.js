@@ -4,9 +4,9 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
-	 $scope.loginAlertMessage = true;
-	 $scope.adminview=false;
-$scope.adminheading='Branch List';
+	$scope.loginAlertMessage = true;
+	$scope.adminview=false;
+	$scope.adminheading='Branch List';
 	
 	//getallbranches
 	$scope.getAllBranches=function(){
@@ -33,13 +33,18 @@ $scope.adminheading='Branch List';
 	}
 	//getbranchmanager
 	
+	//callbranchfunction
 	$scope.getAllBranches();
-	//$scope.getBranchManagers();
+
+	//callbranchmanager
+	$scope.getBranchManagers();
+
 	
 	
 	//gotoadminpanel
 	$scope.gotoAdminPanel=function(){
-		$location.path('/admin');	}
+		$location.path('/admin');	
+	}
 	
 	//go to login page
 	$scope.gotologinPage=function(){
@@ -50,6 +55,12 @@ $scope.adminheading='Branch List';
 		$location.path("/BranchMgr");
 	}
 	
+	//go to register page
+	$scope.gotoregisterpage=function(){
+		$location.path("/register");
+	}
+	
+	//gotocreateBranch
 	$scope.gotocreateBranch=function(){
 		$location.path("/addBranch");
 	}
@@ -101,12 +112,57 @@ $scope.adminheading='Branch List';
 			else
 				$scope.mgrerrormsg="Passwords do not  match";
 	}
+	
+	//add new account
+	$scope.createAccount = function(){
+		var type=$scope.accounttype.toUpperCase();
+		
+		var branchitem;
+		$scope.getAllBranches();
+		
+		var branchDetails =$scope.branchDetails;
+		for(i in branchDetails) {
+			//console.log(branchDetails[i]+"\n"+branchDetails[i].branchName);
+		    if(branchDetails[i].branchName == $scope.userbranch)
+		    {
+		    	branchitem = branchDetails[i];
+		    	break;
+		    }
+		}
+		$http({
+			method : 'POST',
+			url :'http://10.20.14.83:9000/unregistereduser',
+			headers : {
+				'Content-Type' : 'application/json',
+				'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+			},
+			data : { 
+				"firstName": $scope.userfname,
+				"lastName": $scope.userlname,
+				"email": $scope.useremail,
+				"phone": $scope.userphone,
+				"account":{
+					"accountType":type+"ACCOUNT"
+				},
+				"address": $scope.useraddress,
+				"dateOfBirth": ($scope.userdate).getTime(),
+				"branchPOJO": branchitem
+			}
+		}).then(function successCallback(response) {
+			$scope.usererrormsg="Registered Details.wait for confirmation";
+				
+		},function successCallback(response){
+			$scope.mgrerrormsg="Error in adding account";
+		},function errorCallback(response) {
+			console.log(response.data);
+		});
+	}
 
 	$scope.addNewBranch=function(){
 		var ifsc=$scope.bifsc;
 		var name=$scope.bname;
 		var add=$scope.badd;
-		var contact=$scope.contact;
+		var contact=$scope.bcontact;
 	
 		$http({
 					method : 'POST',
@@ -125,7 +181,6 @@ $scope.adminheading='Branch List';
 				}).then(function successCallback(response) {
 					if(response.data['Exception ']=='BranchAlreadyExistException'){
 						console.log(response.data);
-						
 						mymessage("Branch Already Exists");	
 					}
 					else{
@@ -184,7 +239,7 @@ $scope.adminheading='Branch List';
 					});
 		}
 		else{
-			$scope.loginformalert="Please enter proper credentials"
+			$scope.loginformalert="Please enter proper credentials";
 		}
 	}
 	//loginAction find user or bm ends
@@ -220,6 +275,46 @@ $scope.adminheading='Branch List';
 		}
 	};
 	//login admin ends
+	
+	
+	
+	
+	
+	
+	
+	
+	///adminlogout
+	
+	$scope.logoutAdmin=function(){
+		$http({
+			method : 'PUT',
+			url :'http://10.20.14.83:9000/admin/logout',
+			headers : {
+				'Content-Type' : 'application/json',
+				'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+			},
+			data : {				
+				role: $cookieStore.get('role'),
+				id: $cookieStore.get('admintoken') 
+			}
+		}).then(function successCallback(response) {
+			console.log(response.data);
+			if(response.data.error!=null){
+				console.log(response.data);
+			console.log("An error occoured");
+			}
+			else{
+				$cookieStore.remove('role');
+				$cookieStore.remove('admintoken')
+				$location.path('/');
+		
+			}
+				
+		});
+	};
+	//admin logout ends
+	
+	
 	
 	
 	
@@ -264,29 +359,7 @@ $scope.adminheading='Branch List';
 		
 	}
 	
-	//register user ends
-	
-	//user registration status starts
-/*	$scope.approve=function(status){
-		if(status==1)
-			alert("approved");
-		else
-			alert("rejectd");
-	}*/
-	//user registration status starts
-	
-	//getUnregisterdUsers starts
-//	$scope.getUnregisteredUsers=function(){
-//		$scope.unregisteredUsers=[];
-//		var url='http://10.20.14.83:9000/unregistereduser/details';
-//		$http.get(url).success(function(data,status){
-//			angular.forEach(data.data.something,function(value,key){
-////				$scope.unRegisteredUsers.push(value.something);
-////			})
-//			console.log(data)
-//		})
-//	};
-	//getUnregisteredUsers ends
+
 }
 
 inbapp.controller('MainController',mainController);
@@ -319,6 +392,7 @@ inbapp.config(function($routeProvider){
 			templateUrl: 'AddBranch.html'
 		})
 	.otherwise({redirectTo:'/'})
-})
+}
+)
 
 

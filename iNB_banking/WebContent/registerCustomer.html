@@ -1,50 +1,66 @@
-<div class="col-md-5">
-<form name="mySignupForm" novalidate>
-			<div class="col-sm-10">
-					<input type="email" class="form-control"  ng-model="email" name="email" placeholder="Enter email" required>
-				<p id="emailval" class="text-danger" ng-show="mySignupForm.email.$touched && mySignupForm.email.$invalid">Email is required!</p>
-			</div>
-			<div class="col-sm-10">
-					<input type="text" class="form-control"  ng-model="firstname" name="firstname" placeholder="Enter your firstname" required>
-				<p id="fnameval" class="text-danger" ng-show="mySignupForm.firstname.$touched && mySignupForm.firstname.$invalid">Firstname is required!</p>
-			</div>
-			<div class="col-sm-10">
-					<input type="text" class="form-control"  ng-model="lastname" name="lastname" placeholder="Enter your lastname" required>
-				<p id="lnameval" class="text-danger" ng-show="mySignupForm.lastname.$touched && mySignupForm.lastname.$invalid">Lastname is required!</p>
-			</div>
-			<div class="col-sm-10">
-					<input type="date" class="form-control"  ng-model="dob" name="dob" required>
-				<p id="dobval" class="text-danger" ng-show="mySignupForm.dob.$touched && mySignupForm.dob.$invalid">Date of birth is required!</p>
-			</div>
-			<div class="col-sm-10">
-					<textarea ng-model="addr" name="addr" ng-minlength=4  ng-maxlength=50></textarea>
-					<p id="dateval" class="text-danger" ng-show="mySignupForm.addr.$touched && mySignupForm.addr.$invalid">Address is required!</p>
-			</div>
-			<div class="col-sm-10">
-					<input type="text" class="form-control"  ng-model="phone" name="phone" placeholder="Enter your phone number" required>
-				<p id="phoneval" class="text-danger" ng-show="mySignupForm.phone.$touched && mySignupForm.phone.$invalid">Phone number is required!</p>
-			</div>
-			<div class="col-sm-10">
-					<input type="text" class="form-control"  ng-model="custid" name="custid" placeholder="Enter any valid customer ID" required>
-				<p id="custidval" class="text-danger" ng-show="mySignupForm.custid.$touched && mySignupForm.custid.$invalid">Customer ID is required!</p>
-			</div>
-			<div class="col-sm-10">
-					<input type="text" class="form-control"  ng-model="username" name="username" placeholder="Enter your username" required>
-				<p id="unameval" class="text-danger" ng-show="mySignupForm.username.$touched && mySignupForm.username.$invalid">Username is required!</p>
-			</div>
-			<div class="col-sm-10">
-					<input type="password" class="form-control"  ng-model="password1" name="password1" placeholder="Enter your password" required>
-				<p id="pass1val" class="text-danger" ng-show="mySignupForm.password1.$touched && mySignupForm.password1.$invalid">Password is required!</p>
-			</div>
-			<div class="col-sm-10">
-					<input type="password" class="form-control"  ng-model="password2" name="password2" placeholder="Enter your password" required>
-				<p id="pass2val" class="text-danger" ng-show="mySignupForm.password2.$touched && mySignupForm.password2.$invalid">Re-entering of password is required!</p>
-			</div>
+<div class="wrapper row1">
+  <header id="header" class="hoc clear"> 
+    <div id="logo" class="fl_left">
+      <h1><a href="#/">iNB</a></h1>
+   
+    </div>
+    <div id="quickinfo" class="fl_right">
+      <ul class="nospace inline">
+        <li><button type="button" class="btn medium inverse" ng-click="gotoHomePage()">DashBoard &raquo;</button></li>
+          <li><button type="button" class="btn medium inverse" ng-click="">Sign Out &raquo;</button></li>
+       
+      </ul>
+    </div>
+  </header>
+</div>
+<div class='wrapper row2'>
+	<div class='hoc clear'>
+		<h1  style='text-align:center; padding-top: 1.8% '>Create a new account</h1>
 	</div>
-	
-	<div class="text-danger">
-	{{errormsg}}
+</div>
+
+
+<div class="wrapper row3">
+	<div class="hoc clear">
+		<div class="font-x2 nospace" id="userform" style="margin: 20px; padding: 20px;" >
+		
+			<form name="userform" novalidate style="margin-bottom: 20px;">
+				<select class="form-control" ng-model="accounttype" name="accounttype" required>
+					<option value="" disabled selected hidden>Select Account Type</option>
+					<option value="Saving">Savings</option>
+					<option value="Current">Current</option>
+				</select>
+				<p class="text-danger" ng-show="userform.userbranch.$touched && userform.userbranch.$invalid">Branch is required!</p>
+				<br>
+				<input type="text" class="form-control" ng-model="userfname"  name="userfname" placeholder="Enter First Name" required>
+				<p class="text-danger" ng-show="userform.userfname.$touched && userform.userfname.$invalid">First Name is required!</p>
+				<br>
+				<input type="text" class="form-control" ng-model="userlname"  name="userlname" placeholder="Enter Last Name" required>
+				<p class="text-danger" ng-show="userform.userlname.$touched && userform.userlname.$invalid">Last Name is required!</p>
+				<br>
+				<input type="email" class="form-control" ng-model="useremail"  name="useremail" placeholder="Enter Email" required>
+				<p class="text-danger" ng-show="userform.useremail.$touched && userform.useremail.$invalid">Email is required!</p>
+				<br>
+				<input type="text" class="form-control" ng-model="userphone"  name="userphone" placeholder="Enter Phone number" required>
+				<p class="text-danger" ng-show="userform.userphone.$touched && userform.userphone.$invalid">Phone number is required!</p>
+				<br>
+				<input type="text" class="form-control" ng-model="useraddress"  name="useraddress" placeholder="Enter Address" required>
+				<p class="text-danger" ng-show="userform.useraddress.$touched && userform.useraddress.$invalid">Address is required!</p>
+				<br>
+				<input type="date" class="form-control" ng-model="userdate"  name="userdate" placeholder="Enter Date of Birth" required>
+				<p class="text-danger" ng-show="userform.userdate.$touched && userform.userdate.$invalid">Date of birth is required!</p>
+				<br>
+				<select class="form-control" ng-model="userbranch" name="userbranch" required>
+					<option value="" disabled selected hidden>Select Branch</option>
+					<option ng-repeat="i in branchDetails">{{ i.branchName }}</option>
+				</select>
+				<p class="text-danger" ng-show="userform.userbranch.$touched && userform.userbranch.$invalid">Branch is required!</p>
+				<br>
+				<div class="alert alert-danger">
+				{{ usererrormsg }}
+				</div>
+				<input style="float: right;" type="button"   class="btn medium inverse" value="Create Account" ng-click="createAccount()">
+			</form>
+		</div>
 	</div>
-	<input type="button" value="Login" ng-click="registerCustomer()">
-</form>
 </div>
