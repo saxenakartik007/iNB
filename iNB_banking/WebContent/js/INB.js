@@ -2,7 +2,7 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 
 
 function mainController($scope,$http,$cookieStore,$location){
-	
+	$scope.branchDetails;
 	
 	$scope.gotologinPage=function(){
 		$location.path("/login");
@@ -17,8 +17,64 @@ function mainController($scope,$http,$cookieStore,$location){
 	}
 	
 	$scope.addbranchmgr = function(){
+		var branchitem;
+		$scope.getAllBranches();
 		
+		var branchDetails =$scope.branchDetails;
+		//console.log(branchDetails+"\n\n"+$scope.branchDetails);
+		
+		for(i in branchDetails) {
+			//console.log(branchDetails[i]+"\n"+branchDetails[i].branchName);
+		    if(branchDetails[i].branchName == $scope.mgrbranch)
+		    {
+		    	branchitem = {ifscCode : branchDetails[i].ifscCode , branchName : branchDetails[i].branchName, address : branchDetails[i].address, contact : branchDetails[i].contact};
+		    	break;
+		    }
+		}
+		//console.log(branchitem);
+		//console.log($scope.mgruname+"\n"+$scope.mgrpsw1+"\n"+$scope.mgrfname+"\n"+$scope.mgrlname+"\n"+$scope.mgremail+"\n"+$scope.mgrphone+"\n"+$scope.mgraddress+"\n"+$scope.mgrdate);
+		if($scope.mgrpsw1==$scope.mgrpsw2){
+			$http({
+				method : 'POST',
+				url :'http://10.20.14.83:9000/branchmanager/',
+				headers : {
+					'Content-Type' : 'application/json',
+					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+				},
+				data : { 
+					"userName": $scope.mgruname,
+					"password": $scope.mgrpsw1,
+					"firstName": $scope.mgrfname,
+					"lastName": $scope.mgrlname,
+					"email": $scope.mgremail,
+					"phone": $scope.mgrphone,
+					"address": $scope.mgraddress,
+					"dateOfBirth": ($scope.mgrdate).getTime(),
+					"branchPOJO": branchitem
+				}
+			}).then(function successCallback(response) {
+				$scope.mgrerrormsg="Added Branch Manager successfully"
+					
+			},function successCallback(response){
+				$scope.mgrerrormsg="Error in Adding Branch Manager";
+			});
+			}
+			else
+				$scope.mgrerrormsg="Passwords do not  match";
 	}
+	
+	//getallbranches
+	$scope.getAllBranches=function()
+	{  
+		var url='http://10.20.14.83:9000/branch';
+		$http.get(url).success(function(data,status){
+		$scope.branchDetails= data; 
+	  })
+	}
+	//getallbranches
+	
+	$scope.getAllBranches();
+	
 	
 	//login admin starts
 	$scope.loginAdmin=function(){
