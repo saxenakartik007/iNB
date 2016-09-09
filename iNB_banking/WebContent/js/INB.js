@@ -3,7 +3,9 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 
 function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
+	$scope.branchManagerDetails;
 	 $scope.loginAlertMessage = true;
+
 	
 	//getallbranches
 	$scope.getAllBranches=function(){
@@ -14,7 +16,18 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 		});
 	}
 	//getallbranches
+	
+	//getbranchmanager
+	$scope.getBranchManagers=function(){
+		var url='http://10.20.14.83:9000/branchmanager';
+		$http.get(url).success(function(data,status){
+			$scope.branchManagerDetails= data;	
+		});
+	}
+	//getbranchmanager
+	
 	$scope.getAllBranches();
+	$scope.getBranchManagers();
 	
 	
 	//gotoadminpanel
@@ -25,10 +38,63 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.gotologinPage=function(){
 		$location.path("/login");
 	}
+	
+	$scope.createBranchMgr = function(){
+		$location.path("/BranchMgr");
+	}
+	
 	$scope.gotocreateBranch=function(){
 		$location.path("/addBranch");
 	}
 	
+
+	$scope.addbranchmgr = function(){
+		var branchitem;
+		$scope.getAllBranches();
+		
+		var branchDetails =$scope.branchDetails;
+		//console.log(branchDetails+"\n\n"+$scope.branchDetails);
+		
+		for(i in branchDetails) {
+			//console.log(branchDetails[i]+"\n"+branchDetails[i].branchName);
+		    if(branchDetails[i].branchName == $scope.mgrbranch)
+		    {
+		    	branchitem = {ifscCode : branchDetails[i].ifscCode , branchName : branchDetails[i].branchName, address : branchDetails[i].address, contact : branchDetails[i].contact};
+		    	break;
+		    }
+		}
+		//console.log(branchitem);
+		//console.log($scope.mgruname+"\n"+$scope.mgrpsw1+"\n"+$scope.mgrfname+"\n"+$scope.mgrlname+"\n"+$scope.mgremail+"\n"+$scope.mgrphone+"\n"+$scope.mgraddress+"\n"+$scope.mgrdate);
+		if($scope.mgrpsw1==$scope.mgrpsw2){
+			$http({
+				method : 'POST',
+				url :'http://10.20.14.83:9000/branchmanager/',
+				headers : {
+					'Content-Type' : 'application/json',
+					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+				},
+				data : { 
+					"userName": $scope.mgruname,
+					"password": $scope.mgrpsw1,
+					"firstName": $scope.mgrfname,
+					"lastName": $scope.mgrlname,
+					"email": $scope.mgremail,
+					"phone": $scope.mgrphone,
+					"address": $scope.mgraddress,
+					"dateOfBirth": ($scope.mgrdate).getTime(),
+					"branchPOJO": branchitem
+				}
+			}).then(function successCallback(response) {
+				$scope.mgrerrormsg="Added Branch Manager successfully"
+					
+			},function successCallback(response){
+				$scope.mgrerrormsg="Error in Adding Branch Manager";
+			});
+			}
+			else
+				$scope.mgrerrormsg="Passwords do not  match";
+	}
+
 	$scope.addNewBranch=function(){
 		var ifsc=$scope.bifsc;
 		var name=$scope.bname;
@@ -92,20 +158,30 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 							$scope.loginformalert=response.data["Exception"];
 						}
 						else{
-							$cookieStore.put('role','branchmanager');
-							$cookieStore.put('username',$scope.uname);
-							$cookieStore.put('branchmanagertoken',response.data.id)
-							$location.path('/manager');
+							if($scope.role=='branch_manager'){
+								$cookieStore.put('role','branchmanager');
+								$cookieStore.put('username',$scope.uname);
+								$cookieStore.put('branchmanagertoken',response.data.id)
+								$location.path('/manager');
+							}
+							else{
+								$cookieStore.put('role','user');
+								$cookieStore.put('username',$scope.uname);
+								$cookieStore.put('usertoken',response.data.id)
+								$location.path('/userpage');
+							}
+							
 						}
 							
 					});
 		}
 		else{
-			$scope.loginformalert="Please enter credentials"
+			$scope.loginformalert="Please enter proper credentials"
 		}
 	}
 	//loginAction find user or bm ends
 	
+	//login admin starts
 	$scope.loginAdmin=function(){
 		if($scope.aname!=null && $scope.apassword!=null){
 		$http({
@@ -125,11 +201,10 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 			}
 			else{
 				$cookieStore.put('role','admin');
-				$cookieStore.put('admintoken',response.data.id)
+				$cookieStore.put('admintoken',response.data.id);
 				$location.path('/admin');
 		
 			}
-				
 		});
 		}
 		else{
@@ -266,7 +341,12 @@ inbapp.config(function($routeProvider){
 			controller: 'MainController',
 			templateUrl: 'AdminPanel.html'
 		})
-		.when('/addBranch', {
+
+	.when('/BranchMgr', {
+			controller: 'MainController',
+			templateUrl: 'BranchMgr.html'
+		})	
+	.when('/addBranch', {
 			controller: 'MainController',
 			templateUrl: 'AddBranch.html'
 		})
