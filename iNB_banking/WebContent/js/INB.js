@@ -3,6 +3,7 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 
 function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
+	$scope.branchManagerDetails;
 	 $scope.loginAlertMessage = true;
 	
 	//getallbranches
@@ -14,7 +15,18 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 		});
 	}
 	//getallbranches
+	
+	//getbranchmanager
+	$scope.getBranchManagers=function(){
+		var url='http://10.20.14.83:9000/branchmanager';
+		$http.get(url).success(function(data,status){
+			$scope.branchManagerDetails= data;	
+		});
+	}
+	//getbranchmanager
+	
 	$scope.getAllBranches();
+	$scope.getBranchManagers();
 	
 	
 	//gotoadminpanel
@@ -93,10 +105,19 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 							$scope.loginformalert=response.data["Exception"];
 						}
 						else{
-							$cookieStore.put('role','branchmanager');
-							$cookieStore.put('username',$scope.uname);
-							$cookieStore.put('branchmanagertoken',response.data.id)
-							$location.path('/manager');
+							if($scope.role=='branch_manager'){
+								$cookieStore.put('role','branchmanager');
+								$cookieStore.put('username',$scope.uname);
+								$cookieStore.put('branchmanagertoken',response.data.id)
+								$location.path('/manager');
+							}
+							else{
+								$cookieStore.put('role','user');
+								$cookieStore.put('username',$scope.uname);
+								$cookieStore.put('usertoken',response.data.id)
+								$location.path('/userpage');
+							}
+							
 						}
 							
 					});
