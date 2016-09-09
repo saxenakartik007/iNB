@@ -53,9 +53,14 @@
 	<input type="password" class="form-control" ng-model="password"  name="password" placeholder="Enter password" required>
 	<p id="pval" class="text-danger" ng-show="loginform.password.$touched && loginform.password.$invalid">Password is required!</p>
 	<br>
+		<select name="branch" class="form-control"  ng-model="branch" required>
+		<option ng-repeat="i in branchDetails">{{ i.branchName}}</option>
+		</select>
+		<p id="pval" class="text-danger" ng-show="loginform.branch.$touched && loginform.branch.$invalid">Branch is required!</p>	
 	<br>
-	<div class="text-danger">
-	{{errormsg}}
+	<br>
+	<div class="alert alert-danger" ng-show="loginform.$submitted">
+	<p>Please provide proper details</p>
 	</div>
 	<input style="float: right;" type="button" value="Login" ng-click="loginAdmin()">
 </form>
@@ -80,7 +85,7 @@
 	<br>
 	<br>
 	<div class="text-danger">
-	{{errormsg}}
+	{{aerrormsg}}
 	</div>
 	<input style="float: right;" type="button" value="Login" ng-click="loginAdmin()">
 </form>

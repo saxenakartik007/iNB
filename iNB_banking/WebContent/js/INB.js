@@ -2,15 +2,29 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 
 
 function mainController($scope,$http,$cookieStore,$location){
-	//login admin starts
+	$scope.branchDetails;
 	
+	
+	//getallbranches
+	$scope.getAllBranches=function(){
+		
+		var url='http://10.20.14.83:9000/branch';
+		$http.get(url).success(function(data,status){
+			$scope.branchDetails= data;	
+		})
+	}
+	//getallbranches
+	$scope.getAllBranches();
+	
+	//go to login page
 	$scope.gotologinPage=function(){
 		$location.path("/login");
 	}
 	
 	
 	
-	$scope.login=function(){
+	//login admin starts
+	$scope.loginAdmin=function(){
 		$http({
 			method : 'PUT',
 			url :'http://10.20.14.83:9000/admin/login',
@@ -24,7 +38,7 @@ function mainController($scope,$http,$cookieStore,$location){
 			}
 		}).then(function successCallback(response) {
 			if(response.data.error!=null){
-				$scope.errormsg="no login";
+				$scope.aerrormsg="no login";
 			}
 			else{
 				alert("Successfull response"+response.data.id);
@@ -34,7 +48,7 @@ function mainController($scope,$http,$cookieStore,$location){
 			}
 				
 		},function successCallback(response){
-			$scope.errormsg="no response";
+			$scope.aerrormsg="no response";
 		});
 	};
 	//login admin ends
@@ -114,8 +128,8 @@ inbapp.config(function($routeProvider){
 		})
 	.when('/admin', {
 			controller: 'MainController',
-			templateUrl: 'Adminapproval.html'
-		})	
+			templateUrl: 'AdminPanel.html'
+		})
 	.otherwise({redirectTo:'/'})
 })
 
