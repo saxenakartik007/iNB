@@ -1,9 +1,28 @@
 var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 
 
-function mainController($scope,$http,$cookieStore,$location){
+function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
+	 $scope.loginAlertMessage = true;
+
 	
+	//getallbranches
+	$scope.getAllBranches=function(){
+		
+		var url='http://10.20.14.83:9000/branch';
+		$http.get(url).success(function(data,status){
+			$scope.branchDetails= data;	
+		});
+	}
+	//getallbranches
+	$scope.getAllBranches();
+	
+	
+	//gotoadminpanel
+	$scope.gotoAdminPanel=function(){
+		$location.path('/admin');	}
+	
+	//go to login page
 	$scope.gotologinPage=function(){
 		$location.path("/login");
 	}
@@ -16,6 +35,7 @@ function mainController($scope,$http,$cookieStore,$location){
 		$location.path("/addBranch");
 	}
 	
+
 	$scope.addbranchmgr = function(){
 		var branchitem;
 		$scope.getAllBranches();
@@ -62,22 +82,88 @@ function mainController($scope,$http,$cookieStore,$location){
 			else
 				$scope.mgrerrormsg="Passwords do not  match";
 	}
+
+	$scope.addNewBranch=function(){
+		var ifsc=$scope.bifsc;
+		var name=$scope.bname;
+		var add=$scope.badd;
+		var contact=$scope.contact;
 	
-	//getallbranches
-	$scope.getAllBranches=function()
-	{  
-		var url='http://10.20.14.83:9000/branch';
-		$http.get(url).success(function(data,status){
-		$scope.branchDetails= data; 
-	  })
+		$http({
+					method : 'POST',
+					url : 'http://10.20.14.83:9000/branch',
+
+					headers : {
+						'Content-Type' : 'application/json',
+						'Access-Control-Allow-Origin': 'http:///10.20.14.83:9000'
+					},
+					data : {				
+						ifscCode: ifsc,
+						branchName: name,
+						address: add,
+						contact: contact
+					}
+				}).then(function successCallback(response) {
+					if(response.data['Exception ']=='BranchAlreadyExistException'){
+						console.log(response.data);
+						
+						mymessage("Branch Already Exists");	
+					}
+					else{
+					var data = response.data;
+					console.log(response.data);
+				
+						 mymessage("Branch added");	
+					}
+					
+				}, function errorCallback(response) {
+					alert("An Error Occoured");
+					
+				});
+
 	}
-	//getallbranches
 	
-	$scope.getAllBranches();
-	
+	//loginAction find user or bm
+	$scope.loginAction=function(role){
+		if($scope.uname!=null && $scope.password!=null && $scope.branch!=null && $scope.role!=null){
+			if($scope.role=="branch_manager")
+				url="http://10.20.14.83:9000/branchmanager/login"
+			else
+				url="http://10.20.14.83:9000/registeredcustomer"
+					$http({
+						method : 'PUT',
+						url :url,
+						headers : {
+							'Content-Type' : 'application/json',
+							'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+						},
+						data:{
+							userName : $scope.uname,
+							password : $scope.password,
+							branchName:$scope.branch
+						}
+					}).then(function successCallback(response) {
+						if(response.data["Exception"]!=null){
+							$scope.loginformalert=response.data["Exception"];
+						}
+						else{
+							$cookieStore.put('role','branchmanager');
+							$cookieStore.put('username',$scope.uname);
+							$cookieStore.put('branchmanagertoken',response.data.id)
+							$location.path('/manager');
+						}
+							
+					});
+		}
+		else{
+			$scope.loginformalert="Please enter credentials"
+		}
+	}
+	//loginAction find user or bm ends
 	
 	//login admin starts
 	$scope.loginAdmin=function(){
+		if($scope.aname!=null && $scope.apassword!=null){
 		$http({
 			method : 'PUT',
 			url :'http://10.20.14.83:9000/admin/login',
@@ -91,21 +177,22 @@ function mainController($scope,$http,$cookieStore,$location){
 			}
 		}).then(function successCallback(response) {
 			if(response.data.error!=null){
-				$scope.aerrormsg="no login";
+				$scope.aloginformalert="Username and password do not match";
 			}
 			else{
-				alert("Successfull response"+response.data.id);
-				
 				$cookieStore.put('role','admin');
-				$cookieStore.put('admintoken',response.data.id)
+				$cookieStore.put('admintoken',response.data.id);
 				$location.path('/admin');
+		
 			}
-				
-		},function successCallback(response){
-			$scope.aerrormsg="no response";
 		});
+		}
+		else{
+			$scope.aloginformalert="Please enter credentials"
+		}
 	};
 	//login admin ends
+	
 	
 	
 	//register user starts
@@ -130,28 +217,47 @@ function mainController($scope,$http,$cookieStore,$location){
 				 password : $scope.password1
 			}
 		}).then(function successCallback(response) {
-			$scope.errormsg="Registered successfully.Wait for confirmation"
+			$scope.aloginform="Registered successfully.Wait for confirmation"
 				
 		},function successCallback(response){
-			$scope.errormsg="Error in registration";
+			console.log("Error in registration"+response.data);
 		});
 		}
 		else
 			$scope.errormsg="Passwords do not  match";
 	};
+	
+	
+	function mymessage(x){
+		$scope.mycustomMessage=x;
+		  $scope.loginAlertMessage=false; 
+	         $timeout(function () { $scope.loginAlertMessage = true;
+	         $location.path('/admin'); }, 3000);   
+		
+	}
+	
 	//register user ends
 	
+	//user registration status starts
+/*	$scope.approve=function(status){
+		if(status==1)
+			alert("approved");
+		else
+			alert("rejectd");
+	}*/
+	//user registration status starts
 	
 	//getUnregisterdUsers starts
-	/*$scope.getUnregisteredUsers(){
-		$scope.unregisteredUsers=[];
-		var url=something+/unregistereduser/details;
-		$http.get(url).success(function(data,status){
-			angular.forEach(data.data.something,function(value,key){
-				$scope.unRegisteredUsers.push(value.something);
-			})
-		})
-	};*/
+//	$scope.getUnregisteredUsers=function(){
+//		$scope.unregisteredUsers=[];
+//		var url='http://10.20.14.83:9000/unregistereduser/details';
+//		$http.get(url).success(function(data,status){
+//			angular.forEach(data.data.something,function(value,key){
+////				$scope.unRegisteredUsers.push(value.something);
+////			})
+//			console.log(data)
+//		})
+//	};
 	//getUnregisteredUsers ends
 }
 

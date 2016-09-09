@@ -7,7 +7,7 @@
     <div id="quickinfo" class="fl_right">
       <ul class="nospace inline">
         <li><button type="button" class="btn medium inverse" ng-click="gotoHomePage()">Home &raquo;</button></li>
-        <li><button class="btn medium inverse">Register &raquo;</button></li>
+        <li><button class="btn medium inverse">Create an Account&raquo;</button></li>
       </ul>
     </div>
   </header>
@@ -30,13 +30,35 @@
 	<input type="password" class="form-control" ng-model="password"  name="password" placeholder="Enter password" required>
 	<p id="pval" class="text-danger" ng-show="loginform.password.$touched && loginform.password.$invalid">Password is required!</p>
 	<br>
+		<select name="branch" class="form-control"  ng-model="branch" required>
+		<option value="" disabled selected hidden >Select branch</option>
+		<option ng-repeat="i in branchDetails">{{i.branchName}}</option>
+		</select>
+		<p id="pval" class="text-danger" ng-show="loginform.branch.$touched && loginform.branch.$invalid">Branch is required!</p>	
 	<br>
-	<div class="text-danger">
-	{{errormsg}}
+		<select name="role" class="form-control"  ng-model="role" required>
+		<option value="" disabled selected hidden >Select role</option>
+		<option value="branch_manager">Branch Manager</option>
+		<option value="user">User</option>
+		</select>
+		<p id="pval" class="text-danger" ng-show="loginform.role.$touched && loginform.role.$invalid">Role is required!</p>	
+	<br>
+	<br>
+<br>
+	<div class="text-danger"  >
+	<p ng-model="loginformalert">{{loginformalert}}</p>	
 	</div>
-	<input style="float: right;" type="button" value="Login" ng-click="loginAdmin()">
+	<input style="float: right;" type="button" value="Login" ng-click="loginAction()">
 </form>
 </div>
+
+
+
+
+
+
+
+
 
 
 
@@ -56,8 +78,8 @@
 	<p id="pval" class="text-danger" ng-show="aloginform.apassword.$touched && aloginform.apassword.$invalid">Password is required!</p>
 	<br>
 	<br>
-	<div class="text-danger">
-	{{aerrormsg}}
+	<div class="text-danger" >
+	<p ng-model="aloginformalert">{{aloginformalert}}</p>	
 	</div>
 	<input style="float: right;" type="button" value="Login" ng-click="loginAdmin()">
 </form>

@@ -2,12 +2,12 @@
 <div class="wrapper row1">
   <header id="header" class="hoc clear"> 
     <div id="logo" class="fl_left">
-      <h1><a href="#/">iNB</a></h1>
+      <h1 ng-click='gotoAdminPanel()'><a >iNB</a></h1>
    
     </div>
     <div id="quickinfo" class="fl_right">
       <ul class="nospace inline">
-        <li><button type="button" class="btn medium inverse" ng-click="gotoHomePage()">DashBoard &raquo;</button></li>
+        <li><button type="button" class="btn medium inverse" ng-click="gotoAdminPanel()">DashBoard &raquo;</button></li>
           <li><button type="button" class="btn medium inverse" ng-click="">Sign Out &raquo;</button></li>
        
       </ul>
@@ -16,7 +16,7 @@
 </div>
 <div class='wrapper row2'>
 <div class='hoc clear'>
-<h1  style='text-align:center; padding-top: 1.8% '>Add New Branch</h1>
+<h1  style='text-align:center; padding-top: 1.5% '>Add New Branch</h1>
 </div>
 </div>
 
@@ -24,7 +24,7 @@
 <div class="hoc clear">
 <div class="font-x2 nospace" id="userloginform" style="margin: 5%; padding: 5%;" >
 
-<form name="AddBranchForm" novalidate style="margin-bottom: 20px;">
+<form name="AddBranchForm"  style="margin-bottom: 20px;">
 	<input type="text" class="form-control" ng-model="bifsc"  name="bifsc" placeholder="Enter IFSC code" required>
 	<p style="font-size: .5em" id="bifscval" class="text-danger" ng-show="AddBranchForm.bifsc.$touched && AddBranchForm.bifsc.$invalid">IFSC code is required!</p>
 	<br>
@@ -36,13 +36,14 @@
 	<p  style="font-size: .5em" id="baddval" class="text-danger" ng-show="AddBranchForm.badd.$touched && AddBranchForm.badd.$invalid">Branch address is required!</p>
 	<br>
 	
-	<input type="number" maxlength="10" min="1000000000" max='9999999999'class="form-control" ng-model="bcontact"  name="bcontact" placeholder="Enter Contact No." required>
+	<input type="number" pattern=".{10,10}"   class="form-control" ng-model="bcontact"  name="bcontact" placeholder="Enter Contact No." required>
 	<p style="font-size: .5em" id="bcontval" class="text-danger" ng-show="AddBranchForm.bcontact.$touched && AddBranchForm.bcontact.$invalid">Contact number is required!</p>
 	<br>
 	<br>
 	<div class="text-danger">
 	{{errormsg}}
 	</div>
-	<input style="float: right;" type="button"   class="btn medium inverse" value="ADD Branch" ng-click="addNewBranch()">
+	<input style="float: right;" type="button" ng-disabled="AddBranchForm.$invalid"  class="btn medium inverse" value="ADD Branch" ng-click="addNewBranch()">
 </form>
 </div>
+<div ng-hide="loginAlertMessage"  class='hoc clear'><div style="float: right; margin: 5%;margin-right: 5%;background: #00C853;padding: 15px;bottom: 0px;right: 0px;border-color: white;border-width: 2px;position: absolute;z-index: 10;border-radius: 25px;border: 4px solid #969696;color: white;font-size: 1.2em;" >{{mycustomMessage}}</div></div> 	
