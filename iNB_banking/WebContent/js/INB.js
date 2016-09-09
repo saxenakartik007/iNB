@@ -67,7 +67,7 @@ function mainController($scope,$http,$cookieStore){
 			$scope.errormsg="Registered successfully.Wait for confirmation"
 				
 		},function successCallback(response){
-			$scope.errormsg="Error in registration";
+			console.log("Error in registration"+response.data);
 		});
 		}
 		else
@@ -75,17 +75,26 @@ function mainController($scope,$http,$cookieStore){
 	};
 	//register user ends
 	
+	//user registration status starts
+	$scope.approve=function(status){
+		if(status==1)
+			alert("approved");
+		else
+			alert("rejectd");
+	}
+	//user registration status starts
 	
 	//getUnregisterdUsers starts
-	/*$scope.getUnregisteredUsers(){
-		$scope.unregisteredUsers=[];
-		var url=something+/unregistereduser/details;
-		$http.get(url).success(function(data,status){
-			angular.forEach(data.data.something,function(value,key){
-				$scope.unRegisteredUsers.push(value.something);
-			})
-		})
-	};*/
+//	$scope.getUnregisteredUsers=function(){
+//		$scope.unregisteredUsers=[];
+//		var url='http://10.20.14.83:9000/unregistereduser/details';
+//		$http.get(url).success(function(data,status){
+//			angular.forEach(data.data.something,function(value,key){
+////				$scope.unRegisteredUsers.push(value.something);
+////			})
+//			console.log(data)
+//		})
+//	};
 	//getUnregisteredUsers ends
 }
 
@@ -105,6 +114,10 @@ inbapp.config(function($routeProvider){
 			controller: 'MainController',
 			templateUrl: 'registerCustomer.html'
 		})
+	.when('/admin', {
+			controller: 'MainController',
+			templateUrl: 'Adminapproval.html'
+		})	
 	.otherwise({redirectTo:'/'})
 })
 
