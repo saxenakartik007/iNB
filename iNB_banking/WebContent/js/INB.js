@@ -1,14 +1,6 @@
 var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 
-inbapp.directive('ngSlider', function() {
-	return {
-		restrict: 'E',
-		templateUrl: 'slider.html',
-		link: function(scope, iElement, iAttrs) {
-		      //alert("table function called");
-		}
-	}
-});
+
 
 function mainController($scope,$http,$cookieStore){
 	//login admin starts
