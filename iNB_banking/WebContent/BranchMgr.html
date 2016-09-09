@@ -1,24 +1,63 @@
+<div class="wrapper row1">
+  <header id="header" class="hoc clear"> 
+    <div id="logo" class="fl_left">
+      <h1><a href="#/">iNB</a></h1>
+   
+    </div>
+    <div id="quickinfo" class="fl_right">
+      <ul class="nospace inline">
+        <li><button type="button" class="btn medium inverse" ng-click="gotoHomePage()">DashBoard &raquo;</button></li>
+          <li><button type="button" class="btn medium inverse" ng-click="">Sign Out &raquo;</button></li>
+       
+      </ul>
+    </div>
+  </header>
+</div>
+<div class='wrapper row2'>
+	<div class='hoc clear'>
+		<h1  style='text-align:center; padding-top: 1.8% '>Add New Branch Manager</h1>
+	</div>
+</div>
+
+
 <div class="wrapper row3">
 	<div class="hoc clear">
-		<div class="fl_left" id="userloginform"  style="
-		    padding: 51px;
-		    border: 4px solid #4a9453;
-		    margin-left: 5%;
-		    text-align: center;
-		    margin: 5%;">
-			<h1>Login as User   </h1>
-			<form name="loginform" novalidate>
-				<input type="text" class="form-control" ng-model="uname"  name="uname" placeholder="Enter username" required>
-				<p id="uval" class="text-danger" ng-show="loginform.uname.$touched && loginform.uname.$invalid">User name is required!</p>
+		<div class="font-x2 nospace" id="Mgrform" style="margin: 20px; padding: 20px;" >
+		
+			<form name="Mgrform" novalidate style="margin-bottom: 20px;">
+				<input type="text" class="form-control" ng-model="mgrfname"  name="mgrfname" placeholder="Enter First Name" required>
+				<p class="text-danger" ng-show="Mgrform.mgrfname.$touched && Mgrform.mgrfname.$invalid">First Name is required!</p>
 				<br>
-				<input type="password" class="form-control" ng-model="password"  name="password" placeholder="Enter password" required>
-				<p id="pval" class="text-danger" ng-show="loginform.password.$touched && loginform.password.$invalid">Password is required!</p>
+				<input type="text" class="form-control" ng-model="mgrlname"  name="mgrlname" placeholder="Enter Last Name" required>
+				<p class="text-danger" ng-show="Mgrform.mgrlname.$touched && Mgrform.mgrlname.$invalid">Last Name is required!</p>
 				<br>
+				<input type="text" class="form-control" ng-model="mgruname"  name="mgruname" placeholder="Enter User Name" required>
+				<p class="text-danger" ng-show="Mgrform.mgruname.$touched && Mgrform.mgruname.$invalid">User Name is required!</p>
+				<br>
+				<input type="password" class="form-control" ng-model="mgrpsw"  name="mgrpsw" placeholder="Enter Password" required>
+				<p class="text-danger" ng-show="Mgrform.mgrpsw.$touched && Mgrform.mgrpsw.$invalid">Password is required!</p>
+				<br>
+				<input type="email" class="form-control" ng-model="mgremail"  name="mgremail" placeholder="Enter Email" required>
+				<p class="text-danger" ng-show="Mgrform.mgruname.$touched && Mgrform.mgruname.$invalid">Email is required!</p>
+				<br>
+				<input type="text" class="form-control" ng-model="mgrphone"  name="mgrphone" placeholder="Enter Phone number" required>
+				<p class="text-danger" ng-show="Mgrform.mgrphone.$touched && Mgrform.mgrphone.$invalid">Phone number is required!</p>
+				<br>
+				<input type="text" class="form-control" ng-model="mgraddress"  name="mgraddress" placeholder="Enter Address" required>
+				<p class="text-danger" ng-show="Mgrform.mgraddress.$touched && Mgrform.mgraddress.$invalid">Address is required!</p>
+				<br>
+				<input type="date" class="form-control" ng-model="mgrdate"  name="mgrdate" placeholder="Enter Date" required>
+				<p class="text-danger" ng-show="Mgrform.mgrdate.$touched && Mgrform.mgrdate.$invalid">Date is required!</p>
+				<br>
+				<select class="branchpicker" ng-model="mgrbranch" name="mgrbranch" required>
+					<option ng-repeat="i in branchDetails">{{ i.branchName }}</option>
+				</select>
+				<p class="text-danger" ng-show="Mgrform.mgrbranch.$touched && Mgrform.mgrbranch.$invalid">Branch is required!</p>
 				<br>
 				<div class="text-danger">
-				{{errormsg}}
+				{{ mgrerrormsg }}
 				</div>
-				<input style="float: right;" type="button" value="Login" ng-click="loginAdmin()">
+				<input style="float: right;" type="button"   class="btn medium inverse" value="ADD Branch Manager" ng-click="addbranchmgr()">
 			</form>
 		</div>
 	</div>

@@ -11,8 +11,8 @@ function mainController($scope,$http,$cookieStore,$location){
 	$scope.createBranchMgr = function(){
 		$location.path("/BranchMgr");
 	}
+	$scope.gotocreateBranch=function(){
 
-	$scope.createBranch=function(){
 		$location.path("/addBranch");
 	}
 	
