@@ -1,9 +1,9 @@
 var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 
 
-function mainController($scope,$http,$cookieStore,$location){
+function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
-	
+	 $scope.loginAlertMessage = true;
 	
 	//getallbranches
 	$scope.getAllBranches=function(){
@@ -15,6 +15,12 @@ function mainController($scope,$http,$cookieStore,$location){
 	}
 	//getallbranches
 	$scope.getAllBranches();
+	$location.path("/addBranch");
+	
+	//gotoadminpanel
+	$scope.gotoAdminPanel=function(){
+		$location.path('/admin');
+	}
 	
 	//go to login page
 	$scope.gotologinPage=function(){
@@ -45,10 +51,18 @@ function mainController($scope,$http,$cookieStore,$location){
 						contact: contact
 					}
 				}).then(function successCallback(response) {
+					if(response.data['Exception ']=='BranchAlreadyExistException'){
+						console.log(response.data);
+						
+						mymessage("Branch Already Exists");	
+					}
+					else{
 					var data = response.data;
-					console.log(data);
-					alert("Branch Created");
-					$location.path('/admin');
+					console.log(response.data);
+					mymessage("Branch added");	
+						 $location.path('/admin');
+					}
+					
 				}, function errorCallback(response) {
 					alert("An Error Occoured");
 					
@@ -157,6 +171,15 @@ function mainController($scope,$http,$cookieStore,$location){
 		else
 			$scope.errormsg="Passwords do not  match";
 	};
+	
+	
+	function mymessage(x){
+		$scope.mycustomMessage=x;
+		  $scope.loginAlertMessage=false; 
+	         $timeout(function () { $scope.loginAlertMessage = true; }, 3000);   
+		
+	}
+	
 	//register user ends
 	
 	//user registration status starts
