@@ -27,6 +27,7 @@ function mainController($scope,$http,$cookieStore,$location){
 	
 	//login admin starts
 	$scope.loginAdmin=function(){
+		if($scope.aname!=null && $scope.apassword!=null){
 		$http({
 			method : 'PUT',
 			url :'http://10.20.14.83:9000/admin/login',
@@ -40,22 +41,61 @@ function mainController($scope,$http,$cookieStore,$location){
 			}
 		}).then(function successCallback(response) {
 			if(response.data.error!=null){
-				$scope.aerrormsg="no login";
+				$scope.aloginformalert="no login";
 			}
 			else{
 				alert("Successfull response"+response.data.id);
-				
 				$cookieStore.put('role','admin');
 				$cookieStore.put('admintoken',response.data.id)
 				$location.path('/admin');
 			}
 				
 		},function successCallback(response){
-			$scope.aerrormsg="no response";
+			$scope.aloginformalert="no response";
 		});
+		}
+		else{
+			$scope.aloginformalert="Please enter credentials"
+		}
 	};
 	//login admin ends
 	
+	//loginuser
+	$scope.loginUser=function(){
+		if($scope.uname!=null && $scope.password!=null && $scope.branch!="none"){
+			$http({
+				method : 'PUT',
+				url :'http://10.20.14.83:9000/admin/login',
+				headers : {
+					'Content-Type' : 'application/json',
+					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+				},
+				data : {				
+					userName : $scope.aname,
+					password : $scope.apassword
+				}
+			}).then(function successCallback(response) {
+				if(response.data.error!=null){
+					$scope.loginformalert="no login";
+				}
+				else{
+					alert("Successfull response"+response.data.id);
+					
+					$cookieStore.put('role','admin');
+					$cookieStore.put('admintoken',response.data.id)
+					$location.path('/admin');
+				}
+					
+			},function successCallback(response){
+				$scope.loginformalert="no response";
+			});
+		}
+		else{
+			$scope.loginformalert="Please enter credentials"
+		}
+		
+	};
+	//loginuser
 	
 	//register user starts
 	$scope.registerCustomer=function(){
@@ -79,7 +119,7 @@ function mainController($scope,$http,$cookieStore,$location){
 				 password : $scope.password1
 			}
 		}).then(function successCallback(response) {
-			$scope.errormsg="Registered successfully.Wait for confirmation"
+			$scope.aloginform="Registered successfully.Wait for confirmation"
 				
 		},function successCallback(response){
 			console.log("Error in registration"+response.data);

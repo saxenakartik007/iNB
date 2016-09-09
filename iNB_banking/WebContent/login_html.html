@@ -54,13 +54,14 @@
 	<p id="pval" class="text-danger" ng-show="loginform.password.$touched && loginform.password.$invalid">Password is required!</p>
 	<br>
 		<select name="branch" class="form-control"  ng-model="branch" required>
+		<option value="" disabled selected hidden >Select branch</option>
 		<option ng-repeat="i in branchDetails">{{i.branchName}}</option>
 		</select>
 		<p id="pval" class="text-danger" ng-show="loginform.branch.$touched && loginform.branch.$invalid">Branch is required!</p>	
 	<br>
 	<br>
 	<div class="alert alert-danger" >
-	<p ng-model="loginformalert"></p>	
+	<p ng-model="loginformalert">{{loginformalert}}</p>	
 	</div>
 	<input style="float: right;" type="button" value="Login" ng-click="loginUser()">
 </form>
@@ -84,8 +85,8 @@
 	<p id="pval" class="text-danger" ng-show="aloginform.apassword.$touched && aloginform.apassword.$invalid">Password is required!</p>
 	<br>
 	<br>
-	<div class="text-danger">
-	{{aerrormsg}}
+	<div class="alert alert-danger" >
+	<p ng-model="aloginformalert">{{aloginformalert}}</p>	
 	</div>
 	<input style="float: right;" type="button" value="Login" ng-click="loginAdmin()">
 </form>
