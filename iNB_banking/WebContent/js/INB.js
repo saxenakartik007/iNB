@@ -54,10 +54,45 @@ function mainController($scope,$http,$cookieStore,$location){
 					
 				});
 
-		
-		
-		
 	}
+	
+	//loginAction find user or bm
+	$scope.loginAction=function(role){
+		if($scope.uname!=null && $scope.password!=null && $scope.branch!=null && $scope.role!=null){
+			if($scope.role=="branch_manager")
+				url="http://10.20.14.83:9000/branchmanager/login"
+			else
+				url="http://10.20.14.83:9000/registeredcustomer"
+					$http({
+						method : 'PUT',
+						url :url,
+						headers : {
+							'Content-Type' : 'application/json',
+							'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+						},
+						data:{
+							userName : $scope.uname,
+							password : $scope.password,
+							branchName:$scope.branch
+						}
+					}).then(function successCallback(response) {
+						if(response.data["Exception"]!=null){
+							$scope.loginformalert=response.data["Exception"];
+						}
+						else{
+							$cookieStore.put('role','branchmanager');
+							$cookieStore.put('branchmanagertoken',response.data.id)
+							$location.path('/manager');
+						}
+							
+					});
+		}
+		else{
+			$scope.loginformalert="Please enter credentials"
+		}
+	}
+	//loginAction find user or bm ends
+	
 	$scope.loginAdmin=function(){
 		if($scope.aname!=null && $scope.apassword!=null){
 		$http({
@@ -89,42 +124,7 @@ function mainController($scope,$http,$cookieStore,$location){
 	};
 	//login admin ends
 	
-	//loginuser
-	$scope.loginUser=function(){
-		if($scope.uname!=null && $scope.password!=null && $scope.branch!="none"){
-			$http({
-				method : 'PUT',
-				url :'http://10.20.14.83:9000/admin/login',
-				headers : {
-					'Content-Type' : 'application/json',
-					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-				},
-				data : {				
-					userName : $scope.aname,
-					password : $scope.apassword
-				}
-			}).then(function successCallback(response) {
-				if(response.data.error!=null){
-					$scope.loginformalert="no login";
-				}
-				else{
-					alert("Successfull response"+response.data.id);
-					
-					$cookieStore.put('role','admin');
-					$cookieStore.put('admintoken',response.data.id)
-					$location.path('/admin');
-				}
-					
-			},function successCallback(response){
-				$scope.loginformalert="no response";
-			});
-		}
-		else{
-			$scope.loginformalert="Please enter credentials"
-		}
-		
-	};
-	//loginuser
+	
 	
 	//register user starts
 	$scope.registerCustomer=function(){
