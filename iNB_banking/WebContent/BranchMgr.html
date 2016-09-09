@@ -1,0 +1,25 @@
+<div class="wrapper row3">
+	<div class="hoc clear">
+		<div class="fl_left" id="userloginform"  style="
+		    padding: 51px;
+		    border: 4px solid #4a9453;
+		    margin-left: 5%;
+		    text-align: center;
+		    margin: 5%;">
+			<h1>Login as User   </h1>
+			<form name="loginform" novalidate>
+				<input type="text" class="form-control" ng-model="uname"  name="uname" placeholder="Enter username" required>
+				<p id="uval" class="text-danger" ng-show="loginform.uname.$touched && loginform.uname.$invalid">User name is required!</p>
+				<br>
+				<input type="password" class="form-control" ng-model="password"  name="password" placeholder="Enter password" required>
+				<p id="pval" class="text-danger" ng-show="loginform.password.$touched && loginform.password.$invalid">Password is required!</p>
+				<br>
+				<br>
+				<div class="text-danger">
+				{{errormsg}}
+				</div>
+				<input style="float: right;" type="button" value="Login" ng-click="loginAdmin()">
+			</form>
+		</div>
+	</div>
+</div>

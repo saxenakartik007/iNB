@@ -8,7 +8,9 @@ function mainController($scope,$http,$cookieStore,$location){
 		$location.path("/login");
 	}
 	
-	
+	$scope.createBranchMgr = function(){
+		$location.path("/BranchMgr");
+	}
 	
 	$scope.loginAdmin=function(){
 		$http({
@@ -19,12 +21,12 @@ function mainController($scope,$http,$cookieStore,$location){
 				'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
 			},
 			data : {				
-				userName : $scope.uname,
-				password : $scope.password
+				userName : $scope.auname,
+				password : $scope.apassword
 			}
 		}).then(function successCallback(response) {
 			if(response.data.error!=null){
-				$scope.errormsg="no login";
+				$scope.aerrormsg="no login";
 			}
 			else{
 				alert("Successfull response"+response.data.id);
@@ -34,7 +36,7 @@ function mainController($scope,$http,$cookieStore,$location){
 			}
 				
 		},function successCallback(response){
-			$scope.errormsg="no response";
+			$scope.aerrormsg="no response";
 		});
 	};
 	//login admin ends
@@ -103,10 +105,14 @@ inbapp.config(function($routeProvider){
 			controller: 'MainController',
 			templateUrl: 'registerCustomer.html'
 		})
-		.when('/admin', {
+	.when('/admin', {
 			controller: 'MainController',
 			templateUrl: 'AdminPanel.html'
 		})
+	.when('/BranchMgr', {
+			controller: 'MainController',
+			templateUrl: 'BranchMgr.html'
+		})	
 	.otherwise({redirectTo:'/'})
 })
 
