@@ -10,7 +10,7 @@ function mainController($scope,$http,$cookieStore,$location){
 	
 	
 	
-	$scope.login=function(){
+	$scope.loginAdmin=function(){
 		$http({
 			method : 'PUT',
 			url :'http://10.20.14.83:9000/admin/login',
@@ -102,6 +102,10 @@ inbapp.config(function($routeProvider){
 	.when('/register', {
 			controller: 'MainController',
 			templateUrl: 'registerCustomer.html'
+		})
+		.when('/admin', {
+			controller: 'MainController',
+			templateUrl: 'AdminPanel.html'
 		})
 	.otherwise({redirectTo:'/'})
 })
