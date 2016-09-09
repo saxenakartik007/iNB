@@ -95,6 +95,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 						}
 						else{
 							$cookieStore.put('role','branchmanager');
+							$cookieStore.put('username',$scope.uname);
 							$cookieStore.put('branchmanagertoken',response.data.id)
 							$location.path('/manager');
 						}
