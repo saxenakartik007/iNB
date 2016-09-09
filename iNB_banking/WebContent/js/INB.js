@@ -11,7 +11,7 @@ function mainController($scope,$http,$cookieStore,$location){
 		var url='http://10.20.14.83:9000/branch';
 		$http.get(url).success(function(data,status){
 			$scope.branchDetails= data;	
-		})
+		});
 	}
 	//getallbranches
 	$scope.getAllBranches();
@@ -24,8 +24,40 @@ function mainController($scope,$http,$cookieStore,$location){
 		$location.path("/addBranch");
 	}
 	
+	$scope.addNewBranch=function(){
+		var ifsc=$scope.bifsc;
+		var name=$scope.bname;
+		var add=$scope.badd;
+		var contact=$scope.contact;
 	
-	//login admin starts
+		$http({
+					method : 'POST',
+					url : 'http://10.20.14.83:9000/branch',
+
+					headers : {
+						'Content-Type' : 'application/json',
+						'Access-Control-Allow-Origin': 'http:///10.20.14.83:9000'
+					},
+					data : {				
+						ifscCode: ifsc,
+						branchName: name,
+						address: add,
+						contact: contact
+					}
+				}).then(function successCallback(response) {
+					var data = response.data;
+					console.log(data);
+					alert("Branch Created");
+					$location.path('/admin');
+				}, function errorCallback(response) {
+					alert("An Error Occoured");
+					
+				});
+
+		
+		
+		
+	}
 	$scope.loginAdmin=function(){
 		if($scope.aname!=null && $scope.apassword!=null){
 		$http({
@@ -128,12 +160,12 @@ function mainController($scope,$http,$cookieStore,$location){
 	//register user ends
 	
 	//user registration status starts
-	$scope.approve=function(status){
+/*	$scope.approve=function(status){
 		if(status==1)
 			alert("approved");
 		else
 			alert("rejectd");
-	}
+	}*/
 	//user registration status starts
 	
 	//getUnregisterdUsers starts
