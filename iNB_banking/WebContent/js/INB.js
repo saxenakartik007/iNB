@@ -5,14 +5,23 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
 	$scope.loginAlertMessage = true;
-	$scope.adminview=false;
+	
+	$scope.adminbranch=true;
+	$scope.adminnewbranch=false;
+	$scope.adminmanager=false;
+	$scope.adminaddmanager=false;
 	$scope.adminheading='Branch List';
 	
 	//getallbranches
 	$scope.getAllBranches=function(){
 		$scope.adminheading='Branch List';
-		 $scope.adminview=false;
-		$scope.adminview=true;
+		
+		
+		$scope.adminbranch=true;
+		$scope.adminnewbranch=false;
+		$scope.adminmanager=false;
+		$scope.adminaddmanager=false;
+
 		var url='http://10.20.14.83:9000/branch';
 		$http.get(url).success(function(data,status){
 			$scope.branchDetails= data;	
@@ -23,7 +32,12 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	//getbranchmanager
 	$scope.getBranchManagers=function(){
 		$scope.adminheading='Branch Managers List';
-		 $scope.adminview=true;
+		 
+			
+			$scope.adminbranch=false;
+			$scope.adminnewbranch=false;
+			$scope.adminmanager=true;
+			$scope.adminaddmanager=false;
 
 		$scope.adminview=false;
 		var url='http://10.20.14.83:9000/branchmanager';
@@ -37,7 +51,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.getAllBranches();
 
 	//callbranchmanager
-	$scope.getBranchManagers();
+	//$scope.getBranchManagers();
 
 	
 	
@@ -52,7 +66,12 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	}
 	
 	$scope.createBranchMgr = function(){
-		$location.path("/BranchMgr");
+		//$location.path("/BranchMgr");
+		$scope.adminheading='Add New Branch Manager';
+		$scope.adminbranch=false;
+		$scope.adminnewbranch=false;
+		$scope.adminmanager=false;
+		$scope.adminaddmanager=true;
 	}
 	
 	//go to register page
@@ -61,8 +80,13 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	}
 	
 	//gotocreateBranch
-	$scope.gotocreateBranch=function(){
-		$location.path("/addBranch");
+	$scope.createBranch=function(){
+		//$location.path("/addBranch");
+		$scope.adminheading='Add New Branch';
+		$scope.adminbranch=false;
+		$scope.adminnewbranch=true;
+		$scope.adminmanager=false;
+		
 	}
 	
 
@@ -103,7 +127,10 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 					"branchPOJO": branchitem
 				}
 			}).then(function successCallback(response) {
-				$scope.mgrerrormsg="Added Branch Manager successfully"
+				
+				$scope.getBranchManagers();
+				mymessage("Branch Manager Added successfully");	
+				
 					
 			},function successCallback(response){
 				$scope.mgrerrormsg="Error in Adding Branch Manager";
@@ -181,6 +208,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 				}).then(function successCallback(response) {
 					if(response.data['Exception ']=='BranchAlreadyExistException'){
 						console.log(response.data);
+						$scope.getAllBranches();
 						mymessage("Branch Already Exists");	
 					}
 					else{
@@ -355,7 +383,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 		$scope.mycustomMessage=x;
 		  $scope.loginAlertMessage=false; 
 	         $timeout(function () { $scope.loginAlertMessage = true;
-	         $location.path('/admin'); }, 3000);   
+	          }, 3000);   
 		
 	}
 	
