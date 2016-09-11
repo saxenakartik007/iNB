@@ -161,10 +161,8 @@
 				</select>
 				<p class="text-danger" ng-show="Mgrform.mgrbranch.$touched && Mgrform.mgrbranch.$invalid">Branch is required!</p>
 				<br>
-				<div class="alert alert-danger">
-				{{ mgrerrormsg }}
-				</div>
-				<input style="float: right;" type="button"   class="btn medium inverse" value="ADD Branch Manager" ng-click="addbranchmgr()">
+			
+				<input style="float: right;" type="button"  ng-disabled="Mgrform.$invalid" class="btn medium inverse" value="ADD Branch Manager" ng-click="addbranchmgr()">
 			</form>
 		
 				</div>

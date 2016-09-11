@@ -133,12 +133,13 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 				
 					
 			},function successCallback(response){
-				$scope.mgrerrormsg="Error in Adding Branch Manager";
-			});
+				mymessage("Error in Adding Branch Manager");	
+							});
 			}
 			else
-				$scope.mgrerrormsg="Passwords do not  match";
-	}
+				mymessage("Passwords do not  match");	
+			
+					}
 	
 	//add new account
 	$scope.createAccount = function(){
