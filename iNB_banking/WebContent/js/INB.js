@@ -183,6 +183,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 			}
 		}).then(function successCallback(response) {
 			$scope.usererrormsg="Registered Details.wait for confirmation";
+			console.log(response);
 				
 		},function successCallback(response){
 			$scope.mgrerrormsg="Error in adding account";
@@ -254,15 +255,18 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 					}).then(function successCallback(response) {
 						if(response.data["Exception"]!=null){
 							$scope.loginformalert=response.data["Exception"];
+							console.log(response);
 						}
 						else{
 							if($scope.role=='branch_manager'){
+								console.log(response);
 								$cookieStore.put('role','branchmanager');
 								$cookieStore.put('username',$scope.uname);
 								$cookieStore.put('branchmanagertoken',response.data.id)
 								$location.path('/manager');
 							}
 							else{
+								console.log(response);
 								$cookieStore.put('role','user');
 								$cookieStore.put('username',$scope.uname);
 								$cookieStore.put('usertoken',response.data.id)
