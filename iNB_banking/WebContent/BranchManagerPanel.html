@@ -24,7 +24,7 @@
 	<div class="hoc clear">
 		<br>
 		<div class="fl_left" style="margin-right: 10px;" >
-			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getAllUnregisteredUsers">View Registered Applicants</button>
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getAllUnregisteredUsers()">View Registered Applicants</button>
 			<br>
 			<!-- <button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranch()">Add a Branch</button>
 			<br>
@@ -34,11 +34,30 @@
 			<br><br> -->
 		</div>
 		<div>
-		<h1 style="margin-left: 10%">{{adminheading}}</h1>
-	
+		<h1 style="margin-left: 10%">{{ Branchheading }}</h1>
+			<div ng-show="unregisterusers" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+				<table class="table" >
+					<thead>
+						<tr>
+							<th>Sr. No</th>
+							<th>Full Name</th>
+							<th>Application Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="user in UnregisteredUserDetails" >
+							<td>{{$index +1}}</td>
+							<td>{{ user.firstName+" "+ user.lastName}}</td>
+							<td>{{ user.applicationStatus }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
+
+
 
 
 
