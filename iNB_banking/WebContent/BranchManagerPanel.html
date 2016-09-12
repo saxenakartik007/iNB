@@ -42,6 +42,7 @@
 							<th>Sr. No</th>
 							<th>Full Name</th>
 							<th>Application Status</th>
+							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -49,6 +50,7 @@
 							<td>{{$index +1}}</td>
 							<td>{{ user.firstName+" "+ user.lastName}}</td>
 							<td>{{ user.applicationStatus }}</td>
+							<td><input type="button" class="btn medium inverse" value="Verify" ng-click="unregisteruserchange($index)"></td>
 						</tr>
 					</tbody>
 				</table>
