@@ -1,4 +1,16 @@
-var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
+var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']).directive('ngFiles', ['$parse', function ($parse) {
+
+    function fn_link(scope, element, attrs) {
+        var onChange = $parse(attrs.ngFiles);
+        element.on('change', function (event) {
+            onChange(scope, { $files: event.target.files });
+        });
+    };
+
+    return {
+        link: fn_link
+    }
+} ]);
 
 
 function mainController($scope,$http,$cookieStore,$location,$timeout){
@@ -53,6 +65,98 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	//callbranchmanager
 	//$scope.getBranchManagers();
 
+	
+	
+	
+	
+	
+	
+	
+//	 $scope.getTheFiles = function ($files) {
+//         angular.forEach($files, function (value, key) {
+//             formdata.append(key, value);
+//             console.log(formdata);
+//         });
+//     };
+
+     // NOW UPLOAD THE FILES.
+     $scope.uploadFiles = function () {
+
+    	 var formdata = new FormData();
+    	 var file1 = document.getElementById('file1').files[0];
+    	 var file2 = document.getElementById('file2').files[0];
+    	 //var myfile = $scope.file2;
+    	 console.log("file2: " +  file1);
+    	 console.log('usrmail '+$cookieStore.get('newusermail'));
+    	 formdata.append("addressProof", file1);
+    	 formdata.append("ageProof", file2);
+    	 formdata.append("email", $cookieStore.get('newusermail'));
+    	 //var myurl = 'http://10.20.14.83:9000/document?addressProof='+formdata.get("addressProof")+'&ageProof='+formdata.get("ageProof")+'&email=saxenakartik007@gmail.com';
+    	 //var myurl = 'http://10.20.14.83:9000/document?email=saxenakartik007@gmail.com';
+    	 if(file1==undefined||file1==null){
+    		 mymessage('Please Add Address Document');
+    	 }
+    	 else if(file2==undefined||file2==null){
+    		 mymessage('Please Add Age Document');
+    	 }
+    	 else{
+    	 var myurl = 'http://10.20.14.83:9000/document';
+         
+         var request = {
+                 method: 'POST',
+                 url: myurl,
+                 data:formdata,
+//                 transformRequest: function(data, headersGetterFunction) {
+//                     return data; // do nothing! FormData is very good!
+//                 },
+                 transformRequest: angular.identity,
+                 headers: {
+                     'Content-Type': undefined,
+                 	'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+                 }
+             };
+
+             // SEND THE FILES.
+             $http(request).then(function successCallback(response) {	
+			 console.log(response);
+			 bootbox.alert('Thankyou For connecting with us.We will get back to u shortly.')
+			 $location.path('/');
+			});
+			
+    	 }
+         
+         
+         
+     }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	bootbox.alert('Hello');
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//gotoadminpanel
@@ -409,6 +513,10 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 			}
 		}).then(function successCallback(response) {
 			$scope.aloginform="Registered successfully.Wait for confirmation"
+				console.log(response);
+			console.log(response.data.email)
+			$cookieStore.put('newusermail',$scope.email); 
+			$location.path('/updloaddocuments');
 				
 		},function successCallback(response){
 			console.log("Error in registration"+response.data);
@@ -462,6 +570,11 @@ inbapp.config(function($routeProvider){
 	.when('/manager', {
 			controller: 'MainController',
 			templateUrl: 'BranchManagerPanel.html'
+		})	
+		
+	.when('/updloaddocuments', {
+			controller: 'MainController',
+			templateUrl: 'uploaddocuments.html'
 		})	
 	.otherwise({redirectTo:'/'})
 }
