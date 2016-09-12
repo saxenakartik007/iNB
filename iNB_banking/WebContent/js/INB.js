@@ -317,11 +317,6 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	
 	
 	
-	
-	
-	
-	
-	
 	///adminlogout
 	
 	$scope.logoutAdmin=function(){
