@@ -65,6 +65,11 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 		$location.path("/login");
 	}
 	
+	//gotto home page
+	$scope.gotoHomePage=function(){
+		$location.path("/");
+	}
+	
 	$scope.createBranchMgr = function(){
 		//$location.path("/BranchMgr");
 		$scope.adminheading='Add New Branch Manager';
@@ -186,6 +191,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 		});
 	}
 
+	//add branch
 	$scope.addNewBranch=function(){
 		var ifsc=$scope.bifsc;
 		var name=$scope.bname;
@@ -420,6 +426,10 @@ inbapp.config(function($routeProvider){
 			controller: 'MainController',
 			templateUrl: 'AddBranch.html'
 		})
+	.when('/manager', {
+			controller: 'MainController',
+			templateUrl: 'AddBranch.html'
+		})	
 	.otherwise({redirectTo:'/'})
 }
 )

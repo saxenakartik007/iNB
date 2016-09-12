@@ -6,8 +6,8 @@
     </div>
     <div id="quickinfo" class="fl_right">
       <ul class="nospace inline">
-        <li><button type="button" class="btn medium inverse" ng-click="gotoHomePage()">DashBoard &raquo;</button></li>
-          <li><button type="button" class="btn medium inverse" ng-click="">Sign Out &raquo;</button></li>
+        <li><button type="button" class="btn medium inverse" ng-click="gotoHomePage()">Home &raquo;</button></li>
+          <li><button type="button" class="btn medium inverse" ng-click=""> &raquo;</button></li>
        
       </ul>
     </div>
@@ -30,33 +30,33 @@
 					<option value="Saving">Savings</option>
 					<option value="Current">Current</option>
 				</select>
-				<p class="text-danger" ng-show="userform.userbranch.$touched && userform.userbranch.$invalid">Branch is required!</p>
+				<p style="font-size: .5em" class="text-danger" ng-show="userform.userbranch.$touched && userform.userbranch.$invalid">Branch is required!</p>
 				<br>
 				<input type="text" class="form-control" ng-model="userfname"  name="userfname" placeholder="Enter First Name" required>
-				<p class="text-danger" ng-show="userform.userfname.$touched && userform.userfname.$invalid">First Name is required!</p>
+				<p style="font-size: .5em" class="text-danger" ng-show="userform.userfname.$touched && userform.userfname.$invalid">First Name is required!</p>
 				<br>
 				<input type="text" class="form-control" ng-model="userlname"  name="userlname" placeholder="Enter Last Name" required>
-				<p class="text-danger" ng-show="userform.userlname.$touched && userform.userlname.$invalid">Last Name is required!</p>
+				<p style="font-size: .5em" class="text-danger" ng-show="userform.userlname.$touched && userform.userlname.$invalid">Last Name is required!</p>
 				<br>
 				<input type="email" class="form-control" ng-model="useremail"  name="useremail" placeholder="Enter Email" required>
-				<p class="text-danger" ng-show="userform.useremail.$touched && userform.useremail.$invalid">Email is required!</p>
+				<p  style="font-size: .5em"class="text-danger" ng-show="userform.useremail.$touched && userform.useremail.$invalid">Email is required!</p>
 				<br>
 				<input type="text" class="form-control" ng-model="userphone"  name="userphone" placeholder="Enter Phone number" required>
-				<p class="text-danger" ng-show="userform.userphone.$touched && userform.userphone.$invalid">Phone number is required!</p>
+				<p style="font-size: .5em" class="text-danger" ng-show="userform.userphone.$touched && userform.userphone.$invalid">Phone number is required!</p>
 				<br>
 				<input type="text" class="form-control" ng-model="useraddress"  name="useraddress" placeholder="Enter Address" required>
-				<p class="text-danger" ng-show="userform.useraddress.$touched && userform.useraddress.$invalid">Address is required!</p>
+				<p style="font-size: .5em" class="text-danger" ng-show="userform.useraddress.$touched && userform.useraddress.$invalid">Address is required!</p>
 				<br>
 				<input type="date" class="form-control" ng-model="userdate"  name="userdate" placeholder="Enter Date of Birth" required>
-				<p class="text-danger" ng-show="userform.userdate.$touched && userform.userdate.$invalid">Date of birth is required!</p>
+				<p style="font-size: .5em" class="text-danger" ng-show="userform.userdate.$touched && userform.userdate.$invalid">Date of birth is required!</p>
 				<br>
 				<select class="form-control" ng-model="userbranch" name="userbranch" required>
 					<option value="" disabled selected hidden>Select Branch</option>
 					<option ng-repeat="i in branchDetails">{{ i.branchName }}</option>
 				</select>
-				<p class="text-danger" ng-show="userform.userbranch.$touched && userform.userbranch.$invalid">Branch is required!</p>
+				<p style="font-size: .5em" class="text-danger" ng-show="userform.userbranch.$touched && userform.userbranch.$invalid">Branch is required!</p>
 				<br>
-				<div class="alert alert-danger">
+				<div style="font-size: .5em" class="alert alert-danger">
 				{{ usererrormsg }}
 				</div>
 				<input style="float: right;" type="button"   class="btn medium inverse" value="Create Account" ng-click="createAccount()">
