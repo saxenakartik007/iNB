@@ -20,7 +20,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	$scope.getAllUnregisteredUsers=function(){
 		$scope.unregisterusers = true;
 		$scope.Branchheading='Unregistered Users';
-
+		
 		var url='http://10.20.14.83:9000/unregistereduser/details';
 		$http.get(url).success(function(data,status){
 			$scope.UnregisteredUserDetails= data;	
@@ -37,8 +37,6 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	//getallbranches
 	$scope.getAllBranches=function(){
 		$scope.adminheading='Branch List';
-		
-		
 		$scope.adminbranch=true;
 		$scope.adminnewbranch=false;
 		$scope.adminmanager=false;
@@ -54,9 +52,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	//getbranchmanager
 	$scope.getBranchManagers=function(){
 		$scope.adminheading='Branch Managers List';
-		 
-			
-			$scope.adminbranch=false;
+		 $scope.adminbranch=false;
 			$scope.adminnewbranch=false;
 			$scope.adminmanager=true;
 			$scope.adminaddmanager=false;

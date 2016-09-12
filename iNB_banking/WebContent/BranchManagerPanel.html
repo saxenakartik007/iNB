@@ -26,9 +26,9 @@
 		<div class="fl_left" style="margin-right: 10px;" >
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getAllUnregisteredUsers()">View Registered Applicants</button>
 			<br>
-			<!-- <button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranch()">Add a Branch</button>
+			 <button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranch()">Add a Branch</button>
 			<br>
-			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getBranchManagers()">View Managers</button>
+			<!--<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getBranchManagers()">View Managers</button>
 			<br>
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranchMgr()">Add Manager</button>
 			<br><br> -->
@@ -42,7 +42,6 @@
 							<th>Sr. No</th>
 							<th>Full Name</th>
 							<th>Application Status</th>
-							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -50,7 +49,6 @@
 							<td>{{$index +1}}</td>
 							<td>{{ user.firstName+" "+ user.lastName}}</td>
 							<td>{{ user.applicationStatus }}</td>
-							<td><input type="button" class="btn medium inverse" value="Verify" ng-click="unregisteruserchange($index)"></td>
 						</tr>
 					</tbody>
 				</table>
