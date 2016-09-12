@@ -349,7 +349,36 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	};
 	//admin logout ends
 	
-	
+	//branch manager logout
+
+	$scope.logoutManager=function(){
+		$http({
+			method : 'PUT',
+			url :'http://10.20.14.83:9000/branchmanager/logout',
+			headers : {
+				'Content-Type' : 'application/json',
+				'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+			},
+			data : {				
+				role: $cookieStore.get('role'),
+				id: $cookieStore.get('branchmanagertoken') 
+			}
+		}).then(function successCallback(response) {
+			console.log(response.data);
+			if(response.data.error!=null){
+				console.log(response.data);
+			console.log("An error occoured");
+			}
+			else{
+				$cookieStore.remove('role');
+				$cookieStore.remove('branchmanagertoken')
+				$location.path('/');
+		
+			}
+				
+		});
+	};
+	//branch manager logout ends
 	
 	
 	
@@ -428,7 +457,7 @@ inbapp.config(function($routeProvider){
 		})
 	.when('/manager', {
 			controller: 'MainController',
-			templateUrl: 'AddBranch.html'
+			templateUrl: 'BranchManagerPanel.html'
 		})	
 	.otherwise({redirectTo:'/'})
 }
