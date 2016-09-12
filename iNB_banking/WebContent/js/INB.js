@@ -6,16 +6,15 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.branchManagerDetails;
 	$scope.UnregisteredUserDetails;
 	$scope.loginAlertMessage = true;
-	
 	$scope.adminbranch=true;
 	$scope.adminnewbranch=false;
 	$scope.adminmanager=false;
 	$scope.adminaddmanager=false;
 	$scope.unregisterusers = true;
 	$scope.adminheading='Branch List';
-	
 	$scope.Branchheading='Unregistered Users';
-	
+	$scope.branchmanagername=$cookieStore.get('username');
+	console.log("Initially"+$scope.branchmanagername);
 	//getAllUnregisteredUsers
 	$scope.getAllUnregisteredUsers=function(){
 		$scope.unregisterusers = true;
@@ -280,7 +279,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 								console.log(response);
 								$cookieStore.put('role','branchmanager');
 								$cookieStore.put('username',$scope.uname);
-								$cookieStore.put('branchmanagertoken',response.data.id)
+								$cookieStore.put('branchmanagertoken',response.data.id);
+								console.log("inside function"+$scope.branchmanagername);
 								$location.path('/manager');
 							}
 							else{
@@ -317,7 +317,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 			}
 		}).then(function successCallback(response) {
 			if(response.data.error!=null){
-				$scope.aloginformalert="Username and password do not match";
+				$scope.aloginformalert="Invalid credentials";
 			}
 			else{
 				$cookieStore.put('role','admin');
@@ -357,7 +357,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 			}
 			else{
 				$cookieStore.remove('role');
-				$cookieStore.remove('admintoken')
+				$cookieStore.remove('admintoken');
 				$location.path('/');
 		
 			}
@@ -388,7 +388,9 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 			}
 			else{
 				$cookieStore.remove('role');
-				$cookieStore.remove('branchmanagertoken')
+				$cookieStore.remove('branchmanagertoken');
+				$cookieStore.remove('branchmanagertoken');
+				$cookieStore.remove('username');
 				$location.path('/');
 		
 			}
@@ -437,7 +439,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 		  $scope.loginAlertMessage=false; 
 	         $timeout(function () { $scope.loginAlertMessage = true;
 	          }, 3000);   
-		
+		 
 	}
 	
 
@@ -476,6 +478,7 @@ inbapp.config(function($routeProvider){
 			controller: 'MainController',
 			templateUrl: 'BranchManagerPanel.html'
 		})	
+		
 	.otherwise({redirectTo:'/'})
 }
 )
