@@ -4,13 +4,31 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
+	$scope.UnregisteredUserDetails;
 	$scope.loginAlertMessage = true;
 	
 	$scope.adminbranch=true;
 	$scope.adminnewbranch=false;
 	$scope.adminmanager=false;
 	$scope.adminaddmanager=false;
+	$scope.unregisterusers = true;
 	$scope.adminheading='Branch List';
+	
+	$scope.Branchheading='Unregistered Users';
+	
+	//getAllUnregisteredUsers
+	$scope.getAllUnregisteredUsers=function(){
+		$scope.unregisterusers = true;
+		$scope.Branchheading='Unregistered Users';
+
+		var url='http://10.20.14.83:9000/unregistereduser/details';
+		$http.get(url).success(function(data,status){
+			$scope.UnregisteredUserDetails= data;	
+		});
+	}
+	//getAllUnregisteredUsers
+	$scope.getAllUnregisteredUsers();
+	
 	
 	//getallbranches
 	$scope.getAllBranches=function(){
