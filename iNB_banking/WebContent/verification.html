@@ -1,3 +1,4 @@
+<div ng-controller="MainController">
 <div class="wrapper row2">
   <header id="header" class="hoc clear"> 
     <div id="logo" class="one_third first">
@@ -73,14 +74,16 @@
 		<div style='width : 60%;height: 37%px ;'>
 		<a href="images/img1.jpg"><img ng-src="images/img1.jpg" /></a>
 		</div>		
-		<input type="button" class="btn medium inverse" value="Back" ng-click="$window.history.back()">
-		<input type="button" class="btn medium inverse" value="Approve" ng-click="verifyuser(1)">
-		<input type="button" class="btn medium inverse" value="Disapprove" ng-click="verifyuser(0)">
+
+		<br>
+		<td><input type="button" class="btn medium inverse" value="Back" ng-click="backButton()"></td>
+		<input type="button" class="btn medium inverse" value="Approve" ng-click="verifyUser(1,item)"></td>
+		<input type="button" class="btn medium inverse" value="Disapprove" ng-click="verifyUser(0,item)"></td>
+
 	</div>
 </div>
 
 
-    
 
 
 

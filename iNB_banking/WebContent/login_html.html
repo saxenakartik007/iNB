@@ -25,7 +25,7 @@
     text-align: center;
     margin: 5%;
 ">
-<h1>Login as User   </h1>
+<h1>Login as User/Branch Manager  </h1>
 <form name="loginform" novalidate>
 	<input type="text" class="form-control" ng-model="uname"  name="uname" placeholder="Enter username" required>
 	<p id="uval" class="text-danger" ng-show="loginform.uname.$touched && loginform.uname.$invalid">User name is required!</p>
@@ -45,23 +45,13 @@
 		<option value="user">User</option>
 		</select>
 		<p id="pval" class="text-danger" ng-show="loginform.role.$touched && loginform.role.$invalid">Role is required!</p>	
-	<br>
-	<br>
-<br>
+
 	<div class="text-danger"  >
 	<p ng-model="loginformalert">{{loginformalert}}</p>	
 	</div>
 	<input style="float: right;" type="button" value="Login" ng-click="loginAction()">
 </form>
 </div>
-
-
-
-
-
-
-
-
 
 
 

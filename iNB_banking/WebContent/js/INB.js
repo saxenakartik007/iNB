@@ -1,22 +1,21 @@
 var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 
 
-function mainController($scope,$rootScope,$http,$cookieStore,$location,$timeout){
+function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
 	$scope.UnregisteredUserDetails= [];
 	$scope.item;
 	$scope.loginAlertMessage = true;
-	
 	$scope.adminbranch=true;
 	$scope.adminnewbranch=false;
 	$scope.adminmanager=false;
 	$scope.adminaddmanager=false;
 	$scope.unregisterusers = true;
 	$scope.adminheading='Branch List';
-	
 	$scope.Branchheading='Unregistered Users';
-	
+	$scope.branchmanagername=$cookieStore.get('username');
+	console.log("Initially"+$scope.branchmanagername);
 	//getAllUnregisteredUsers
 	$scope.getAllUnregisteredUsers=function(){
 		$scope.unregisterusers = true;
@@ -100,6 +99,46 @@ function mainController($scope,$rootScope,$http,$cookieStore,$location,$timeout)
 	//gotto home page
 	$scope.gotoHomePage=function(){
 		$location.path("/");
+	}
+	
+	//go to backpage
+	$scope.backButton=function(){
+		$window.history.back();
+	}
+	
+	//approve or disapprove
+	$scope.verifyUser=function(state,user){
+		if(state==1){
+			var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/verify';
+			$http({
+				method : 'PUT',
+				url :url,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+				}
+			}).then(function successCallBack(response){
+				mymessage("Email Sent");
+				$location.path('/manager');
+			},function errorCallBack(response){
+				alert("Some error occured");
+			})
+		}
+		else{
+			var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/reject';
+			$http({
+				method : 'PUT',
+				url :url,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+				}
+			}).then(function successCallBack(response){
+				$location.path('/manager');
+			},function errorCallBack(response){
+				alert("Some error occured");
+			})
+		}
 	}
 	
 	$scope.createBranchMgr = function(){
@@ -296,6 +335,8 @@ function mainController($scope,$rootScope,$http,$cookieStore,$location,$timeout)
 								$cookieStore.put('username',$scope.uname);
 								$cookieStore.put('bmbranch',$scope.branch);
 								$cookieStore.put('branchmanagertoken',response.data.id)
+								$cookieStore.put('branchmanagertoken',response.data.id);
+								console.log("inside function"+$scope.branchmanagername);
 								$location.path('/manager');
 							}
 							else{
@@ -350,11 +391,6 @@ function mainController($scope,$rootScope,$http,$cookieStore,$location,$timeout)
 	
 	
 	
-	
-	
-	
-	
-	
 	///adminlogout
 	
 	$scope.logoutAdmin=function(){
@@ -377,7 +413,7 @@ function mainController($scope,$rootScope,$http,$cookieStore,$location,$timeout)
 			}
 			else{
 				$cookieStore.remove('role');
-				$cookieStore.remove('admintoken')
+				$cookieStore.remove('admintoken');
 				$location.path('/');
 		
 			}
@@ -408,7 +444,9 @@ function mainController($scope,$rootScope,$http,$cookieStore,$location,$timeout)
 			}
 			else{
 				$cookieStore.remove('role');
-				$cookieStore.remove('branchmanagertoken')
+				$cookieStore.remove('branchmanagertoken');
+				$cookieStore.remove('branchmanagertoken');
+				$cookieStore.remove('username');
 				$location.path('/');
 		
 			}
@@ -457,7 +495,7 @@ function mainController($scope,$rootScope,$http,$cookieStore,$location,$timeout)
 		  $scope.loginAlertMessage=false; 
 	         $timeout(function () { $scope.loginAlertMessage = true;
 	          }, 3000);   
-		
+		 
 	}
 	
 
@@ -520,7 +558,7 @@ inbapp.config(function($routeProvider){
 			},
 			templateUrl: 'verification.html'
 		})	
-	.otherwise({redirectTo:'/'})
+		.otherwise({redirectTo:'/'})
 }
 )
 
