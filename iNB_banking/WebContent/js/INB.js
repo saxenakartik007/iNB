@@ -41,10 +41,9 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 		$scope.adminnewbranch=false;
 		$scope.adminmanager=false;
 		$scope.adminaddmanager=false;
-
 		var url='http://10.20.14.83:9000/branch';
 		$http.get(url).success(function(data,status){
-			$scope.branchDetails= data;	
+			$scope.branchDetails= data;
 		});
 	}
 	//getallbranches
@@ -52,13 +51,12 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	//getbranchmanager
 	$scope.getBranchManagers=function(){
 		$scope.adminheading='Branch Managers List';
-		 $scope.adminbranch=false;
-			$scope.adminnewbranch=false;
-			$scope.adminmanager=true;
-			$scope.adminaddmanager=false;
-
+		$scope.adminbranch=false;
+		$scope.adminnewbranch=false;
+		$scope.adminmanager=true;
+		$scope.adminaddmanager=false;
 		$scope.adminview=false;
-		var url='http://10.20.14.83:9000/branchmanager';
+		var url='http://10.20.14.83:9000/branchmanager/';
 		$http.get(url).success(function(data,status){
 			$scope.branchManagerDetails= data;	
 		});
@@ -69,8 +67,12 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	$scope.getAllBranches();
 
 	//callbranchmanager
-	//$scope.getBranchManagers();
-
+	$scope.getBranchManagers();
+	
+	
+	$scope.gotoNext=function(){
+		
+	}
 	
 	
 	//gotoadminpanel
@@ -486,8 +488,18 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 
 }
 
+
 inbapp.controller('MainController',mainController);
 
+inbapp.directive('ngPage', function() {
+	return {
+		restrict: 'E',//E = element, A = attribute, C = class, M = comment
+		templateUrl: 'Pagination.html',
+		link: function(scope, iElement, iAttrs) {
+		   //nothing
+		}
+	}
+});
 inbapp.config(function($routeProvider){
 	$routeProvider
 	.when('/',{

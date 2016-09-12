@@ -1,23 +1,17 @@
 <div class="wrapper row2">
-  <header id="header" class="hoc clear"> 
-    <div id="logo" class="one_third first">
-      <h1>iNB</h1>
-   
-    </div>
-    <div id="logo" class="one_third">
-      
-      <h1>Admin Panel</h1>
-   
-    </div>
-    <div id="quickinfo" class="fl_right">
-      <ul class="nospace inline">
-          
-       
-          <li><button type="button" class="btn medium inverse" ng-click="logoutAdmin()">Sign Out &raquo;</button></li>
-       
-      </ul>
-    </div>
-  </header>
+	<header id="header" class="hoc clear"> 
+	  <div id="logo" class="one_third first">
+	    <h1>iNB</h1>
+	  </div>
+	  <div id="logo" class="one_third">
+	  	<h1>Admin Panel</h1>
+	  </div>
+	  <div id="quickinfo" class="fl_right">
+	  	<ul class="nospace inline">
+	    	<li><button type="button" class="btn medium inverse" ng-click="logoutAdmin()">Sign Out &raquo;</button></li>
+	 	</ul>
+	  </div>
+	</header>
 </div>
 
 <div class="wrapper row3" style="height: 100%">
@@ -31,42 +25,47 @@
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getBranchManagers()">View Managers</button>
 			<br>
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranchMgr()">Add Manager</button>
-			<br><br>
+			<br>
+			<br>
 		</div>
-		<div>
-		<h1 style="margin-left: 10%">{{adminheading}}</h1>
+	<div>
 	
-				<div ng-show="adminbranch" class="table-responsive" style='overflow: auto;  height: 370px ;'>
-					  <table class="table" >
-					    <thead>
-					      <tr>
-					        <th>Sr.No.</th>
-					        <th>Branch Name</th>
-					        <th>Address</th>
-					        <th>IFSC Code</th>
-					        <th>Contact</th>
-					      </tr>
-					    </thead>
-					    <tbody>
-					      <tr ng-repeat="branch in branchDetails" >
-					        <td>{{$index +1}}</td>
-					        <td>{{ branch.branchName }}</td>
-					        <td>{{ branch.address }}</td>
-					        <td>{{ branch.ifscCode }}</td>
-					        <td>{{ branch.contact }}</td>
-					      </tr>
-					    </tbody>
-					  </table>
-			  	</div>
+	<h1 style="margin-left: 10%">{{adminheading}}</h1>
 
-
-
-<div>
+	<div ng-show="adminbranch" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+						  <table class="table" >
+						    <thead>
+						      <tr>
+						        <th>Sr.No.</th>
+						        <th>Branch Name</th>
+						        <th>Address</th>
+						        <th>IFSC Code</th>
+						        <th>Contact</th>
+						      </tr>
+						    </thead>
+						    <tbody>
+						      <tr ng-repeat="branch in branchDetails" >
+						        <td>{{$index +1}}</td>
+						        <td>{{ branch.branchName }}</td>
+						        <td>{{ branch.address }}</td>
+						        <td>{{ branch.ifscCode }}</td>
+						        <td>{{ branch.contact }}</td>
+						      </tr>
+						    </tbody>
+						  </table>
+						  <div class="fl_right">
+				  		
+				  	</div>
+						  
+	</div>
+				  	
 		
-	
-				<div ng-show="adminnewbranch" class="table-responsive" style='overflow: auto;  height: 370px ;'>
-					 
-<form name="AddBranchForm"  style="margin-bottom: 20px;">
+	<div>
+			
+		
+					<div ng-show="adminnewbranch" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+						 
+	<form name="AddBranchForm"  style="margin-bottom: 20px;">
 	<input type="text" class="form-control" ng-model="bifsc"  name="bifsc" placeholder="Enter IFSC code" required>
 	<p style="font-size: .5em" id="bifscval" class="text-danger" ng-show="AddBranchForm.bifsc.$touched && AddBranchForm.bifsc.$invalid">IFSC code is required!</p>
 	<br>
@@ -86,89 +85,86 @@
 	{{errormsg}}
 	</div>
 	<input style="float: right;" type="button" ng-disabled="AddBranchForm.$invalid"  class="btn medium inverse" value="ADD Branch" ng-click="addNewBranch()">
-</form>
-					 
-			  	</div>
+	</form>
+						 
+				  	</div>
+	
+	
+				  	
+				  	<div ng-show="adminmanager" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+	 <table class="table" >
+	   <thead>
+	     <tr>
+	       <th>Sr.</th>
+	       <th>Name</th>
+	       <th>UserName</th>
+	       <th>Branch</th>
+	       <th>Address</th>
+	       <th>Email</th>
+	       <th>Contact</th>
+	     </tr>
+	   </thead>
+	   <tbody>
+	     <tr ng-repeat="m in branchManagerDetails" >
+	       <td>{{$index +1}}</td>
+	       <td>{{ m.firstName+" "+m.lastName}}</td>
+	        <td>{{m.userName }}</td>
+	       <td>{{ m.branch.branchName }}</td>
+	       <td>{{m.address }}</td>
+	       <td>{{ m.email }}</td>
+	       <td>{{m.phone }}</td>
+	       
+	     </tr>
+	   </tbody>
+	 </table>
+	</div>
 
-
-			  	
-			  	<div ng-show="adminmanager" class="table-responsive" style='overflow: auto;  height: 370px ;'>
-					  <table class="table" >
-					    <thead>
-					      <tr>
-					        <th>Sr.</th>
-					        <th>Name</th>
-					        <th>UserName</th>
-					        <th>Branch</th>
-					        <th>Address</th>
-					        <th>Email</th>
-					        <th>Contact</th>
-					      </tr>
-					    </thead>
-					    <tbody>
-					      <tr ng-repeat="m in branchManagerDetails" >
-					        <td>{{$index +1}}</td>
-					        <td>{{ m.firstName+" "+m.lastName}}</td>
-					         <td>{{m.userName }}</td>
-					        <td>{{ m.branch.branchName }}</td>
-					        <td>{{m.address }}</td>
-					        <td>{{ m.email }}</td>
-					        <td>{{m.phone }}</td>
-					        
-					      </tr>
-					    </tbody>
-					  </table>
-			  	</div>
-			  	
-			  	
-			  	
-			  	
-			  	
-			  	<div ng-show="adminaddmanager" class="table-responsive" style='overflow: auto;  height: 370px ;'>
-				
-				
-			<form name="Mgrform" novalidate style="margin-bottom: 20px;">
-				<input type="text" class="form-control" ng-model="mgrfname"  name="mgrfname" placeholder="Enter First Name" required>
-				<p class="text-danger" ng-show="Mgrform.mgrfname.$touched && Mgrform.mgrfname.$invalid">First Name is required!</p>
-				<br>
-				<input type="text" class="form-control" ng-model="mgrlname"  name="mgrlname" placeholder="Enter Last Name" required>
-				<p class="text-danger" ng-show="Mgrform.mgrlname.$touched && Mgrform.mgrlname.$invalid">Last Name is required!</p>
-				<br>
-				<input type="text" class="form-control" ng-model="mgruname"  name="mgruname" placeholder="Enter User Name" required>
-				<p class="text-danger" ng-show="Mgrform.mgruname.$touched && Mgrform.mgruname.$invalid">User Name is required!</p>
-				<br>
-				<input type="password" class="form-control" ng-model="mgrpsw1"  name="mgrpsw1" placeholder="Enter Password" required>
-				<p class="text-danger" ng-show="Mgrform.mgrpsw1.$touched && Mgrform.mgrpsw1.$invalid">Password is required!</p>
-				<br>
-				<input type="password" class="form-control" ng-model="mgrpsw2"  name="mgrpsw2" placeholder="Confirm Password" required>
-				<p class="text-danger" ng-show="Mgrform.mgrpsw2.$touched && Mgrform.mgrpsw2.$invalid">Password is required!</p>
-				<br>
-				<input type="email" class="form-control" ng-model="mgremail"  name="mgremail" placeholder="Enter Email" required>
-				<p class="text-danger" ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$invalid">Email is required!</p>
-				<br>
-				<input type="text" class="form-control" ng-model="mgrphone"  name="mgrphone" placeholder="Enter Phone number" required>
-				<p class="text-danger" ng-show="Mgrform.mgrphone.$touched && Mgrform.mgrphone.$invalid">Phone number is required!</p>
-				<br>
-				<input type="text" class="form-control" ng-model="mgraddress"  name="mgraddress" placeholder="Enter Address" required>
-				<p class="text-danger" ng-show="Mgrform.mgraddress.$touched && Mgrform.mgraddress.$invalid">Address is required!</p>
-				<br>
-				<input type="date" class="form-control" ng-model="mgrdate"  name="mgrdate" placeholder="Enter Date" required>
-				<p class="text-danger" ng-show="Mgrform.mgrdate.$touched && Mgrform.mgrdate.$invalid">Date is required!</p>
-				<br>
-				<select class="form-control" ng-model="mgrbranch" name="mgrbranch" required>
-					<option value="" disabled selected hidden>Select Branch</option>
-					<option ng-repeat="i in branchDetails">{{ i.branchName }}</option>
-				</select>
-				<p class="text-danger" ng-show="Mgrform.mgrbranch.$touched && Mgrform.mgrbranch.$invalid">Branch is required!</p>
-				<br>
-			
-				<input style="float: right;" type="button"  ng-disabled="Mgrform.$invalid" class="btn medium inverse" value="ADD Branch Manager" ng-click="addbranchmgr()">
-			</form>
+	
+	<div ng-show="adminaddmanager" class="table-responsive" style='overflow: auto;  height: 370px ;'>
 		
+		
+	<form name="Mgrform" novalidate style="margin-bottom: 20px;">
+	<input type="text" class="form-control" ng-model="mgrfname"  name="mgrfname" placeholder="Enter First Name" required>
+	<p class="text-danger" ng-show="Mgrform.mgrfname.$touched && Mgrform.mgrfname.$invalid">First Name is required!</p>
+	<br>
+	<input type="text" class="form-control" ng-model="mgrlname"  name="mgrlname" placeholder="Enter Last Name" required>
+	<p class="text-danger" ng-show="Mgrform.mgrlname.$touched && Mgrform.mgrlname.$invalid">Last Name is required!</p>
+	<br>
+	<input type="text" class="form-control" ng-model="mgruname"  name="mgruname" placeholder="Enter User Name" required>
+	<p class="text-danger" ng-show="Mgrform.mgruname.$touched && Mgrform.mgruname.$invalid">User Name is required!</p>
+	<br>
+	<input type="password" class="form-control" ng-model="mgrpsw1"  name="mgrpsw1" placeholder="Enter Password" required>
+	<p class="text-danger" ng-show="Mgrform.mgrpsw1.$touched && Mgrform.mgrpsw1.$invalid">Password is required!</p>
+	<br>
+	<input type="password" class="form-control" ng-model="mgrpsw2"  name="mgrpsw2" placeholder="Confirm Password" required>
+	<p class="text-danger" ng-show="Mgrform.mgrpsw2.$touched && Mgrform.mgrpsw2.$invalid">Password is required!</p>
+	<br>
+	<input type="email" class="form-control" ng-model="mgremail"  name="mgremail" placeholder="Enter Email" required>
+	<p class="text-danger" ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$invalid">Email is required!</p>
+	<br>
+	<input type="text" class="form-control" ng-model="mgrphone"  name="mgrphone" placeholder="Enter Phone number" required>
+	<p class="text-danger" ng-show="Mgrform.mgrphone.$touched && Mgrform.mgrphone.$invalid">Phone number is required!</p>
+	<br>
+	<input type="text" class="form-control" ng-model="mgraddress"  name="mgraddress" placeholder="Enter Address" required>
+	<p class="text-danger" ng-show="Mgrform.mgraddress.$touched && Mgrform.mgraddress.$invalid">Address is required!</p>
+	<br>
+	<input type="date" class="form-control" ng-model="mgrdate"  name="mgrdate" placeholder="Enter Date" required>
+	<p class="text-danger" ng-show="Mgrform.mgrdate.$touched && Mgrform.mgrdate.$invalid">Date is required!</p>
+	<br>
+	<select class="form-control" ng-model="mgrbranch" name="mgrbranch" required>
+		<option value="" disabled selected hidden>Select Branch</option>
+		<option ng-repeat="i in branchDetails">{{ i.branchName }}</option>
+	</select>
+	<p class="text-danger" ng-show="Mgrform.mgrbranch.$touched && Mgrform.mgrbranch.$invalid">Branch is required!</p>
+	<br>
+	
+	<input style="float: right;" type="button"  ng-disabled="Mgrform.$invalid" class="btn medium inverse" value="ADD Branch Manager" ng-click="addbranchmgr()">
+				</form>
+			
+					</div>
+				  	
 				</div>
-			  	
 			</div>
-		</div>
 	</div>
 </div>
 
@@ -181,4 +177,3 @@
 
 
 
-	
