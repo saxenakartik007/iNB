@@ -4,7 +4,7 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 function mainController($scope,$rootScope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
-	$scope.UnregisteredUserDetails;
+	$scope.UnregisteredUserDetails= [];
 	$scope.item;
 	$scope.loginAlertMessage = true;
 	
@@ -24,7 +24,16 @@ function mainController($scope,$rootScope,$http,$cookieStore,$location,$timeout)
 
 		var url='http://10.20.14.83:9000/unregistereduser/details';
 		$http.get(url).success(function(data,status){
-			$scope.UnregisteredUserDetails= data;	
+			angular.forEach(data, function(value, key) {
+				var branch = $cookieStore.get('bmbranch');
+				if(value.branch.branchName == branch)
+				{
+					console.log(value.branch.branchName + "\n" + branch);
+					$scope.UnregisteredUserDetails.push(value);
+					console.log($scope.UnregisteredUserDetails);
+				}
+			});
+				
 		});
 	}
 	//getAllUnregisteredUsers
@@ -285,6 +294,7 @@ function mainController($scope,$rootScope,$http,$cookieStore,$location,$timeout)
 								console.log(response);
 								$cookieStore.put('role','branchmanager');
 								$cookieStore.put('username',$scope.uname);
+								$cookieStore.put('bmbranch',$scope.branch);
 								$cookieStore.put('branchmanagertoken',response.data.id)
 								$location.path('/manager');
 							}
@@ -489,11 +499,19 @@ inbapp.config(function($routeProvider){
 	.when('/verification/:i', {
 			controller: function($scope, $routeParams, $http,$cookieStore) 
 			{
-				var UnregisteredUserDetails;
+				var UnregisteredUserDetails = [];
 				var index = $routeParams.i;
 				var url='http://10.20.14.83:9000/unregistereduser/details';
 				$http.get(url).success(function(data,status){
-					UnregisteredUserDetails= data;
+					angular.forEach(data, function(value, key) {
+						var branch = $cookieStore.get('bmbranch');
+						if(value.branch.branchName == branch)
+						{
+							console.log(value.branch.branchName + "\n" + branch);
+							UnregisteredUserDetails.push(value);
+							console.log($scope.UnregisteredUserDetails);
+						}
+					});
 					$scope.item = UnregisteredUserDetails[index];
 					console.log(index+"\n"+UnregisteredUserDetails[index]+"\n"+$scope.item);
 				});
