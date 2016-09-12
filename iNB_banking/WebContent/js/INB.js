@@ -1,10 +1,11 @@
 var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 
 
-function mainController($scope,$http,$cookieStore,$location,$timeout){
+function mainController($scope,$rootScope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
 	$scope.UnregisteredUserDetails;
+	$scope.item;
 	$scope.loginAlertMessage = true;
 	
 	$scope.adminbranch=true;
@@ -29,6 +30,10 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	//getAllUnregisteredUsers
 	$scope.getAllUnregisteredUsers();
 	
+	$scope.unregisteruserchange = function(user_i){
+		console.log(user_i+"\n");
+		$location.path("/verification/"+user_i);
+	}
 	
 	//getallbranches
 	$scope.getAllBranches=function(){
@@ -317,7 +322,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 			}
 		}).then(function successCallback(response) {
 			if(response.data.error!=null){
-				$scope.aloginformalert="Username and password do not match";
+				$scope.aloginformalert="Invalid credentials";
 			}
 			else{
 				$cookieStore.put('role','admin');
@@ -328,7 +333,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 		});
 		}
 		else{
-			$scope.aloginformalert="Please enter credentials"
+			$scope.aloginformalert="Please enter credentials";
 		}
 	};
 	//login admin ends
@@ -480,6 +485,22 @@ inbapp.config(function($routeProvider){
 	.when('/manager', {
 			controller: 'MainController',
 			templateUrl: 'BranchManagerPanel.html'
+		})
+	.when('/verification/:i', {
+			controller: function($scope, $routeParams, $http,$cookieStore) 
+			{
+				var UnregisteredUserDetails;
+				var index = $routeParams.i;
+				var url='http://10.20.14.83:9000/unregistereduser/details';
+				$http.get(url).success(function(data,status){
+					UnregisteredUserDetails= data;
+					$scope.item = UnregisteredUserDetails[index];
+					console.log(index+"\n"+UnregisteredUserDetails[index]+"\n"+$scope.item);
+				});
+				
+				
+			},
+			templateUrl: 'verification.html'
 		})	
 	.otherwise({redirectTo:'/'})
 }
