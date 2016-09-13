@@ -42,8 +42,7 @@ function readURL(input,k) {
 }
 
 
-
-function mainController($scope,$http,$cookieStore,$location,$timeout){
+function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope){
 	
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
@@ -279,7 +278,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 				"branchPOJO": branchitem
 			}
 		}).then(function successCallback(response) {
-			mymessage("Registered Details.wait for confirmation");
+			bootbox.alert("Thankyou for Connecting with us. We will get back to you shortly");
 			console.log(response);
 			console.log(response);
 			console.log(response.data.email)
