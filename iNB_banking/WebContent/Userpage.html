@@ -24,7 +24,7 @@
 	<div class="hoc clear">
 		<br>
 		<div class="fl_left" style="margin-right: 10px;" >
-			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getMyDetails()">View my profile</button>
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="">View my profile</button>
 			<br>
 			 <button style="width: 100%;" type="button" class="btn medium inverse" ng-click="transferMoney()">Transfer Money</button>
 			<br>
@@ -38,7 +38,37 @@
 						<th>Details</th>
 					</tr>
 					<tr>
-						
+						<td>Customer Id</td>
+						<td>{{ userDetails.customerId }}</td>
+					</tr>
+					<tr>
+						<td>First Name</td>
+						<td>{{ userDetails.firstName }}</td>
+					</tr>
+					<tr>
+						<td>Last Name</td>
+						<td>{{ userDetails.lastName }}</td>
+					</tr>
+					<tr>
+						<td>Email Id</td>
+						<td>{{ userDetails.email }}</td>
+					</tr>
+					<tr>
+						<td>Date of Birth</td>
+						<td>{{ userDetails.dateOfBirth | date:"MM/dd/yyyy"}}</td>
+					</tr>
+					<tr>
+						<td>Address</td>
+						<td>{{ userDetails.address }}</td>
+					</tr>
+					<tr>
+						<td>Phone</td>
+						<td>{{ userDetails.phone }}</td>
+					</tr>
+					
+					<tr>
+						<td>Password</td>
+						<td>{{ userDetails.password }}</td>
 					</tr>
 				</table>
 			</div>

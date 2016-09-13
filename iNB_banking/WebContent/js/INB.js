@@ -4,6 +4,7 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
 function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$timeout){
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
+	$rootScope.userDetails;
 	$scope.UnregisteredUserDetails= [];
 	$scope.item;
 	$scope.loginAlertMessage = true;
@@ -78,12 +79,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 
 	//callbranchmanager
 	$scope.getBranchManagers();
-	
-	
-	$scope.gotoNext=function(){
-		
-	}
-	
+	 
 	
 	//gotoadminpanel
 	$scope.gotoAdminPanel=function(){
@@ -164,7 +160,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 		
 	}
 	
-
+	
 	$scope.addbranchmgr = function(){
 		var branchitem;
 		$scope.getAllBranches();
@@ -302,6 +298,16 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 
 	}
 	
+	//get user details
+	$scope.getUserDetails=function(id){
+		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
+		$http.get(url).success(function(data,status){
+			$rootScope.userDetails=data[0];
+		});
+		
+	}
+	
+	$scope.getUserDetails($cookieStore.get('usertoken'));
 	//loginAction find user or bm
 	$scope.loginAction=function(role){
 		if($scope.uname!=null && $scope.password!=null && $scope.branch!=null && $scope.role!=null){
@@ -339,7 +345,8 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 							else{
 								$cookieStore.put('role','user');
 								$cookieStore.put('username',response.data.firstName);
-								$cookieStore.put('usertoken',response.data.id)
+								$cookieStore.put('usertoken',response.data.id);
+								$scope.getUserDetails(response.data.id);
 								$location.path('/userpage');
 							}
 							
