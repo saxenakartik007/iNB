@@ -18,22 +18,13 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	$scope.Branchheading='Unregistered Users';
 	$scope.branchmanagername=$cookieStore.get('username');
 	$scope.username=$cookieStore.get('username');
-	console.log("Initially"+$scope.branchmanagername);
-	$scope.userdetails = true;
+	console.log("Initially "+$scope.branchmanagername);
+	$scope.accountdetails = false;
+	$scope.userdetails = false;
 	$scope.moneytransfer = false;
 	$scope.transfermoneyerror;
 	
 	
-	//money transfer tab call
-	$scope.transferMoney = function(){
-		$scope.userdetails = false;
-		$scope.moneytransfer = true;
-	}
-	
-	//money transfer function call
-	$scope.moneytransfer = function(){
-		
-	}
 	
 	
 	//getAllUnregisteredUsers
@@ -320,9 +311,10 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	
 	//get user details
 	$scope.getUserDetails=function(){
-		$scope.Userheading="My Details";
-		$scope.userdetails=true;
-		$scope.accountdetails=false;
+		$scope.Userheading = "My Details";
+		$scope.userdetails = true;
+		$scope.accountdetails = false;
+		$scope.moneytransfer = true;
 		var id=$cookieStore.get('usertoken');
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
@@ -336,8 +328,9 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	//get account summary
 	$scope.getAccountSummary=function(){
 		$scope.Userheading="Account Details";
-		$scope.userdetails=false;
-		$scope.accountdetails=true;
+		$scope.userdetails = false;
+		$scope.accountdetails = true;
+		$scope.moneytransfer = true;
 		var id=$cookieStore.get('usertoken');
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
@@ -345,6 +338,30 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 			
 		});
 	}
+	//get account summary ends
+	$scope.getAccountSummary();
+	
+	
+	//money transfer tab call
+	$scope.transferMoney = function(){
+		$scope.Userheading="Money Transfer";
+		$scope.accountdetails = false;
+		$scope.userdetails = false;
+		$scope.moneytransfer = false;
+		var id=$cookieStore.get('usertoken');
+		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
+		$http.get(url).success(function(data,status){
+			$scope.uaccount = data[0].accounthash[0].accountNumber;
+			
+		});
+	}
+	//money transfer tab call ends
+	
+	//money transfer function call
+	$scope.moneytransfer = function(){
+		
+	}
+	//money transfer function call ends
 	
 	//loginAction find user or bm
 	$scope.loginAction=function(role){
