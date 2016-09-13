@@ -15,6 +15,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	$scope.adminheading='Branch List';
 	$scope.Branchheading='Unregistered Users';
 	$scope.branchmanagername=$cookieStore.get('username');
+	$scope.username=$cookieStore.get('username');
 	console.log("Initially"+$scope.branchmanagername);
 	//getAllUnregisteredUsers
 	$scope.getAllUnregisteredUsers=function(){
@@ -334,7 +335,6 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 								$cookieStore.put('bmbranch',$scope.branch);
 								$cookieStore.put('branchmanagertoken',response.data.id)
 								$cookieStore.put('branchmanagertoken',response.data.id);
-								console.log("inside function"+$scope.branchmanagername);
 								$location.path('/manager');
 							}
 							else{
@@ -541,6 +541,10 @@ inbapp.config(function($routeProvider){
 	.when('/manager', {
 			controller: 'MainController',
 			templateUrl: 'BranchManagerPanel.html'
+		})
+	.when('/userpage', {
+			controller: 'MainController',
+			templateUrl: 'UserPage.html'
 		})
 	.when('/verification/:i', {
 			controller: function($scope, $routeParams, $http,$cookieStore) 

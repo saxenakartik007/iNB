@@ -1,0 +1,68 @@
+<div class="wrapper row2">
+  <header id="header" class="hoc clear"> 
+    <div id="logo" class="one_third first">
+      <h1>iNB</h1>
+   
+    </div>
+    <div id="logo" class="one_third">
+      
+      <h1>Welcome Mr.{{ username }}</h1>
+   
+    </div>
+    <div id="quickinfo" class="fl_right">
+      <ul class="nospace inline">
+          
+       
+          <li><button type="button" class="btn medium inverse" ng-click="">Sign Out &raquo;</button></li>
+       
+      </ul>
+    </div>
+  </header>
+</div>
+
+<div class="wrapper row3" style="height: 100%">
+	<div class="hoc clear">
+		<br>
+		<div class="fl_left" style="margin-right: 10px;" >
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getAllUnregisteredUsers()">View Registered Applicants</button>
+			<br>
+			 <button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranch()">Add a Branch</button>
+			<br>
+			<!--<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getBranchManagers()">View Managers</button>
+			<br>
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranchMgr()">Add Manager</button>
+			<br><br> -->
+		</div>
+		<div>
+		<h1 style="margin-left: 10%">{{ Branchheading }}</h1>
+			<div ng-show="unregisterusers" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+				<table class="table" >
+					<thead>
+						<tr>
+							<th>Sr. No</th>
+							<th>Full Name</th>
+							<th>Application Status</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="user in UnregisteredUserDetails" >
+							<td>{{$index +1}}</td>
+							<td>{{ user.firstName+" "+ user.lastName}}</td>
+							<td>{{ user.applicationStatus }}</td>
+							<td> <button style="width: 100%;" type="button" class="btn medium inverse" ng-click="unregisteruserchange($index)">Verify</button>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+	
