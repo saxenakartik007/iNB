@@ -18,6 +18,23 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	$scope.branchmanagername=$cookieStore.get('username');
 	$scope.username=$cookieStore.get('username');
 	console.log("Initially"+$scope.branchmanagername);
+	$scope.userdetails = true;
+	$scope.moneytransfer = false;
+	$scope.transfermoneyerror;
+	
+	
+	//money transfer tab call
+	$scope.transferMoney = function(){
+		$scope.userdetails = false;
+		$scope.moneytransfer = true;
+	}
+	
+	//money transfer function call
+	$scope.moneytransfer = function(){
+		
+	}
+	
+	
 	//getAllUnregisteredUsers
 	$scope.getAllUnregisteredUsers=function(){
 		$scope.unregisterusers = true;
@@ -160,7 +177,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 		
 	}
 	
-	
+	//add manager
 	$scope.addbranchmgr = function(){
 		var branchitem;
 		$scope.getAllBranches();
@@ -210,7 +227,9 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 			else
 				mymessage("Passwords do not  match");	
 			
-					}
+	}
+	//add manager ends
+	
 	
 	//add new account
 	$scope.createAccount = function(){
