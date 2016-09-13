@@ -65,7 +65,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	$scope.userdetails = false;			
 	$scope.moneytransfer = false;			
 	$scope.transfermoneyerror;
-
+	
 	
 	//getAllUnregisteredUsers
 	$scope.getAllUnregisteredUsers=function(){
@@ -77,11 +77,11 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 			angular.forEach(data, function(value, key) {
 				var branch = $cookieStore.get('bmbranch');
 				if(value.branch.branchName == branch)
-				{
-					console.log(value.branch.branchName + "\n" + branch);
-					$scope.UnregisteredUserDetails.push(value);
-					console.log($scope.UnregisteredUserDetails);
-				}
+			    {
+			     console.log(value.branch.branchName + "\n" + branch);
+			     $scope.UnregisteredUserDetails.push(value);
+			     console.log($scope.UnregisteredUserDetails);
+			    }
 			});
 				
 		});
@@ -184,9 +184,14 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 
      }
 	
-	
-	
-	
+
+ 	
+   
+        
+        
+        
+   	
+   	
 	//gotoadminpanel
 	$scope.gotoAdminPanel=function(){
 		$location.path('/admin');	
@@ -268,7 +273,6 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	}
 	
 
-	//add manager
 	$scope.addbranchmgr = function(){
 		var branchitem;
 		$scope.getAllBranches();
@@ -318,9 +322,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 			else
 				mymessage("Passwords do not  match");	
 			
-	}
-	//add manager ends
-	
+					}
 	
 	//add new account
 	$scope.createAccount = function(){
@@ -418,7 +420,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		$scope.Userheading = "My Details";
 		$scope.userdetails = true;
 		$scope.accountdetails = false;
-		$scope.moneytransfer = true;
+		$scope.moneytransfer = false;
 		var id=$cookieStore.get('usertoken');
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
@@ -433,7 +435,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		$scope.Userheading="Account Details";
 		$scope.userdetails = false;
 		$scope.accountdetails = true;
-		$scope.moneytransfer = true;
+		$scope.moneytransfer = false;
 		var id=$cookieStore.get('usertoken');
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
@@ -448,7 +450,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		$scope.Userheading="Money Transfer";
 		$scope.accountdetails = false;
 		$scope.userdetails = false;
-		$scope.moneytransfer = false;
+		$scope.moneytransfer = true;
 		var id=$cookieStore.get('usertoken');
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
@@ -459,6 +461,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	//money transfer tab call ends
 		
 	//money transfer function call
+
 	$scope.moneytransferfun = function(){
 		var balance;
 		var id=$cookieStore.get('usertoken');
@@ -499,6 +502,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	}
 	//money transfer function call ends
 	
+	
 	//loginAction find user or bm
 	$scope.loginAction=function(role){
 		if($scope.uname!=null && $scope.password!=null && $scope.branch!=null && $scope.role!=null){
@@ -535,8 +539,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 							else{
 								console.log(response);
 								$cookieStore.put('role','user');
-								$cookieStore.put('username',response.data.firstName);
-								$cookieStore.put('usertoken',response.data.id);
+								$cookieStore.put('username',$scope.uname);
+								$cookieStore.put('usertoken',response.data.id)
 								$location.path('/userpage');
 							}
 							
@@ -771,10 +775,72 @@ inbapp.config(function($routeProvider){
 							console.log(value.branch.branchName + "\n" + branch);
 							UnregisteredUserDetails.push(value);
 							console.log($scope.UnregisteredUserDetails);
+							 
 						}
 					});
 					$scope.item = UnregisteredUserDetails[index];
 					console.log(index+"\n"+UnregisteredUserDetails[index]+"\n"+$scope.item);
+					 
+					///Get Age document, pass users objectid;     
+			        $scope.getAgeDoc=function(userId)
+			        {
+			        	
+			        	var url='http://10.20.14.83:9000/ageproofdocument/'+userId;
+			        	$http({
+			            	    method : 'GET',
+			        		url : url,
+			        		headers : {
+			        			'Content-Type' : 'application/json',
+			        			'Access-Control-Allow-Origin': 'http://10.20.14.83:9000'
+			        		}
+			        	    }).then(function successCallback(response) {
+			        		var msg = response.data;
+			        		
+			        		if(msg.length!=undefined)
+			        			$scope.agesrcname="data:image/png;base64,"+msg;
+			        		
+				        		
+			        	}, function errorCallback(response) {
+			        		mymessage("Server Error. Try After Some time: " + response);
+			        	});
+			        }
+
+			        
+			      ///Get Address document, pass users objectid;     
+			        $scope.getAddDoc=function(userId)
+			        {
+			        	
+			        	var url='http://10.20.14.83:9000/addressproofdocument/'+userId;
+			        	$http({
+			            	    method : 'GET',
+			        		url : url,
+			        		headers : {
+			        			'Content-Type' : 'application/json',
+			        			'Access-Control-Allow-Origin': 'http://10.20.14.83:9000'
+			        		}
+			        	    }).then(function successCallback(response) {
+			        		var msg = response.data;
+			        		if(msg.length!=undefined)
+			        			$scope.addsrcname="data:image/png;base64,"+msg;
+			        			
+			        	}, function errorCallback(response) {
+			        		mymessage("Server Error. Try After Some time: " + response);
+			        	});
+			        }
+
+			        function mymessage(x){
+			    		$scope.mycustomMessage=x;
+			    		  $scope.loginAlertMessage=false; 
+			    	         $timeout(function () { $scope.loginAlertMessage = true;
+			    	          }, 3000);   
+			    		
+			    	}
+			        console.log("id" + $scope.item.id);
+			        $scope.addsrcname="images/ina.png";
+			        $scope.agesrcname="images/ina.png";
+			        
+					$scope.getAgeDoc($scope.item.id);
+					 $scope.getAddDoc($scope.item.id);
 				});
 				
 				
