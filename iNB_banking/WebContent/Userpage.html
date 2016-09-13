@@ -33,22 +33,13 @@
 		<h1 style="margin-left: 10%">{{ Userheading }}</h1>
 			<div ng-show="unregisterusers" class="table-responsive" style='overflow: auto;  height: 370px ;'>
 				<table class="table" >
-					<thead>
-						<tr>
-							<th>Sr. No</th>
-							<th>Full Name</th>
-							<th>Application Status</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="user in UnregisteredUserDetails" >
-							<td>{{$index +1}}</td>
-							<td>{{ user.firstName+" "+ user.lastName}}</td>
-							<td>{{ user.applicationStatus }}</td>
-							<td> <button style="width: 100%;" type="button" class="btn medium inverse" ng-click="unregisteruserchange($index)">Verify</button>
-						</tr>
-					</tbody>
+					<tr>
+						<th>Fields</th>
+						<th>Details</th>
+					</tr>
+					<tr>
+						
+					</tr>
 				</table>
 			</div>
 		</div>
