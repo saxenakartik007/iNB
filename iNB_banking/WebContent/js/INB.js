@@ -499,6 +499,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 								console.log(response);
 								$cookieStore.put('role','user');
 								$cookieStore.put('username',$scope.uname);
+								
 								$cookieStore.put('usertoken',response.data.id)
 								$location.path('/userpage');
 							}
