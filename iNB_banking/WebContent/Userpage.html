@@ -1,0 +1,110 @@
+<div class="wrapper row2">
+  <header id="header" class="hoc clear"> 
+    <div id="logo" class="one_third first">
+      <h1>iNB</h1>
+   
+    </div>
+    <div id="logo" class="one_third">
+      
+      <h1>Welcome {{ username }}</h1>
+   
+    </div>
+    <div id="quickinfo" class="fl_right">
+      <ul class="nospace inline">
+          
+       
+          <li><button type="button" class="btn medium inverse" ng-click="logoutUser()">Sign Out &raquo;</button></li>
+       
+      </ul>
+    </div>
+  </header>
+</div>
+
+<div class="wrapper row3" style="height: 100%">
+	<div class="hoc clear">
+		<br>
+		<div class="fl_left" style="margin-right: 10px;" >
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getAccountSummary()">Account Summary</button>
+			<br>
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="transferMoney()">Transfer Money</button>
+			<br>
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getUserDetails()">View my profile</button>
+			<br>
+			 
+		</div>
+		<div>
+		<h1 style="margin-left: 10%">{{ Userheading }}</h1>
+			<div ng-show="accountdetails" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+				<table class="table" >
+					<tr>
+						<th>Fields</th>
+						<th>Details</th>
+					</tr>
+					<tr>
+						<td>Account Type</td>
+						<td>{{ accountDetails.accountType }}</td>
+					</tr>
+					<tr>
+						<td>Account Number</td>
+						<td>{{ accountDetails.accountNumber }}</td>
+					</tr>
+					
+					<tr>
+						<td>Account Balance</td>
+						<td>Rs.{{ accountDetails.balance}}</td>
+					</tr> 			
+				</table>
+			</div>
+			<div ng-show="userdetails" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+				<table class="table" >
+					<tr>
+						<th>Fields</th>
+						<th>Details</th>
+					</tr>
+					<tr>
+						<td>Customer Id</td>
+						<td>{{ userDetails.customerId }}</td>
+					</tr>
+					<tr>
+						<td>Password</td>
+						<td>{{ userDetails.password }}</td>
+					</tr>
+					<tr>
+						<td>First Name</td>
+						<td>{{ userDetails.firstName }}</td>
+					</tr>
+					<tr>
+						<td>Last Name</td>
+						<td>{{ userDetails.lastName }}</td>
+					</tr>
+					<tr>
+						<td>Email Id</td>
+						<td>{{ userDetails.email }}</td>
+					</tr>
+					<tr>
+						<td>Date of Birth</td>
+						<td>{{ userDetails.dateOfBirth | date:"MM/dd/yyyy"}}</td>
+					</tr>
+					<tr>
+						<td>Address</td>
+						<td>{{ userDetails.address }}</td>
+					</tr>
+					<tr>
+						<td>Phone</td>
+						<td>{{ userDetails.phone }}</td>
+					</tr>
+					
+				</table>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+	
