@@ -238,7 +238,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 				$location.path('/manager');
 			},function errorCallBack(response){
 				alert("Some error occured");
-			})
+			});
 		}
 	}
 	
@@ -457,9 +457,10 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		});
 	}
 	//money transfer tab call ends
-	
+		
 	//money transfer function call
-	$scope.moneytransfer = function(){
+	$scope.moneytransferfun = function(){
+		var balance;
 		var id=$cookieStore.get('usertoken');
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
@@ -485,7 +486,14 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 					amount: $scope.mtamount
 				}
 			}).then(function successCallback(response) {
-					alert("successfull")
+				
+				if(response.data["Status"]=='Failed'){
+					console.log(response.data["Message"]);
+					mymessage(response.data["Message"]);
+					$scope.transfermoneyerror = "Invalid"
+				}
+				else
+					mymessage(response.data["Message"]);
 			});
 		}
 	}
@@ -520,7 +528,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 								console.log(response);
 								$cookieStore.put('role','branchmanager');
 								$cookieStore.put('username',$scope.uname);
-								$cookieStore.put('branchmanagertoken',response.data.id)
+								$cookieStore.put('branchmanagertoken',response.data.id);
+								$cookieStore.put('bmbranch',$scope.branch);
 								$location.path('/manager');
 							}
 							else{
@@ -630,7 +639,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 			}
 			else{
 				$cookieStore.remove('role');
-				$cookieStore.remove('branchmanagertoken')
+				$cookieStore.remove('branchmanagertoken');
+				$cookieStore.remove('bmbranch');
 				$location.path('/');
 		
 			}
