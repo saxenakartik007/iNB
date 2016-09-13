@@ -299,7 +299,8 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	}
 	
 	//get user details
-	$scope.getUserDetails=function(id){
+	$scope.getUserDetails=function(){
+		var id=$cookieStore.get('usertoken');
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
 			$rootScope.userDetails=data[0];
@@ -346,7 +347,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 								$cookieStore.put('role','user');
 								$cookieStore.put('username',response.data.firstName);
 								$cookieStore.put('usertoken',response.data.id);
-								$scope.getUserDetails(response.data.id);
+								$scope.getUserDetails();
 								$location.path('/userpage');
 							}
 							
