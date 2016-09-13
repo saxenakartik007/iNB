@@ -219,7 +219,6 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	//add new account
 	$scope.createAccount = function(){
 		var type=$scope.accounttype.toUpperCase();
-		
 		var branchitem;
 		$scope.getAllBranches();
 		
@@ -338,9 +337,8 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 								$location.path('/manager');
 							}
 							else{
-								console.log(response);
 								$cookieStore.put('role','user');
-								$cookieStore.put('username',$scope.uname);
+								$cookieStore.put('username',response.data.firstName);
 								$cookieStore.put('usertoken',response.data.id)
 								$location.path('/userpage');
 							}
@@ -453,39 +451,20 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	};
 	//branch manager logout ends
 	
-	
-	
-	//register user starts
-	$scope.registerCustomer=function(){
-		if($scope.password1==$scope.password2){
-		$http({
-			method : 'POST',
-			url :'http://10.20.14.83:9000/registeredcustomer',
-			headers : {
-				'Content-Type' : 'application/json',
-				'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-			},
-			data : {				
-				firstName : $scope.firstname,
-				lastName : $scope.lastname,
-				email : $scope.email,
-				phone : $scope.phone,
-				address : $scope.addr,
-				dateOfBirth : $scope.dob,
-				 customerId : $scope.custid,
-				 userName : $scope.username,
-				 password : $scope.password1
-			}
-		}).then(function successCallback(response) {
-			$scope.aloginform="Registered successfully.Wait for confirmation"
-				
-		},function successCallback(response){
-			console.log("Error in registration"+response.data);
-		});
-		}
-		else
-			$scope.errormsg="Passwords do not  match";
+	//user logout
+
+	$scope.logoutUser=function(){
+		
+		$cookieStore.remove('role');
+		$cookieStore.remove('username');
+		$cookieStore.remove('usertoken');
+			$location.path('/');
+		
 	};
+	//users logout ends
+	
+	
+	
 	
 	
 	function mymessage(x){
@@ -544,7 +523,7 @@ inbapp.config(function($routeProvider){
 		})
 	.when('/userpage', {
 			controller: 'MainController',
-			templateUrl: 'UserPage.html'
+			templateUrl: 'Userpage.html'
 		})
 	.when('/verification/:i', {
 			controller: function($scope, $routeParams, $http,$cookieStore) 
