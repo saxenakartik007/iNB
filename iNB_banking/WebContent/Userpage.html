@@ -24,14 +24,38 @@
 	<div class="hoc clear">
 		<br>
 		<div class="fl_left" style="margin-right: 10px;" >
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getAccountSummary()">Account Summary</button>
+			<br>
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="transferMoney()">Transfer Money</button>
+			<br>
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getUserDetails()">View my profile</button>
 			<br>
-			 <button style="width: 100%;" type="button" class="btn medium inverse" ng-click="transferMoney()">Transfer Money</button>
-			<br>
+			 
 		</div>
 		<div>
 		<h1 style="margin-left: 10%">{{ Userheading }}</h1>
-			<div ng-show="unregisterusers" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+			<div ng-show="accountdetails" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+				<table class="table" >
+					<tr>
+						<th>Fields</th>
+						<th>Details</th>
+					</tr>
+					<tr>
+						<td>Account Type</td>
+						<td>{{ accountDetails.accountType }}</td>
+					</tr>
+					<tr>
+						<td>Account Number</td>
+						<td>{{ accountDetails.accountNumber }}</td>
+					</tr>
+					
+					<tr>
+						<td>Account Balance</td>
+						<td>Rs.{{ accountDetails.balance}}</td>
+					</tr> 			
+				</table>
+			</div>
+			<div ng-show="userdetails" class="table-responsive" style='overflow: auto;  height: 370px ;'>
 				<table class="table" >
 					<tr>
 						<th>Fields</th>
@@ -40,6 +64,10 @@
 					<tr>
 						<td>Customer Id</td>
 						<td>{{ userDetails.customerId }}</td>
+					</tr>
+					<tr>
+						<td>Password</td>
+						<td>{{ userDetails.password }}</td>
 					</tr>
 					<tr>
 						<td>First Name</td>
@@ -66,12 +94,9 @@
 						<td>{{ userDetails.phone }}</td>
 					</tr>
 					
-					<tr>
-						<td>Password</td>
-						<td>{{ userDetails.password }}</td>
-					</tr>
 				</table>
 			</div>
+			
 		</div>
 	</div>
 </div>
