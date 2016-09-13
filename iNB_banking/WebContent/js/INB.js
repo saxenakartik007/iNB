@@ -19,6 +19,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	$scope.branchmanagername=$cookieStore.get('username');
 	$scope.username=$cookieStore.get('username');
 	console.log("Initially "+$scope.branchmanagername);
+	var flag=false;
 	$scope.accountdetails = false;
 	$scope.userdetails = false;
 	$scope.moneytransfer = false;
@@ -46,6 +47,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 				
 		});
 	}
+	
 	//getAllUnregisteredUsers
 	$scope.getAllUnregisteredUsers();
 	
@@ -53,7 +55,9 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 		console.log(user_i+"\n");
 		$location.path("/verification/"+user_i);
 	}
+	
 	//temporary
+	
 	//getallbranches
 	$scope.getAllBranches=function(){
 		$scope.adminheading='Branch List';
@@ -339,8 +343,6 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 		});
 	}
 	//get account summary ends
-	$scope.getAccountSummary();
-	
 	
 	//money transfer tab call
 	$scope.transferMoney = function(){
@@ -359,7 +361,34 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	
 	//money transfer function call
 	$scope.moneytransfer = function(){
-		
+		var id=$cookieStore.get('usertoken');
+		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
+		$http.get(url).success(function(data,status){
+			balance = data[0].accounthash[0].balance;
+			
+		});
+		if($scope.mtamount > balance)
+		{
+			$scope.transfermoneyerror = 'Insufficient balance for Money Transfer';
+		}
+		else
+		{
+			$http({
+				method : 'PUT',
+				url : 'http://10.20.14.83:9000/registeredcustomer/transfer',
+				headers : {
+					'Content-Type' : 'application/json',
+					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+				},
+				data:{
+					clientAccount : $scope.uaccount,
+					recevierAccount : $scope.raccount,
+					amount: $scope.mtamount
+				}
+			}).then(function successCallback(response) {
+					alert("successfull")
+			});
+		}
 	}
 	//money transfer function call ends
 	
@@ -401,7 +430,6 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 								$cookieStore.put('role','user');
 								$cookieStore.put('username',response.data.firstName);
 								$cookieStore.put('usertoken',response.data.id);
-								$scope.getUserDetails();
 								$location.path('/userpage');
 							}
 							
