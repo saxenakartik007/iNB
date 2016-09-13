@@ -40,7 +40,7 @@
 				<input type="email" class="form-control" ng-model="useremail"  name="useremail" placeholder="Enter Email" required>
 				<p  style="font-size: .5em"class="text-danger" ng-show="userform.useremail.$touched && userform.useremail.$invalid">Email is required!</p>
 				<br>
-				<input type="text" class="form-control" ng-model="userphone"  name="userphone" placeholder="Enter Phone number" required>
+				<input type="number"   pattern=".{10,10}" class="form-control" ng-model="userphone"  name="userphone" placeholder="Enter Phone number" required>
 				<p style="font-size: .5em" class="text-danger" ng-show="userform.userphone.$touched && userform.userphone.$invalid">Phone number is required!</p>
 				<br>
 				<input type="text" class="form-control" ng-model="useraddress"  name="useraddress" placeholder="Enter Address" required>
@@ -56,9 +56,9 @@
 				<p style="font-size: .5em" class="text-danger" ng-show="userform.userbranch.$touched && userform.userbranch.$invalid">Branch is required!</p>
 				<br>
 				<div style="font-size: .5em" class="alert alert-danger">
-				{{ usererrormsg }}
+				
 				</div>
-				<input style="float: right;" type="button"   class="btn medium inverse" value="Continue" ng-click="registerCustomer()">
+				<input style="float: right;" type="button"  ng-disabled="userform.$invalid" class="btn medium inverse" value="Continue" ng-click="createAccount()">
 			</form>
 		</div>
 	</div>
