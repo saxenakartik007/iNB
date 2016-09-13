@@ -549,11 +549,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	
 	
 	
-	
-	
-	
-	
-	///adminlogout
+	///admin 
 	
 	$scope.logoutAdmin=function(){
 		$http({
@@ -575,7 +571,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 			}
 			else{
 				$cookieStore.remove('role');
-				$cookieStore.remove('admintoken')
+				$cookieStore.remove('admintoken');
 				$location.path('/');
 		
 			}
