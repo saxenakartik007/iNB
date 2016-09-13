@@ -39,7 +39,7 @@ function readURL(input,k) {
     }
 }
 
-
+var oldpassword;
 
 function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,$window){
 	
@@ -65,7 +65,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	$scope.userdetails = false;			
 	$scope.moneytransfer = false;			
 	$scope.transfermoneyerror;
-	
+	$scope.changepasswordhead=$cookieStore.get('customername');
 	
 	//getAllUnregisteredUsers
 	$scope.getAllUnregisteredUsers=function(){
@@ -540,7 +540,14 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 								console.log(response);
 								$cookieStore.put('role','user');
 								$cookieStore.put('username',$scope.uname);
+								$cookieStore.put('customername',response.data.firstName);
 								$cookieStore.put('usertoken',response.data.id)
+								if($scope.password.length==4){
+									oldpassword=$scope.password;
+									$location.path('/password');
+									
+								}
+								else
 								$location.path('/userpage');
 							}
 							
@@ -553,6 +560,27 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		}
 	}
 	//loginAction find user or bm ends
+	
+	
+	//changepassword
+	$scope.changePassword=function(){
+		if($scope.ocpassword!=oldpassword)
+	{
+		//	$scope.ocpasswordalert='Wrong Old Password';
+			bootbox.alert('Wrong Old Password');
+	}
+		
+		else if($scope.rcpassword!=$scope.ncpassword){
+			//$scope.rcpasswordalert='Password do not Match';
+			bootbox.alert('Password do not Match');
+		}
+		
+		else{
+			
+			///rest call
+			
+		}
+	}
 	
 	
 	//login admin starts
