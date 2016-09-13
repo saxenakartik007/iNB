@@ -78,11 +78,11 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 			angular.forEach(data, function(value, key) {
 				var branch = $cookieStore.get('bmbranch');
 				if(value.branch.branchName == branch)
-				{
-					console.log(value.branch.branchName + "\n" + branch);
-					$scope.UnregisteredUserDetails.push(value);
-					console.log($scope.UnregisteredUserDetails);
-				}
+			    {
+			     console.log(value.branch.branchName + "\n" + branch);
+			     $scope.UnregisteredUserDetails.push(value);
+			     console.log($scope.UnregisteredUserDetails);
+			    }
 			});
 				
 		});
@@ -185,9 +185,56 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 
      }
 	
-	
-	
-	
+
+ 	
+   ///Get Age document, pass users objectid;     
+        $scope.getAgeDoc=function(userId)
+        {
+        	
+        	var url='http://10.20.14.83:9000/ageproofdocument/'+userId;
+        	$http({
+            	    method : 'GET',
+        		url : url,
+        		headers : {
+        			'Content-Type' : 'application/json',
+        			'Access-Control-Allow-Origin': 'http://10.20.14.83:9000'
+        		}
+        	    }).then(function successCallback(response) {
+        		var msg = response.data;
+        			//$scope.srcname="data:image/png;base64,"+msg;
+        			
+        	}, function errorCallback(response) {
+        		mymessage("Server Error. Try After Some time: " + response);
+        	});
+        }
+
+        
+      ///Get Address document, pass users objectid;     
+        $scope.getAddDoc=function(userId)
+        {
+        	
+        	var url='http://10.20.14.83:9000/addressproofdocument/'+userId;
+        	$http({
+            	    method : 'GET',
+        		url : url,
+        		headers : {
+        			'Content-Type' : 'application/json',
+        			'Access-Control-Allow-Origin': 'http://10.20.14.83:9000'
+        		}
+        	    }).then(function successCallback(response) {
+        		var msg = response.data;
+        			//$scope.srcname="data:image/png;base64,"+msg;
+        			
+        	}, function errorCallback(response) {
+        		mymessage("Server Error. Try After Some time: " + response);
+        	});
+        }
+
+        
+        
+        
+   	
+   	
 	//gotoadminpanel
 	$scope.gotoAdminPanel=function(){
 		$location.path('/admin');	
