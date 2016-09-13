@@ -1,9 +1,53 @@
-var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']);
+var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']).directive('ngFiles', ['$parse', function ($parse) {
+
+    function fn_link(scope, element, attrs) {
+        var onChange = $parse(attrs.ngFiles);
+        element.on('change', function (event) {
+            onChange(scope, { $files: event.target.files });
+        });
+    };
+
+    return {
+        link: fn_link
+    }
+} ]);
 
 
-function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$timeout){
+
+function readURL(input,k) {
+    if(k){
+	if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#agepre')
+                .attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+    }
+    else{
+    	if (input.files && input.files[0]) {
+            var reader1 = new FileReader();
+
+            reader1.onload = function (e) {
+            	 $('#addpre')
+                    .attr('src', e.target.result);
+            };
+
+            reader1.readAsDataURL(input.files[0]);
+        }
+    }
+}
+
+
+
+function mainController($scope,$http,$cookieStore,$location,$timeout){
+	
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
+	$scope.loginAlertMessage = true;
 	$rootScope.userDetails;
 	$rootScope.accountDetails;
 	$scope.UnregisteredUserDetails= [];
@@ -19,33 +63,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	$scope.branchmanagername=$cookieStore.get('username');
 	$scope.username=$cookieStore.get('username');
 	console.log("Initially"+$scope.branchmanagername);
-	//getAllUnregisteredUsers
-	$scope.getAllUnregisteredUsers=function(){
-		$scope.unregisterusers = true;
-		$scope.Branchheading='Unregistered Users';
-		
-		var url='http://10.20.14.83:9000/unregistereduser/details';
-		$http.get(url).success(function(data,status){
-			angular.forEach(data, function(value, key) {
-				var branch = $cookieStore.get('bmbranch');
-				if(value.branch.branchName == branch)
-				{
-					console.log(value.branch.branchName + "\n" + branch);
-					$scope.UnregisteredUserDetails.push(value);
-					console.log($scope.UnregisteredUserDetails);
-				}
-			});
-				
-		});
-	}
-	//getAllUnregisteredUsers
-	$scope.getAllUnregisteredUsers();
 	
-	$scope.unregisteruserchange = function(user_i){
-		console.log(user_i+"\n");
-		$location.path("/verification/"+user_i);
-	}
-	//temporary
 	//getallbranches
 	$scope.getAllBranches=function(){
 		$scope.adminheading='Branch List';
@@ -53,9 +71,10 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 		$scope.adminnewbranch=false;
 		$scope.adminmanager=false;
 		$scope.adminaddmanager=false;
+
 		var url='http://10.20.14.83:9000/branch';
 		$http.get(url).success(function(data,status){
-			$scope.branchDetails= data;
+			$scope.branchDetails= data;	
 		});
 	}
 	//getallbranches
@@ -63,12 +82,15 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	//getbranchmanager
 	$scope.getBranchManagers=function(){
 		$scope.adminheading='Branch Managers List';
-		$scope.adminbranch=false;
-		$scope.adminnewbranch=false;
-		$scope.adminmanager=true;
-		$scope.adminaddmanager=false;
+		 
+			
+			$scope.adminbranch=false;
+			$scope.adminnewbranch=false;
+			$scope.adminmanager=true;
+			$scope.adminaddmanager=false;
+
 		$scope.adminview=false;
-		var url='http://10.20.14.83:9000/branchmanager/';
+		var url='http://10.20.14.83:9000/branchmanager';
 		$http.get(url).success(function(data,status){
 			$scope.branchManagerDetails= data;	
 		});
@@ -78,9 +100,57 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	//callbranchfunction
 	$scope.getAllBranches();
 
-	//callbranchmanager
-	$scope.getBranchManagers();
-	 
+
+     // NOW UPLOAD THE FILES.
+     $scope.uploadFiles = function () {
+
+    	 var formdata = new FormData();
+    	 var file1 = document.getElementById('file1').files[0];
+    	 var file2 = document.getElementById('file2').files[0];
+    	 //var myfile = $scope.file2;
+    	 console.log("file2: " +  file1);
+    	 console.log('usrmail '+$cookieStore.get('newusermail'));
+    	 formdata.append("addressProof", file1);
+    	 formdata.append("ageProof", file2);
+    	 formdata.append("email", $cookieStore.get('newusermail'));
+    	 //var myurl = 'http://10.20.14.83:9000/document?addressProof='+formdata.get("addressProof")+'&ageProof='+formdata.get("ageProof")+'&email=saxenakartik007@gmail.com';
+    	 //var myurl = 'http://10.20.14.83:9000/document?email=saxenakartik007@gmail.com';
+    	 if(file1==undefined||file1==null){
+    		 mymessage('Please Add Address Document');
+    	 }
+    	 else if(file2==undefined||file2==null){
+    		 mymessage('Please Add Age Document');
+    	 }
+    	 else{
+    	 var myurl = 'http://10.20.14.83:9000/document';
+         
+         var request = {
+                 method: 'POST',
+                 url: myurl,
+                 data:formdata,
+//                 transformRequest: function(data, headersGetterFunction) {
+//                     return data; // do nothing! FormData is very good!
+//                 },
+                 transformRequest: angular.identity,
+                 headers: {
+                     'Content-Type': undefined,
+                 	'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+                 }
+             };
+
+             // SEND THE FILES.
+             $http(request).then(function successCallback(response) {	
+			 console.log(response);
+			 bootbox.alert('Thankyou For connecting with us.We will get back to u shortly.')
+			 $location.path('/');
+			});
+			
+    	 }
+
+     }
+	
+	
+	
 	
 	//gotoadminpanel
 	$scope.gotoAdminPanel=function(){
@@ -95,46 +165,6 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	//gotto home page
 	$scope.gotoHomePage=function(){
 		$location.path("/");
-	}
-	
-	//go to backpage
-	$scope.backButton=function(){
-		$window.history.back();
-	}
-	
-	//approve or disapprove
-	$scope.verifyUser=function(state,user){
-		if(state==1){
-			var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/verify';
-			$http({
-				method : 'PUT',
-				url :url,
-				headers : {
-					'Content-Type' : 'application/json',
-					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-				}
-			}).then(function successCallBack(response){
-				mymessage("Email Sent");
-				$location.path('/manager');
-			},function errorCallBack(response){
-				alert("Some error occured");
-			})
-		}
-		else{
-			var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/reject';
-			$http({
-				method : 'PUT',
-				url :url,
-				headers : {
-					'Content-Type' : 'application/json',
-					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-				}
-			}).then(function successCallBack(response){
-				$location.path('/manager');
-			},function errorCallBack(response){
-				alert("Some error occured");
-			})
-		}
 	}
 	
 	$scope.createBranchMgr = function(){
@@ -161,7 +191,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 		
 	}
 	
-	
+
 	$scope.addbranchmgr = function(){
 		var branchitem;
 		$scope.getAllBranches();
@@ -216,6 +246,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	//add new account
 	$scope.createAccount = function(){
 		var type=$scope.accounttype.toUpperCase();
+		
 		var branchitem;
 		$scope.getAllBranches();
 		
@@ -248,11 +279,15 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 				"branchPOJO": branchitem
 			}
 		}).then(function successCallback(response) {
-			$scope.usererrormsg="Registered Details.wait for confirmation";
+			mymessage("Registered Details.wait for confirmation");
 			console.log(response);
+			console.log(response);
+			console.log(response.data.email)
+			$cookieStore.put('newusermail', $scope.useremail); 
+			$location.path('/updloaddocuments');
 				
 		},function successCallback(response){
-			$scope.mgrerrormsg="Error in adding account";
+			mymessage("Error in adding account");
 		},function errorCallback(response) {
 			console.log(response.data);
 		});
@@ -299,34 +334,6 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 
 	}
 	
-	//get user details
-	$scope.getUserDetails=function(){
-		$scope.Userheading="My Details";
-		$scope.userdetails=true;
-		$scope.accountdetails=false;
-		var id=$cookieStore.get('usertoken');
-		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
-		$http.get(url).success(function(data,status){
-			$rootScope.userDetails=data[0];
-		});
-		
-	}
-	//get user details ends
-	
-	
-	//get account summary
-	$scope.getAccountSummary=function(){
-		$scope.Userheading="Account Details";
-		$scope.userdetails=false;
-		$scope.accountdetails=true;
-		var id=$cookieStore.get('usertoken');
-		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
-		$http.get(url).success(function(data,status){
-			$rootScope.accountDetails=data[0].accounthash[0];
-			
-		});
-	}
-	
 	//loginAction find user or bm
 	$scope.loginAction=function(role){
 		if($scope.uname!=null && $scope.password!=null && $scope.branch!=null && $scope.role!=null){
@@ -356,16 +363,14 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 								console.log(response);
 								$cookieStore.put('role','branchmanager');
 								$cookieStore.put('username',$scope.uname);
-								$cookieStore.put('bmbranch',$scope.branch);
 								$cookieStore.put('branchmanagertoken',response.data.id)
-								$cookieStore.put('branchmanagertoken',response.data.id);
 								$location.path('/manager');
 							}
 							else{
+								console.log(response);
 								$cookieStore.put('role','user');
-								$cookieStore.put('username',response.data.firstName);
-								$cookieStore.put('usertoken',response.data.id);
-								$scope.getUserDetails();
+								$cookieStore.put('username',$scope.uname);
+								$cookieStore.put('usertoken',response.data.id)
 								$location.path('/userpage');
 							}
 							
@@ -378,6 +383,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 		}
 	}
 	//loginAction find user or bm ends
+	
 	
 	//login admin starts
 	$scope.loginAdmin=function(){
@@ -395,7 +401,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 			}
 		}).then(function successCallback(response) {
 			if(response.data.error!=null){
-				$scope.aloginformalert="Invalid credentials";
+				$scope.aloginformalert="Username and password do not match";
 			}
 			else{
 				$cookieStore.put('role','admin');
@@ -406,10 +412,15 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 		});
 		}
 		else{
-			$scope.aloginformalert="Please enter credentials";
+			$scope.aloginformalert="Please enter credentials"
 		}
 	};
 	//login admin ends
+	
+	
+	
+	
+	
 	
 	
 	
@@ -435,7 +446,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 			}
 			else{
 				$cookieStore.remove('role');
-				$cookieStore.remove('admintoken');
+				$cookieStore.remove('admintoken')
 				$location.path('/');
 		
 			}
@@ -466,9 +477,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 			}
 			else{
 				$cookieStore.remove('role');
-				$cookieStore.remove('branchmanagertoken');
-				$cookieStore.remove('branchmanagertoken');
-				$cookieStore.remove('username');
+				$cookieStore.remove('branchmanagertoken')
 				$location.path('/');
 		
 			}
@@ -477,20 +486,40 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	};
 	//branch manager logout ends
 	
-	//user logout
-
-	$scope.logoutUser=function(){
-		
-		$cookieStore.remove('role');
-		$cookieStore.remove('username');
-		$cookieStore.remove('usertoken');
-			$location.path('/');
-		
+	
+	
+	//register user starts
+	$scope.registerCustomer=function(){
+		if($scope.password1==$scope.password2){
+		$http({
+			method : 'POST',
+			url :'http://10.20.14.83:9000/registeredcustomer',
+			headers : {
+				'Content-Type' : 'application/json',
+				'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+			},
+			data : {				
+				firstName : $scope.firstname,
+				lastName : $scope.lastname,
+				email : $scope.email,
+				phone : $scope.phone,
+				address : $scope.addr,
+				dateOfBirth : $scope.dob,
+				 customerId : $scope.custid,
+				 userName : $scope.username,
+				 password : $scope.password1
+			}
+		}).then(function successCallback(response) {
+			$scope.aloginform="Registered successfully.Wait for confirmation"
+			
+				
+		},function successCallback(response){
+			console.log("Error in registration"+response.data);
+		});
+		}
+		else
+			$scope.errormsg="Passwords do not  match";
 	};
-	//users logout ends
-	
-	
-	
 	
 	
 	function mymessage(x){
@@ -498,14 +527,14 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 		  $scope.loginAlertMessage=false; 
 	         $timeout(function () { $scope.loginAlertMessage = true;
 	          }, 3000);   
-		 
+		
 	}
 	
 
 }
 
-
 inbapp.controller('MainController',mainController);
+
 
 inbapp.directive('ngPage', function() {
 	return {
@@ -516,6 +545,8 @@ inbapp.directive('ngPage', function() {
 		}
 	}
 });
+
+
 inbapp.config(function($routeProvider){
 	$routeProvider
 	.when('/',{
@@ -576,7 +607,10 @@ inbapp.config(function($routeProvider){
 			templateUrl: 'verification.html'
 		})	
 		.otherwise({redirectTo:'/'})
-}
-)
+})
+
+
+
+
 
 
