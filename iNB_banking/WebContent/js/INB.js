@@ -766,6 +766,10 @@ inbapp.config(function($routeProvider){
 			controller: 'MainController',
 			templateUrl: 'uploaddocuments.html'
 		})
+		.when('/password', {
+			controller: 'MainController',
+			templateUrl: 'changepassword.html'
+		})
 	.when('/verification/:i', {
 			controller: function($scope, $routeParams, $http,$cookieStore) 
 			{
