@@ -6,14 +6,14 @@
     </div>
     <div id="logo" class="one_third">
       
-      <h1>Welcome Mr.{{ branchmanagername }}</h1>
+      <h1>Welcome {{ username }}</h1>
    
     </div>
     <div id="quickinfo" class="fl_right">
       <ul class="nospace inline">
           
        
-          <li><button type="button" class="btn medium inverse" ng-click="logoutManager()">Sign Out &raquo;</button></li>
+          <li><button type="button" class="btn medium inverse" ng-click="logoutUser()">Sign Out &raquo;</button></li>
        
       </ul>
     </div>
@@ -23,8 +23,14 @@
 <div class="wrapper row3" style="height: 100%">
 	<div class="hoc clear">
 		<br>
+		<div class="fl_left" style="margin-right: 10px;" >
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getMyDetails()">View my profile</button>
+			<br>
+			 <button style="width: 100%;" type="button" class="btn medium inverse" ng-click="transferMoney()">Transfer Money</button>
+			<br>
+		</div>
 		<div>
-		<h1 >{{ Branchheading }}</h1>
+		<h1 style="margin-left: 10%">{{ Userheading }}</h1>
 			<div ng-show="unregisterusers" class="table-responsive" style='overflow: auto;  height: 370px ;'>
 				<table class="table" >
 					<thead>
