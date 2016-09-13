@@ -65,6 +65,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	$scope.userdetails = false;			
 	$scope.moneytransfer = false;			
 	$scope.transfermoneyerror;
+	
 
 	
 	//getAllUnregisteredUsers
@@ -77,11 +78,11 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 			angular.forEach(data, function(value, key) {
 				var branch = $cookieStore.get('bmbranch');
 				if(value.branch.branchName == branch)
-				{
-					console.log(value.branch.branchName + "\n" + branch);
-					$scope.UnregisteredUserDetails.push(value);
-					console.log($scope.UnregisteredUserDetails);
-				}
+			    {
+			     console.log(value.branch.branchName + "\n" + branch);
+			     $scope.UnregisteredUserDetails.push(value);
+			     console.log($scope.UnregisteredUserDetails);
+			    }
 			});
 				
 		});
@@ -184,9 +185,56 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 
      }
 	
-	
-	
-	
+
+ 	
+   ///Get Age document, pass users objectid;     
+        $scope.getAgeDoc=function(userId)
+        {
+        	
+        	var url='http://10.20.14.83:9000/ageproofdocument/'+userId;
+        	$http({
+            	    method : 'GET',
+        		url : url,
+        		headers : {
+        			'Content-Type' : 'application/json',
+        			'Access-Control-Allow-Origin': 'http://10.20.14.83:9000'
+        		}
+        	    }).then(function successCallback(response) {
+        		var msg = response.data;
+        			//$scope.srcname="data:image/png;base64,"+msg;
+        			
+        	}, function errorCallback(response) {
+        		mymessage("Server Error. Try After Some time: " + response);
+        	});
+        }
+
+        
+      ///Get Address document, pass users objectid;     
+        $scope.getAddDoc=function(userId)
+        {
+        	
+        	var url='http://10.20.14.83:9000/addressproofdocument/'+userId;
+        	$http({
+            	    method : 'GET',
+        		url : url,
+        		headers : {
+        			'Content-Type' : 'application/json',
+        			'Access-Control-Allow-Origin': 'http://10.20.14.83:9000'
+        		}
+        	    }).then(function successCallback(response) {
+        		var msg = response.data;
+        			//$scope.srcname="data:image/png;base64,"+msg;
+        			
+        	}, function errorCallback(response) {
+        		mymessage("Server Error. Try After Some time: " + response);
+        	});
+        }
+
+        
+        
+        
+   	
+   	
 	//gotoadminpanel
 	$scope.gotoAdminPanel=function(){
 		$location.path('/admin');	
@@ -268,7 +316,6 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	}
 	
 
-	//add manager
 	$scope.addbranchmgr = function(){
 		var branchitem;
 		$scope.getAllBranches();
@@ -318,9 +365,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 			else
 				mymessage("Passwords do not  match");	
 			
-	}
-	//add manager ends
-	
+					}
 	
 	//add new account
 	$scope.createAccount = function(){
@@ -418,7 +463,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		$scope.Userheading = "My Details";
 		$scope.userdetails = true;
 		$scope.accountdetails = false;
-		$scope.moneytransfer = true;
+		$scope.moneytransfer = false;
 		var id=$cookieStore.get('usertoken');
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
@@ -433,7 +478,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		$scope.Userheading="Account Details";
 		$scope.userdetails = false;
 		$scope.accountdetails = true;
-		$scope.moneytransfer = true;
+		$scope.moneytransfer = false;
 		var id=$cookieStore.get('usertoken');
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
@@ -448,7 +493,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		$scope.Userheading="Money Transfer";
 		$scope.accountdetails = false;
 		$scope.userdetails = false;
-		$scope.moneytransfer = false;
+		$scope.moneytransfer = true;
 		var id=$cookieStore.get('usertoken');
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
@@ -460,36 +505,10 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	
 	//money transfer function call
 	$scope.moneytransfer = function(){
-		var id=$cookieStore.get('usertoken');
-		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
-		$http.get(url).success(function(data,status){
-			balance = data[0].accounthash[0].balance;
-			
-		});
-		if($scope.mtamount > balance)
-		{
-			$scope.transfermoneyerror = 'Insufficient balance for Money Transfer';
-		}
-		else
-		{
-			$http({
-				method : 'PUT',
-				url : 'http://10.20.14.83:9000/registeredcustomer/transfer',
-				headers : {
-					'Content-Type' : 'application/json',
-					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-				},
-				data:{
-					clientAccount : $scope.uaccount,
-					recevierAccount : $scope.raccount,
-					amount: $scope.mtamount
-				}
-			}).then(function successCallback(response) {
-					alert("successfull")
-			});
-		}
+		
 	}
 	//money transfer function call ends
+	
 	
 	//loginAction find user or bm
 	$scope.loginAction=function(role){
@@ -526,8 +545,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 							else{
 								console.log(response);
 								$cookieStore.put('role','user');
-								$cookieStore.put('username',response.data.firstName);
-								$cookieStore.put('usertoken',response.data.id);
+								$cookieStore.put('username',$scope.uname);
+								$cookieStore.put('usertoken',response.data.id)
 								$location.path('/userpage');
 							}
 							
