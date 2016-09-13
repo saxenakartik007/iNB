@@ -12,8 +12,6 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']).directive('ngFiles',
     }
 } ]);
 
-
-
 function readURL(input,k) {
     if(k){
 	if (input.files && input.files[0]) {
@@ -43,7 +41,7 @@ function readURL(input,k) {
 
 
 
-function mainController($scope,$http,$cookieStore,$location,$timeout){
+function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,$window){
 	
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
@@ -63,6 +61,40 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.branchmanagername=$cookieStore.get('username');
 	$scope.username=$cookieStore.get('username');
 	console.log("Initially"+$scope.branchmanagername);
+	$scope.accountdetails = false;			
+	$scope.userdetails = false;			
+	$scope.moneytransfer = false;			
+	$scope.transfermoneyerror;
+	
+
+	
+	//getAllUnregisteredUsers
+	$scope.getAllUnregisteredUsers=function(){
+		$scope.unregisterusers = true;
+		$scope.Branchheading='Unregistered Users';
+		
+		var url='http://10.20.14.83:9000/unregistereduser/details';
+		$http.get(url).success(function(data,status){
+			angular.forEach(data, function(value, key) {
+				var branch = $cookieStore.get('bmbranch');
+				if(value.branch.branchName == branch)
+				{
+					console.log(value.branch.branchName + "\n" + branch);
+					$scope.UnregisteredUserDetails.push(value);
+					console.log($scope.UnregisteredUserDetails);
+				}
+			});
+				
+		});
+	}
+	
+	//getAllUnregisteredUsers
+	$scope.getAllUnregisteredUsers();
+	
+	$scope.unregisteruserchange = function(user_i){
+		console.log(user_i+"\n");
+		$location.path("/verification/"+user_i);
+	}
 	
 	//getallbranches
 	$scope.getAllBranches=function(){
@@ -97,9 +129,13 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	}
 	//getbranchmanager
 	
+	
 	//callbranchfunction
 	$scope.getAllBranches();
-
+	
+	//callbranchmanager
+	$scope.getBranchManagers();
+	 
 
      // NOW UPLOAD THE FILES.
      $scope.uploadFiles = function () {
@@ -166,6 +202,47 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	$scope.gotoHomePage=function(){
 		$location.path("/");
 	}
+	
+	//go to backpage
+	$scope.backButton=function(){
+		$window.history.back();
+	}
+	
+	//approve or disapprove
+	$scope.verifyUser=function(state,user){
+		if(state==1){
+			var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/verify';
+			$http({
+				method : 'PUT',
+				url :url,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+				}
+			}).then(function successCallBack(response){
+				mymessage("Email Sent");
+				$location.path('/manager');
+			},function errorCallBack(response){
+				alert("Some error occured");
+			})
+		}
+		else{
+			var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/reject';
+			$http({
+				method : 'PUT',
+				url :url,
+				headers : {
+					'Content-Type' : 'application/json',
+					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+				}
+			}).then(function successCallBack(response){
+				$location.path('/manager');
+			},function errorCallBack(response){
+				alert("Some error occured");
+			})
+		}
+	}
+	
 	
 	$scope.createBranchMgr = function(){
 		//$location.path("/BranchMgr");
@@ -334,6 +411,58 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 
 	}
 	
+	//get user details
+	$scope.getUserDetails=function(){
+		$scope.Userheading = "My Details";
+		$scope.userdetails = true;
+		$scope.accountdetails = false;
+		$scope.moneytransfer = false;
+		var id=$cookieStore.get('usertoken');
+		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
+		$http.get(url).success(function(data,status){
+			$rootScope.userDetails=data[0];
+		});
+		
+	}
+	//get user details ends
+	
+	//get account summary
+	$scope.getAccountSummary=function(){
+		$scope.Userheading="Account Details";
+		$scope.userdetails = false;
+		$scope.accountdetails = true;
+		$scope.moneytransfer = false;
+		var id=$cookieStore.get('usertoken');
+		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
+		$http.get(url).success(function(data,status){
+			$rootScope.accountDetails=data[0].accounthash[0];
+			
+		});
+	}
+	//get account summary ends
+	
+	//money transfer tab call
+	$scope.transferMoney = function(){
+		$scope.Userheading="Money Transfer";
+		$scope.accountdetails = false;
+		$scope.userdetails = false;
+		$scope.moneytransfer = true;
+		var id=$cookieStore.get('usertoken');
+		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
+		$http.get(url).success(function(data,status){
+			$scope.uaccount = data[0].accounthash[0].accountNumber;
+			
+		});
+	}
+	//money transfer tab call ends
+	
+	//money transfer function call
+	$scope.moneytransfer = function(){
+		
+	}
+	//money transfer function call ends
+	
+	
 	//loginAction find user or bm
 	$scope.loginAction=function(role){
 		if($scope.uname!=null && $scope.password!=null && $scope.branch!=null && $scope.role!=null){
@@ -486,7 +615,15 @@ function mainController($scope,$http,$cookieStore,$location,$timeout){
 	};
 	//branch manager logout ends
 	
-	
+$scope.logoutUser=function(){
+		
+		$cookieStore.remove('role');
+		$cookieStore.remove('username');
+		$cookieStore.remove('usertoken');
+			$location.path('/');
+		
+	};
+	//users logout ends
 	
 	//register user starts
 	$scope.registerCustomer=function(){
