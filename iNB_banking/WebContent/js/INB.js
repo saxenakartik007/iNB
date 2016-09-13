@@ -5,6 +5,7 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
 	$rootScope.userDetails;
+	$rootScope.accountDetails;
 	$scope.UnregisteredUserDetails= [];
 	$scope.item;
 	$scope.loginAlertMessage = true;
@@ -319,6 +320,9 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 	
 	//get user details
 	$scope.getUserDetails=function(){
+		$scope.Userheading="My Details";
+		$scope.userdetails=true;
+		$scope.accountdetails=false;
 		var id=$cookieStore.get('usertoken');
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
@@ -326,8 +330,22 @@ function mainController($scope,$window,$rootScope,$http,$cookieStore,$location,$
 		});
 		
 	}
+	//get user details ends
 	
-	$scope.getUserDetails($cookieStore.get('usertoken'));
+	
+	//get account summary
+	$scope.getAccountSummary=function(){
+		$scope.Userheading="Account Details";
+		$scope.userdetails=false;
+		$scope.accountdetails=true;
+		var id=$cookieStore.get('usertoken');
+		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
+		$http.get(url).success(function(data,status){
+			$rootScope.accountDetails=data[0].accounthash[0];
+			
+		});
+	}
+	
 	//loginAction find user or bm
 	$scope.loginAction=function(role){
 		if($scope.uname!=null && $scope.password!=null && $scope.branch!=null && $scope.role!=null){
