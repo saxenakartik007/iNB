@@ -65,7 +65,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	$scope.userdetails = false;			
 	$scope.moneytransfer = false;			
 	$scope.transfermoneyerror;
-	
+	$scope.disable = false;
 	
 	//getAllUnregisteredUsers
 	$scope.getAllUnregisteredUsers=function(){
@@ -78,9 +78,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 				var branch = $cookieStore.get('bmbranch');
 				if(value.branch.branchName == branch)
 			    {
-			     console.log(value.branch.branchName + "\n" + branch);
-			     $scope.UnregisteredUserDetails.push(value);
-			     console.log($scope.UnregisteredUserDetails);
+					if(value.applicationStatus != "Rejected")
+						$scope.UnregisteredUserDetails.push(value);
 			    }
 			});
 				
@@ -772,9 +771,10 @@ inbapp.config(function($routeProvider){
 						var branch = $cookieStore.get('bmbranch');
 						if(value.branch.branchName == branch)
 						{
-							console.log(value.branch.branchName + "\n" + branch);
-							UnregisteredUserDetails.push(value);
-							console.log($scope.UnregisteredUserDetails);
+							//console.log(value.branch.branchName + "\n" + branch);
+							if(value.applicationStatus != "Rejected")
+								UnregisteredUserDetails.push(value);
+							//console.log($scope.UnregisteredUserDetails);
 							 
 						}
 					});

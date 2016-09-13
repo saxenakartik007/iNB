@@ -1,3 +1,15 @@
-
-
-    .zoom { border:5px solid #fff; margin:0 auto;}
+.parentimage { 
+	width: 300px;
+	height: 300px; 
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;
+} 
+.parentimage:hover {
+	-moz-transform: scale(2);
+	-webkit-transform: scale(2);
+	-o-transform: scale(2);
+	-ms-transform: scale(2);
+	transform: scale(2);
+} 
