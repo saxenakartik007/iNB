@@ -20,46 +20,54 @@
 
 
 
+<div class='wrapper row3' ng-show='showUserloginform'>
+	
+		<div class="container"  >
+    <div class="row" >
+        <div class="col-xs-6" style="text-align: center; padding-left: 50px;">
+            <h1 style="color: grey;margin-bottom: 30px;">Login As User  </h1>
+<form name="loginform" novalidate style="margin-left: 20px;">
+	<input type="number" class="form-control" ng-model="uname"   name="uname" placeholder="Enter customer id" required>
+	<p id="uval" class="text-danger" ng-show="loginform.uname.$touched && loginform.uname.$invalid">Customer id required!</p>
+	
 
-
-<div class="wrapper row3">
-  <div class="hoc container clear"> 
-    <div class="center btmspace-50">
-      <h3 class="font-x2 nospace">Login</h3>
-   </div>
-    <ul class="nospace group services">
-      <li class="one_third first">
-        <article>
-   <h1 style="color: grey;margin-bottom: 30px;">As User  </h1>
-<form name="loginform" novalidate>
-	<input type="text" class="form-control" ng-model="uname"  name="uname" placeholder="Enter username" required>
-	<p id="uval" class="text-danger" ng-show="loginform.uname.$touched && loginform.uname.$invalid">User name is required!</p>
 	<br>
 	<input type="password" class="form-control" ng-model="password"  name="password" placeholder="Enter password" required>
 	<p id="pval" class="text-danger" ng-show="loginform.password.$touched && loginform.password.$invalid">Password is required!</p>
-	<br>
-		<select name="branch" class="form-control"  ng-model="branch" required>
-		<option value="" disabled selected hidden >Select branch</option>
-		<option ng-repeat="i in branchDetails">{{i.branchName}}</option>
-		</select>
-		<p id="pval" class="text-danger" ng-show="loginform.branch.$touched && loginform.branch.$invalid">Branch is required!</p>	
-	<br>
+		<br>
 	
 	<div class="text-danger"  >
-	<p ng-model="loginformalert">{{loginformalert}}</p>	
+	<p ng-model="loginformalert" >{{loginformalert}}</p>	
 	</div>
-	<input style="float: right;" type="button" class="btn medium inverse" value="Login &raquo;" ng-click="loginAction(0)">
+	<input  style="float: right; margin-bottom: 65px; margin-top: 40px;" type="button" class="btn medium inverse" value="Login &raquo;" ng-click="loginAction(0)">
 </form>
    
-        </article>
-      </li>
-      
-       <li class="one_third" style="
-border-left:5px solid #4b92d7; border-right:5px solid #4b92d7;  padding-right: 40px; margin-right: -40px;">
-        <article >
-          <h1 style="color: grey;margin-bottom: 30px;   
-          ">As Admin  </h1>
-<form name="aloginform" class="inputfrom" novalidate>
+        </div>
+        <div class="col-xs-6" style="text-align: center; margin-top: 50px;  ">
+            <div style=' '>
+              <h3 style="color: grey;margin-bottom: 30px;">Or Login As  </h3>
+              <h3 style="text-decoration: none;"><a ng-click='viewBranchManagerloginForm()'>Branch Manager</a></h3>
+              <h4 style="margin-top: 25px;">or</h4>
+              <h3 ><a ng-click='viewAdminloginForm()'>Admin</a></h3>
+              
+            </div>
+        </div>
+   
+</div>
+	</div>  
+</div>
+
+
+
+
+
+<div class='wrapper row3' ng-show='showAdminloginform'>
+	
+		<div class="container" >
+    <div class="row" >
+        <div class="col-xs-6" style="text-align: center; padding-left: 50px;">
+            <h1 style="color: grey;margin-bottom: 30px;">Login As Admin  </h1>
+<form name="aloginform" novalidate style="margin-left: 20px;">
 	<input type="text" class="form-control" ng-model="aname"  name="aname" placeholder="Enter username" required>
 	<p id="uval" class="text-danger" ng-show="aloginform.aname.$touched && aloginform.aname.$invalid">User name is required!</p>
 	<br>
@@ -70,42 +78,23 @@ border-left:5px solid #4b92d7; border-right:5px solid #4b92d7;  padding-right: 4
 	<div class="text-danger">
 	
 		<span ng-model="aloginformalert">{{ aloginformalert }}</span>	
-	
 	</div>
-	<input style="float: right; margin-top: 45px;" type="button" class="btn medium inverse" value="Login &raquo;" ng-click="loginAdmin()">
-</form>
-         
-        </article>
-      </li >
-     
-      <li class="one_third" >
-        <article>
-       <h1 style="color: grey;margin-bottom: 30px;">As Branch Manager  </h1>
-<form name="loginform1" novalidate>
-	<input type="text" class="form-control" ng-model="buname"  name="buname" placeholder="Enter username" required>
-	<p id="uval" class="text-danger" ng-show="loginform1.buname.$touched && loginform1.buname.$invalid">User name is required!</p>
-	<br>
-	<input type="password" class="form-control" ng-model="bpassword"  name="bpassword" placeholder="Enter password" required>
-	<p id="pval" class="text-danger" ng-show="loginform1.bpassword.$touched && loginform1.bpassword.$invalid">Password is required!</p>
-	<br>
-		<select name="bbranch" class="form-control"  ng-model="bbranch" required>
-		<option value="" disabled selected hidden >Select branch</option>
-		<option ng-repeat="i in branchDetails">{{i.branchName}}</option>
-		</select>
-		<p id="pval" class="text-danger" ng-show="loginform1.bbranch.$touched && loginform1.bbranch.$invalid">Branch is required!</p>	
-	<br>
-	
-	<div class="text-danger"  >
-	<p ng-model="loginformalert1">{{loginformalert1}}</p>	
-	</div>
-	<input style="float: right;" type="button" class="btn medium inverse" value="Login &raquo;" ng-click="loginAction(1)">
-</form>
-        </article>
-      </li>
-     
-    </ul>
-    <div class="clear"></div>
-  </div>
+	<input style="float: right; margin-bottom: 58px; margin-top: 40px;" type="button" class="btn medium inverse" value="Login &raquo;" ng-click="loginAdmin()">
+	</form>
+   
+        </div>
+        <div class="col-xs-6" style="text-align: center; margin-top: 50px;  ">
+            <div style=' '>
+              <h3 style="color: grey;margin-bottom: 30px;">Or Login As  </h3>
+              <h3 style="text-decoration: none;"><a ng-click='viewBranchManagerloginForm()'>Branch Manager</a></h3>
+              <h4 style="margin-top: 25px;">or</h4>
+              <h3 ><a ng-click='viewUserloginForm()'>User</a></h3>
+              
+            </div>
+        </div>
+   
+</div>
+	</div>  
 </div>
 
 
@@ -125,11 +114,44 @@ border-left:5px solid #4b92d7; border-right:5px solid #4b92d7;  padding-right: 4
 
 
 
-
-
-
-
-
-
-
+<div class='wrapper row3' ng-show='showBranchManagerloginform'>
+	
+		<div class="container" >
+    <div class="row" >
+        <div class="col-xs-6" style="text-align: center; padding-left: 50px;">
+            <h1 style="color: grey;margin-bottom: 30px;">Login As Branch Manager  </h1>
+<form name="loginform1" novalidate style="margin-left: 20px;">
+		<input type="text" class="form-control" ng-model="buname"    name="buname" placeholder="Enter username" required>
+	<p id="uval" class="text-danger" ng-show="loginform1.buname.$touched && loginform1.buname.$invalid">User name is required!</p>
+	<br>
+	<input type="password" class="form-control" ng-model="bpassword"   name="bpassword" placeholder="Enter password" required>
+	<p id="pval" class="text-danger" ng-show="loginform1.bpassword.$touched && loginform1.bpassword.$invalid">Password is required!</p>
+	<br>
+		<select name="bbranch" class="form-control"  ng-model="bbranch" required>
+		<option value="" disabled selected hidden >Select branch</option>
+		<option ng-repeat="i in branchDetails">{{i.branchName}}</option>
+		</select>
+		<p id="pval" class="text-danger" ng-show="loginform1.bbranch.$touched && loginform1.bbranch.$invalid">Branch is required!</p>	
+	<br>
+	
+	<div class="text-danger"  >
+	<p ng-model="loginformalert1" >{{loginformalert1}}</p>	
+	</div>
+	<input style="float: right;  margin-bottom: 50px;" type="button" class="btn medium inverse" value="Login &raquo;" ng-click="loginAction(1)">
+	</form>
+   
+        </div>
+        <div class="col-xs-6" style="text-align: center; margin-top: 50px;  ">
+            <div style=' '>
+              <h3 style="color: grey;margin-bottom: 30px;">Or Login As  </h3>
+              <h3 style="text-decoration: none;"><a ng-click='viewAdminloginForm()'>Admin</a></h3>
+              <h4 style="margin-top: 25px;">or</h4>
+              <h3 ><a ng-click='viewUserloginForm()'>User</a></h3>
+              
+            </div>
+        </div>
+   
+</div>
+	</div>  
+</div>
 
