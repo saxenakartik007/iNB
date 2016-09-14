@@ -34,35 +34,32 @@
 					<option value="Saving">Savings</option>
 					<option value="Current">Current</option>
 				</select>
-				<p style="font-size: .5em" class="text-danger" ng-show="userform.userbranch.$touched && userform.userbranch.$invalid">Branch is required!</p>
-				<br>
+				<p style="font-size: .5em" class="text-danger" ng-show="userform.accounttype.$touched && userform.accounttype.$invalid">Select the Account Type!</p>
+				<p></p>
 				<input type="text" class="form-control" ng-model="userfname"  name="userfname" placeholder="Enter First Name" required>
 				<p style="font-size: .5em" class="text-danger" ng-show="userform.userfname.$touched && userform.userfname.$invalid">First Name is required!</p>
-				<br>
+				<p></p>
 				<input type="text" class="form-control" ng-model="userlname"  name="userlname" placeholder="Enter Last Name" required>
 				<p style="font-size: .5em" class="text-danger" ng-show="userform.userlname.$touched && userform.userlname.$invalid">Last Name is required!</p>
-				<br>
+				<p></p>
 				<input type="email" class="form-control" ng-model="useremail"  name="useremail" placeholder="Enter Email" required>
 				<p  style="font-size: .5em"class="text-danger" ng-show="userform.useremail.$touched && userform.useremail.$invalid">Email is required!</p>
-				<br>
+				<p></p>
 				<input type="number"   pattern=".{10,10}" class="form-control" ng-model="userphone"  name="userphone" placeholder="Enter Phone number" required>
 				<p style="font-size: .5em" class="text-danger" ng-show="userform.userphone.$touched && userform.userphone.$invalid">Phone number is required!</p>
-				<br>
+				<p></p>
 				<input type="text" class="form-control" ng-model="useraddress"  name="useraddress" placeholder="Enter Address" required>
 				<p style="font-size: .5em" class="text-danger" ng-show="userform.useraddress.$touched && userform.useraddress.$invalid">Address is required!</p>
-				<br>
+				<p></p>
 				<input type="date" class="form-control" ng-model="userdate"  name="userdate" placeholder="Enter Date of Birth" required>
 				<p style="font-size: .5em" class="text-danger" ng-show="userform.userdate.$touched && userform.userdate.$invalid">Date of birth is required!</p>
-				<br>
+				<p></p>
 				<select class="form-control" ng-model="userbranch" name="userbranch" required>
 					<option value="" disabled selected hidden>Select Branch</option>
 					<option ng-repeat="i in branchDetails">{{ i.branchName }}</option>
 				</select>
 				<p style="font-size: .5em" class="text-danger" ng-show="userform.userbranch.$touched && userform.userbranch.$invalid">Branch is required!</p>
-				<br>
-				<div style="font-size: .5em" class="alert alert-danger">
-				
-				</div>
+				<p></p>
 				<input style="float: right;" type="button"  ng-disabled="userform.$invalid" class="btn medium inverse" value="Continue" ng-click="createAccount()">
 			</form>
 		</div>
