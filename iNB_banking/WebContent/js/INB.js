@@ -59,7 +59,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	$scope.adminheading='Branch List';
 	$scope.Branchheading='Unregistered Users';
 	$scope.branchmanagername=$cookieStore.get('username');
-	$scope.username=$cookieStore.get('username');
+	$scope.username=$cookieStore.get('customername');
 	console.log("Initially"+$scope.branchmanagername);
 	$scope.accountdetails = false;			
 	$scope.userdetails = false;			
@@ -565,24 +565,32 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	//changepassword
 	$scope.changePassword=function(){
 		if($scope.ocpassword!=oldpassword)
-	{
-		//	$scope.ocpasswordalert='Wrong Old Password';
+		{
+			console.log("old pass"+$scope.ocpassword+" "+oldpassword);
 			bootbox.alert('Wrong Old Password');
-	}
-		
+		}
 		else if($scope.rcpassword!=$scope.ncpassword){
-			//$scope.rcpasswordalert='Password do not Match';
 			bootbox.alert('Password do not Match');
 		}
-		
 		else{
-			
-			///rest call
-			
-		}
+			$http({
+				method : 'PUT',
+				url :'http://10.20.14.83:9000/registeredcustomer/changepassword',
+				headers : {
+					'Content-Type' : 'application/json',
+					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+				},
+				data:{
+					customerId : $cookieStore.get('username'),
+					newPassword : $scope.ncpassword
+				}
+			}).then(function successCallback(response) {
+				bootbox.alert(response.data['Success']);
+				$location.path('/userpage');
+			})
 	}
 	
-	
+	}
 	//login admin starts
 	$scope.loginAdmin=function(){
 		if($scope.aname!=null && $scope.apassword!=null){
