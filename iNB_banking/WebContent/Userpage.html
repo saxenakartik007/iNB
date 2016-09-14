@@ -26,11 +26,11 @@
 			<br>
 			<div class="fl_left" style="margin-right: 10px;" >
 				<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getAccountSummary()">Account Summary</button>
-				<br>
+				<p></p>
 				<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="transferMoney()">Transfer Money</button>
-				<br>
+				<p></p>
 				<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getUserDetails()">View my profile</button>
-				<br>
+				<p></p>
 				 
 			</div>
 			<div>
@@ -99,14 +99,18 @@
 				</div>
 				
 			</div>
-			<div ng-show="moneytransfer" class="table-responsive" style='overflow: auto;  height: 370px ;'>		
+			<div ng-show="moneytransfer" class="table-responsive" style='height: 370px ;'>		
+
 				<form name="moneytransferform" novalidate style="margin-bottom: 20px;">
 					<p>User Account Number</p>
 					<input type="number" class="form-control" ng-model="uaccount"  name="uaccount" ng-readonly = "true">
 					<p></p>
 					<p>Transfer Account Number</p>
-					<input type="number" class="form-control" ng-model="raccount"  name="raccount" placeholder="Enter Transfer Account number" required>
+					<input type="number" class="form-control" ng-model="raccount"  name="raccount" placeholder="Enter Transfer Account number" ng-blur="getusername()"required>
 					<p class="text-danger" ng-show="moneytransferform.raccount.$touched && moneytransferform.raccount.$invalid">Transfer Account number is required!</p>
+					<p></p>
+					<p>Receiver's Name</p>
+					<input type="text" class="form-control" ng-model="rname"  name="rname" ng-readonly = "true">
 					<p></p>
 					<p>Amount</p>
 					<input type="number" class="form-control" ng-model="mtamount"  name="mtamount" placeholder="Enter Transfer Amount" required>

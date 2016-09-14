@@ -20,14 +20,14 @@
 		<br>
 		<div class="fl_left" style="margin-right: 10px;" >
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getAllBranches()">View Branches</button>
-			<br>
+			<p></p>
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranch()">Add a Branch</button>
-			<br>
+			<p></p>
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getBranchManagers()">View Managers</button>
-			<br>
+			<p></p>
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranchMgr()">Add Manager</button>
-			<br>
-			<br>
+			<p></p>
+			<p></p>
 		</div>
 	<div>
 	
@@ -69,19 +69,19 @@
 	<form name="AddBranchForm"  style="margin-bottom: 20px;">
 	<input type="text" class="form-control" ng-model="bifsc"  name="bifsc" placeholder="Enter IFSC code" required>
 	<p style="font-size: 1em" id="bifscval" class="text-danger" ng-show="AddBranchForm.bifsc.$touched && AddBranchForm.bifsc.$invalid">IFSC code is required!</p>
-	<br>
+	<p></p>
 	<input type="text" class="form-control" ng-model="bname"  name="bname" placeholder="Enter Branch Name" required>
 	<p style="font-size: " id="bnameval" class="text-danger" ng-show="AddBranchForm.bname.$touched && AddBranchForm.bname.$invalid">Branch name is required!</p>
-	<br>
+	<p></p>
 	
 	<input type="text" class="form-control" ng-model="badd"  name="badd" placeholder="Enter Branch Address" required>
 	<p  style="font-size: " id="baddval" class="text-danger" ng-show="AddBranchForm.badd.$touched && AddBranchForm.badd.$invalid">Branch address is required!</p>
-	<br>
+	<p></p>
 	
 	<input type="number" pattern=".{10,10}"   class="form-control" ng-model="bcontact"  name="bcontact" placeholder="Enter Contact No." required>
 	<p style="font-size: " id="bcontval" class="text-danger" ng-show="AddBranchForm.bcontact.$touched && AddBranchForm.bcontact.$invalid">Contact number is required!</p>
-	<br>
-	<br>
+	<p></p>
+	<p></p>
 	<div class="text-danger">
 	{{errormsg}}
 	</div>
@@ -127,37 +127,37 @@
 	<form name="Mgrform" novalidate style="margin-bottom: 20px;">
 	<input type="text" class="form-control" ng-model="mgrfname"  name="mgrfname" placeholder="Enter First Name" required>
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrfname.$touched && Mgrform.mgrfname.$invalid">First Name is required!</p>
-	<br>
+	<p></p>
 	<input type="text" class="form-control" ng-model="mgrlname"  name="mgrlname" placeholder="Enter Last Name" required>
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrlname.$touched && Mgrform.mgrlname.$invalid">Last Name is required!</p>
-	<br>
+	<p></p>
 	<input type="text" class="form-control" ng-model="mgruname"  name="mgruname" placeholder="Enter User Name" required>
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgruname.$touched && Mgrform.mgruname.$invalid">User Name is required!</p>
-	<br>
+	<p></p>
 	<input type="password" class="form-control" ng-model="mgrpsw1"  name="mgrpsw1" placeholder="Enter Password" required>
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrpsw1.$touched && Mgrform.mgrpsw1.$invalid">Password is required!</p>
-	<br>
+	<p></p>
 	<input type="password" class="form-control" ng-model="mgrpsw2"  name="mgrpsw2" placeholder="Confirm Password" required>
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrpsw2.$touched && Mgrform.mgrpsw2.$invalid">Password is required!</p>
-	<br>
+	<p></p>
 	<input type="email" class="form-control" ng-model="mgremail"  name="mgremail" placeholder="Enter Email" required>
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$invalid">Email is required!</p>
-	<br>
+	<p></p>
 	<input type="text" class="form-control" ng-model="mgrphone"  name="mgrphone" placeholder="Enter Phone number" required>
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrphone.$touched && Mgrform.mgrphone.$invalid">Phone number is required!</p>
-	<br>
+	<p></p>
 	<input type="text" class="form-control" ng-model="mgraddress"  name="mgraddress" placeholder="Enter Address" required>
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgraddress.$touched && Mgrform.mgraddress.$invalid">Address is required!</p>
-	<br>
+	<p></p>
 	<input type="date" class="form-control" ng-model="mgrdate"  name="mgrdate" placeholder="Enter Date" required>
-	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrdate.$touched && Mgrform.mgrdate.$invalid">Date is required!</p>
-	<br>
+	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrdate.$touched && Mgrform.mgrdate.$invalid" >Date is required!</p>
+	<p></p>
 	<select class="form-control" ng-model="mgrbranch" name="mgrbranch" required>
 		<option value="" disabled selected hidden>Select Branch</option>
 		<option ng-repeat="i in branchDetails">{{ i.branchName }}</option>
 	</select>
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrbranch.$touched && Mgrform.mgrbranch.$invalid">Branch is required!</p>
-	<br>
+	<p></p>
 	
 	<input style="float: right;" type="button"  ng-disabled="Mgrform.$invalid" class="btn medium inverse" value="ADD Branch Manager" ng-click="addbranchmgr()">
 				</form>
