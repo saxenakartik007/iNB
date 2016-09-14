@@ -20,6 +20,8 @@ File: Layout CSS
 .row3, .row3 a{}
 .row4, .row4 a{}
 .row5, .row5 a{}
+.row10, .row10 a{background: #EEEEEE;}
+
 
 
 /* Top Bar
@@ -46,7 +48,7 @@ File: Layout CSS
 
 /* Page Intro
 --------------------------------------------------------------------------------------------------------------- */
-#pageintro{padding:150px 0;}
+#pageintro{padding:100px 0;}
 
 #pageintro li article > div *{margin:0;}
 #pageintro li article > div:first-child *{margin:20px 0 0 0;}
@@ -72,10 +74,10 @@ File: Layout CSS
 .services article{display:block; position:relative; min-height:80px; padding:0 0 0 40px;}
 .services article *{margin:0;}
 .services article i{display:block; position:absolute; top:0; left:0; font-size:24px;}
-.services article .heading{margin-bottom:10px; font-size:1.2rem; text-transform:uppercase;}
+.services article .heading{margin-bottom:10px; color:#4b92d7; font-size:1.2rem; text-transform:uppercase;}
 .services article p{margin-bottom:10px;}
 
-.elements{margin-bottom:50px;}
+.elements{margin-bottom:50px; }
 .elements li{}
 .elements li:nth-child(-n+3){}
 .elements li:last-child{margin-bottom:0;}/* Used for mobile devices when elements stack */
@@ -141,7 +143,7 @@ File: Layout CSS
 /* Copyright
 --------------------------------------------------------------------------------------------------------------- */
 #copyright{padding:30px 0; border-top:1px solid;}
-#copyright *{margin:0; padding:0;}
+#copyright *{margin:0; padding:0; color:#4b92d7;}
 
 
 /* Transition Fade
@@ -266,41 +268,41 @@ td{border-width:0 1px;}
 /* Colours
 --------------------------------------------------------------------------------------------------------------- */
 body{color:#888888; background-color:#EEEEEE;}
-a{color:#00C853;}
+a{color:#4b92d7;}
 a:active, a:focus{background:transparent;}/* IE10 + 11 Bugfix - prevents grey background */
 hr, .borderedbox{border-color:#D7D7D7;}
 label span{color:#FF0000; background-color:inherit;}
-input:focus, textarea:focus, *:required:focus{border-color:#00C853;}
+input:focus, textarea:focus, *:required:focus{border-color:#4b92d7;}
 .overlay{color:#FFFFFF; background-color:inherit;}
 .overlay::after{color:inherit; background-color:rgba(0,0,0,.55);}
-.overlay.coloured::after{color:#292B2C; background-color:rgba(233,54,90,.5);/* #00C853 */}
+.overlay.coloured::after{color:#292B2C; background-color:rgba(233,54,90,.5);/* #4b92d7 */}
 
-.btn, .btn.inverse:hover{color:#FFFFFF; background-color:#00C853; border-color:#00C853;}
+.btn, .btn.inverse:hover{color:#FFFFFF; background-color:#4b92d7; border-color:#4b92d7;}
 .btn:hover, .btn.inverse{color:inherit; background-color:transparent; border-color:inherit;}
 
 
 /* Rows */
-.row0{color:#888888; background-color:#EEEEEE;}
-.row1{color:#888888; background-color:#FFFFFF;}
-.row2{color:#FFFFFF; background-color:#00C853;}
-.row3{color:#888888; background-color:#FFFFFF;}
+.row0{    color: #4b92d7; background-color:#EEEEEE;}
+.row1{color:#888888; }
+.row2{color:#FFFFFF; background-color:#4b92d7;}
+.row3{color:#888888; }
 .row4{color:#888888; background-color:#EEEEEE;}
 .row5, .row5 a{color:#888888; background-color:#EEEEEE;}
 
 
 /* Flexslider Overrides */
-.flex-control-paging li a{background-color:#558B2F;/* #00C853 */ border-color:rgba(233,54,90,0);/* #00C853 */}
-.flex-control-paging li a.flex-active{background-color:rgba(233,54,90,0);/* #00C853 */ border-color:#558B2F;/* #00C853 */}
+.flex-control-paging li a{background-color:#558B2F;/* #4b92d7 */ border-color:rgba(233,54,90,0);/* #4b92d7 */}
+.flex-control-paging li a.flex-active{background-color:rgba(233,54,90,0);/* #4b92d7 */ border-color:#558B2F;/* #4b92d7 */}
 
 
 /* Header */
-#header #logo *{color:inherit;}
+#header #logo *{color:inherit;     margin-top: -30px;}
 
 
 /* Content Area */
 .elements figure figcaption{color:#888888; background:#FFFFFF;}
 .elements figure figcaption a{color:inherit; background:inherit;}
-.elements figure:hover figcaption a{color:#FFFFFF; background:#00C853;}
+.elements figure:hover figcaption a{color:#FFFFFF; background:#4b92d7;}
 
 
 /* Coloured Boxes */
@@ -316,8 +318,8 @@ input:focus, textarea:focus, *:required:focus{border-color:#00C853;}
 
 #footer input, #footer button{border-color:transparent;}
 #footer input{color:#333333; background-color:#DADADA;}
-#footer input:focus{border-color:#00C853;}
-#footer button{color:#FFFFFF; background-color:#00C853;}
+#footer input:focus{border-color:#4b92d7;}
+#footer button{color:#FFFFFF; background-color:#4b92d7;}
 
 
 /* Copyright */
@@ -325,28 +327,28 @@ input:focus, textarea:focus, *:required:focus{border-color:#00C853;}
 
 
 /* Navigation */
-#mainav ul.clear, #mainav li a{border-color:#558B2F;}
+#mainav ul.clear, #mainav li a{border-color:#4b92d7;}
 #mainav li a{color:inherit; background-color:inherit;}
 #mainav .active a, #mainav a:hover, #mainav li:hover > a{color:#ffffff; background-color:inherit;}
 #mainav li li a, #mainav .active li a{color:#FFFFFF; background-color:rgba(0,0,0,.6); border-color:rgba(0,0,0,.6);}
-#mainav li li:hover > a, #mainav .active .active > a{color:#FFFFFF; background-color:#00C853;}
+#mainav li li:hover > a, #mainav .active .active > a{color:#FFFFFF; background-color:#4b92d7;}
 #mainav form select{color:#FFFFFF; background-color:#000000;}
 
 #breadcrumb a{color:inherit; background-color:inherit;}
-#breadcrumb li:last-child a{color:#00C853;}
+#breadcrumb li:last-child a{color:#4b92d7;}
 
 .container .sidebar nav a{color:inherit; border-color:#D7D7D7;}
-.container .sidebar nav a:hover{color:#00C853;}
+.container .sidebar nav a:hover{color:#4b92d7;}
 
 .pagination a, .pagination strong{border-color:#D7D7D7;}
-.pagination .current *{color:#FFFFFF; background-color:#00C853;}
+.pagination .current *{color:#FFFFFF; background-color:#4b92d7;}
 
-#backtotop{color:#FFFFFF; background-color:#00C853;}
+#backtotop{color:#FFFFFF; background-color:#4b92d7;}
 
 
 /* Tables + Comments */
 table, th, td, #comments .avatar, #comments input, #comments textarea{border-color:#D7D7D7;}
-#comments input:focus, #comments textarea:focus, #comments *:required:focus{border-color:#00C853;}
+#comments input:focus, #comments textarea:focus, #comments *:required:focus{border-color:#4b92d7;}
 th{color:#FFFFFF; background-color:#373737;}
 tr, #comments li, #comments input[type="submit"], #comments input[type="reset"]{color:inherit; background-color:#FBFBFB;}
 tr:nth-child(even), #comments li:nth-child(even){color:inherit; background-color:#F7F7F7;}

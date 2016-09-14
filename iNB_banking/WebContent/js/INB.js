@@ -505,11 +505,21 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	
 	//loginAction find user or bm
 	$scope.loginAction=function(role){
-		if($scope.uname!=null && $scope.password!=null && $scope.branch!=null && $scope.role!=null){
-			if($scope.role=="branch_manager")
-				url="http://10.20.14.83:9000/branchmanager/login"
-			else
+		if(($scope.uname!=null && $scope.password!=null && $scope.branch!=null)||($scope.buname!=null && $scope.bpassword!=null && $scope.bbranch!=null)){
+			var name,pass,branch;
+			if(role==0){
 				url="http://10.20.14.83:9000/registeredcustomer"
+				name= $scope.uname;
+			   pass= $scope.password;
+				branch=$scope.branch;
+			}
+					else
+				{
+						url= "http://10.20.14.83:9000/branchmanager/login";
+							name= $scope.buname;
+						pass= $scope.bpassword;
+							branch=$scope.bbranch;			
+				}
 					$http({
 						method : 'PUT',
 						url :url,
@@ -518,22 +528,27 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 							'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
 						},
 						data:{
-							userName : $scope.uname,
-							password : $scope.password,
-							branchName:$scope.branch
+							userName : name,
+							password : pass,
+							branchName:branch
+							
 						}
 					}).then(function successCallback(response) {
 						if(response.data["Exception"]!=null){
-							$scope.loginformalert=response.data["Exception"];
+							if(role==1)
+							$scope.loginformalert1=response.data["Exception"];
+							else
+								$scope.loginformalert=response.data["Exception"];
+								
 							console.log(response);
 						}
 						else{
-							if($scope.role=='branch_manager'){
+							if(role==1){
 								console.log(response);
 								$cookieStore.put('role','branchmanager');
-								$cookieStore.put('username',$scope.uname);
+								$cookieStore.put('username',$scope.buname);
 								$cookieStore.put('branchmanagertoken',response.data.id);
-								$cookieStore.put('bmbranch',$scope.branch);
+								$cookieStore.put('bmbranch',$scope.bbranch);
 								$location.path('/manager');
 							}
 							else{
