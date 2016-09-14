@@ -62,7 +62,7 @@ File: Layout CSS
 
 /* Content Area
 --------------------------------------------------------------------------------------------------------------- */
-.container{padding:80px 0;}
+.container{padding-top:80px;}
 
 /* Content */
 .container .content{}
@@ -283,10 +283,12 @@ input:focus, textarea:focus, *:required:focus{border-color:#4b92d7;}
 
 /* Rows */
 .row0{    color: #4b92d7; background-color:#EEEEEE;}
-.row1{color:#888888; }
+.row1{color:#888888; background-image: url("../images/texture.png");
+    background-repeat: repeat; }
 .row2{color:#FFFFFF; background-color:#4b92d7;}
-.row3{color:#888888; }
-.row4{color:#888888; background-color:#EEEEEE;}
+.row3{color:#888888;  background-image: url("../images/texture.png");
+    background-repeat: repeat;  }
+.row4{color:#888888; background-color:#EEEEEE; }
 .row5, .row5 a{color:#888888; background-color:#EEEEEE;}
 
 

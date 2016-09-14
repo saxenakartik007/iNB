@@ -43,7 +43,7 @@ function readURL(input,k) {
 var oldpassword;
 var userdetails;
 
-function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,$window){
+function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,$window,$route){
 	
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
@@ -62,7 +62,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	$scope.Branchheading='Unregistered Users';
 	$scope.branchmanagername=$cookieStore.get('branchmanagername');
 	$scope.username=$cookieStore.get('customername');
-	
+	$scope.addmanagererror;
 	console.log("Initially"+$scope.branchmanagername);
 	$scope.accountdetails = false;			
 	$scope.userdetails = false;			
@@ -288,13 +288,19 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		$scope.adminbranch=false;
 		$scope.adminnewbranch=true;
 		$scope.adminmanager=false;
+		$scope.adminaddmanager=false;
 		
 	}
 	
 
-	$scope.addbranchmgr = function(){
+	$scope.addbranchmgr = function()
+	{
+		$scope.addmanagererror = "";
 		var branchitem;
-		$scope.getAllBranches();
+		var url='http://10.20.14.83:9000/branch';
+		$http.get(url).success(function(data,status){
+			$scope.branchDetails= data;	
+		});
 		
 		var branchDetails =$scope.branchDetails;
 		//console.log(branchDetails+"\n\n"+$scope.branchDetails);
@@ -309,39 +315,38 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		}
 		//console.log(branchitem);
 		//console.log($scope.mgruname+"\n"+$scope.mgrpsw1+"\n"+$scope.mgrfname+"\n"+$scope.mgrlname+"\n"+$scope.mgremail+"\n"+$scope.mgrphone+"\n"+$scope.mgraddress+"\n"+$scope.mgrdate);
-		if($scope.mgrpsw1==$scope.mgrpsw2){
-			$http({
-				method : 'POST',
-				url :'http://10.20.14.83:9000/branchmanager/',
-				headers : {
-					'Content-Type' : 'application/json',
-					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-				},
-				data : { 
-					"userName": $scope.mgruname,
-					"password": $scope.mgrpsw1,
-					"firstName": $scope.mgrfname,
-					"lastName": $scope.mgrlname,
-					"email": $scope.mgremail,
-					"phone": $scope.mgrphone,
-					"address": $scope.mgraddress,
-					"dateOfBirth": ($scope.mgrdate).getTime(),
-					"branchPOJO": branchitem
-				}
-			}).then(function successCallback(response) {
-				
-				$scope.getBranchManagers();
-				mymessage("Branch Manager Added successfully");	
-				
-					
-			},function successCallback(response){
-				mymessage("Error in Adding Branch Manager");	
-							});
-			}
-			else
-				mymessage("Passwords do not  match");	
-			
+		if($scope.mgrpsw1==$scope.mgrpsw2)
+		{
+				$http({
+					method : 'POST',
+					url :'http://10.20.14.83:9000/branchmanager/',
+					headers : {
+						'Content-Type' : 'application/json',
+						'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+					},
+					data : { 
+						"userName": $scope.mgruname,
+						"password": $scope.mgrpsw1,
+						"firstName": $scope.mgrfname,
+						"lastName": $scope.mgrlname,
+						"email": $scope.mgremail,
+						"phone": $scope.mgrphone,
+						"address": $scope.mgraddress,
+						"dateOfBirth": ($scope.mgrdate).getTime(),
+						"branchPOJO": branchitem
 					}
+				}).then(function successCallback(response) 
+				{	
+					bootbox.alert("Branch Manager Added successfully");
+					$scope.getBranchManagers();
+				},function errorCallback(response)
+				{
+					$scope.addmanagererror="Error in Adding Branch Manager";	
+				});
+		}
+		else
+			$scope.addmanagererror="Passwords do not  match";		
+	}
 	
 	//add new account
 	$scope.createAccount = function(){
@@ -424,14 +429,13 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 				}).then(function successCallback(response) {
 					if(response.data['Exception ']=='BranchAlreadyExistException'){
 						console.log(response.data);
-						$scope.getAllBranches();
-						mymessage("Branch Already Exists");	
+						$scope.errormsg = "Branch Already Exists";	
 					}
 					else{
 					var data = response.data;
-					console.log(response.data);
-				
-						 mymessage("Branch added");	
+						console.log(response.data);
+						bootbox.alert("Branch added");
+						$scope.getAllBranches();
 					}
 					
 				}, function errorCallback(response) {

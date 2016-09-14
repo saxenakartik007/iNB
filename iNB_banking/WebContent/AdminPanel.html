@@ -39,7 +39,7 @@
 	
 	<h1 style="margin-left: 10%">{{adminheading}}</h1>
 
-	<div ng-show="adminbranch" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+	<div ng-show="adminbranch" class="table-responsive" style='overflow: auto;  height: 450px ;'>
 						  <table class="table" >
 						    <thead>
 						      <tr>
@@ -70,7 +70,7 @@
 	<div>
 			
 		
-					<div ng-show="adminnewbranch" style='overflow: auto;  height: 370px ;'>
+					<div ng-show="adminnewbranch" style='overflow: auto;  height: 450px ;'>
 						 
 	<form name="AddBranchForm"  style="margin-bottom: 20px;">
 	<input type="text" class="form-control" ng-model="bifsc"  name="bifsc" placeholder="Enter IFSC code" required>
@@ -98,7 +98,7 @@
 	
 	
 				  	
-				  	<div ng-show="adminmanager" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+				  	<div ng-show="adminmanager" class="table-responsive" style='overflow: auto;  height: 450px ;'>
 	 <table class="table" >
 	   <thead>
 	     <tr>
@@ -127,7 +127,7 @@
 	</div>
 
 	
-	<div ng-show="adminaddmanager"  style='overflow: auto;  height: 370px ;'>
+	<div ng-show="adminaddmanager"  style='overflow: auto;  height: 450px ;'>
 		
 		
 	<form name="Mgrform" novalidate style="margin-bottom: 20px;">
@@ -164,7 +164,8 @@
 	</select>
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrbranch.$touched && Mgrform.mgrbranch.$invalid">Branch is required!</p>
 	<p></p>
-	
+	<p class="text-danger">{{ addmanagererror }}</p>
+	<p></p>
 	<input style="float: right;" type="button"  ng-disabled="Mgrform.$invalid" class="btn medium inverse" value="ADD Branch Manager" ng-click="addbranchmgr()">
 				</form>
 			
