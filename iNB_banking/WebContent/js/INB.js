@@ -40,6 +40,7 @@ function readURL(input,k) {
 }
 
 var oldpassword;
+var userdetails;
 
 function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,$window){
 	
@@ -64,9 +65,13 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	$scope.accountdetails = false;			
 	$scope.userdetails = false;			
 	$scope.moneytransfer = false;			
-	$scope.transfermoneyerror;
+	$scope.transfermoneyerror = "";
 	$scope.changepasswordhead=$cookieStore.get('customername');
-
+	
+	//settting the date parameters
+	var today = new Date();
+	$scope.maxDate = new Date(today.getFullYear(),today.getMonth() , today.getDate());
+	  
 	
 	//getAllUnregisteredUsers
 	$scope.getAllUnregisteredUsers=function(){
@@ -442,8 +447,36 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 			$rootScope.accountDetails=data[0].accounthash[0];
 			
 		});
+		
 	}
 	//get account summary ends
+	
+	//get user name of Recivers account
+	$scope.getusername = function(){
+		if($scope.uaccount != $scope.raccount)
+		{
+			$scope.transfermoneyerror= "";
+			$scope.rname = " ";
+			var url='http://10.20.14.83:9000/registeredcustomer/';
+			$http.get(url).success(function(data,status){
+				angular.forEach(data,function(value){
+					if(value.accounthash[0].accountNumber == $scope.raccount)
+					{
+						$scope.rname = (value.firstName +" " + value.lastName);
+						console.log(value.firstName);
+					}
+				})
+				if($scope.rname == " ")
+				{
+					$scope.transfermoneyerror = "No such account Exists!"
+				}
+			});
+		}
+		else
+		{
+			$scope.transfermoneyerror = "Please Enter Diffrent Receiver's Account Number";
+		}
+	}
 	
 	//money transfer tab call
 	$scope.transferMoney = function(){
@@ -457,9 +490,12 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 			$scope.uaccount = data[0].accounthash[0].accountNumber;
 			
 		});
+		
+		
 	}
 	//money transfer tab call ends
-		
+	
+	
 	//money transfer function call
 
 	$scope.moneytransferfun = function(){
@@ -492,8 +528,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 				
 				if(response.data["Status"]=='Failed'){
 					console.log(response.data["Message"]);
-					mymessage(response.data["Message"]);
-					$scope.transfermoneyerror = "Invalid"
+					//mymessage(response.data["Message"]);
+					$scope.transfermoneyerror = "Invalid Account Number"
 				}
 				else
 					bootbox.alert(response.data["Message"]);
