@@ -496,7 +496,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 					$scope.transfermoneyerror = "Invalid"
 				}
 				else
-					mymessage(response.data["Message"]);
+					bootbox.alert(response.data["Message"]);
 			});
 		}
 	}
