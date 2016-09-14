@@ -1,4 +1,4 @@
-<div ng-init="getAccountSummary()">
+<div ng-init="getAccountSummary()" ng-controller="MainController">
 	<div class="wrapper row2">
 	  <header id="header" class="hoc clear"> 
 	    <div id="logo" class="one_third first">
@@ -113,7 +113,7 @@
 					<p class="text-danger" ng-show="moneytransferform.mtamount.$touched && moneytransferform.mtamount.$invalid">Transfer Amount is required!</p>
 					<p></p>
 					<p class="text-danger">{{ transfermoneyerror }}</p>
-					<input style="float: right;" type="button"  ng-disabled="moneytransferform.$invalid" class="btn medium inverse" value="Transfer Money" ng-click="moneytransfer()">
+					<input style="float: right;" type="button"  ng-disabled="moneytransferform.$invalid" class="btn medium inverse" value="Transfer Money" ng-click="moneytransferfun()">
 				</form>
 			</div>
 		</div>
@@ -121,9 +121,7 @@
 </div>
 
 
+<div ng-hide="loginAlertMessage"  class='hoc clear'><div style="float: right; margin: 5%;margin-right: 5%;background: #00C853;padding: 15px;bottom: 0px;right: 0px;border-color: white;border-width: 2px;position: absolute;z-index: 10;border-radius: 25px;border: 4px solid #969696;color: white;font-size: 1.2em;" >{{mycustomMessage}}</div></div> 	
 
 
 
-
-
-	

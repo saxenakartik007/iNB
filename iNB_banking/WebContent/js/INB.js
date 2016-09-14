@@ -39,7 +39,7 @@ function readURL(input,k) {
     }
 }
 
-
+var oldpassword;
 
 function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,$window){
 	
@@ -65,7 +65,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	$scope.userdetails = false;			
 	$scope.moneytransfer = false;			
 	$scope.transfermoneyerror;
-	
+	$scope.changepasswordhead=$cookieStore.get('customername');
 
 	
 	//getAllUnregisteredUsers
@@ -79,9 +79,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 				var branch = $cookieStore.get('bmbranch');
 				if(value.branch.branchName == branch)
 			    {
-			     console.log(value.branch.branchName + "\n" + branch);
-			     $scope.UnregisteredUserDetails.push(value);
-			     console.log($scope.UnregisteredUserDetails);
+					if(value.applicationStatus != "Rejected")
+						$scope.UnregisteredUserDetails.push(value);
 			    }
 			});
 				
@@ -187,49 +186,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	
 
  	
-   ///Get Age document, pass users objectid;     
-        $scope.getAgeDoc=function(userId)
-        {
-        	
-        	var url='http://10.20.14.83:9000/ageproofdocument/'+userId;
-        	$http({
-            	    method : 'GET',
-        		url : url,
-        		headers : {
-        			'Content-Type' : 'application/json',
-        			'Access-Control-Allow-Origin': 'http://10.20.14.83:9000'
-        		}
-        	    }).then(function successCallback(response) {
-        		var msg = response.data;
-        			//$scope.srcname="data:image/png;base64,"+msg;
-        			
-        	}, function errorCallback(response) {
-        		mymessage("Server Error. Try After Some time: " + response);
-        	});
-        }
-
-        
-      ///Get Address document, pass users objectid;     
-        $scope.getAddDoc=function(userId)
-        {
-        	
-        	var url='http://10.20.14.83:9000/addressproofdocument/'+userId;
-        	$http({
-            	    method : 'GET',
-        		url : url,
-        		headers : {
-        			'Content-Type' : 'application/json',
-        			'Access-Control-Allow-Origin': 'http://10.20.14.83:9000'
-        		}
-        	    }).then(function successCallback(response) {
-        		var msg = response.data;
-        			//$scope.srcname="data:image/png;base64,"+msg;
-        			
-        	}, function errorCallback(response) {
-        		mymessage("Server Error. Try After Some time: " + response);
-        	});
-        }
-
+   
         
         
         
@@ -286,7 +243,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 				$location.path('/manager');
 			},function errorCallBack(response){
 				alert("Some error occured");
-			})
+			});
 		}
 	}
 	
@@ -502,10 +459,46 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		});
 	}
 	//money transfer tab call ends
-	
-	//money transfer function call
-	$scope.moneytransfer = function(){
 		
+	//money transfer function call
+
+	$scope.moneytransferfun = function(){
+		var balance;
+		var id=$cookieStore.get('usertoken');
+		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
+		$http.get(url).success(function(data,status){
+			balance = data[0].accounthash[0].balance;
+			
+		});
+		if($scope.mtamount > balance)
+		{
+			$scope.transfermoneyerror = 'Insufficient balance for Money Transfer';
+		}
+		else
+		{
+			$http({
+				method : 'PUT',
+				url : 'http://10.20.14.83:9000/registeredcustomer/transfer',
+				headers : {
+					'Content-Type' : 'application/json',
+					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+				},
+				data:{
+					clientAccount : $scope.uaccount,
+					recevierAccount : $scope.raccount,
+					amount: $scope.mtamount
+				}
+			}).then(function successCallback(response) {
+				
+				if(response.data["Status"]=='Failed'){
+					console.log(response.data["Message"]);
+					mymessage(response.data["Message"]);
+					$scope.transfermoneyerror = "Invalid"
+				}
+				else
+					mymessage(response.data["Message"]);
+			});
+		}
 	}
 	//money transfer function call ends
 	
@@ -539,15 +532,22 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 								console.log(response);
 								$cookieStore.put('role','branchmanager');
 								$cookieStore.put('username',$scope.uname);
-								$cookieStore.put('branchmanagertoken',response.data.id)
+								$cookieStore.put('branchmanagertoken',response.data.id);
+								$cookieStore.put('bmbranch',$scope.branch);
 								$location.path('/manager');
 							}
 							else{
 								console.log(response);
 								$cookieStore.put('role','user');
 								$cookieStore.put('username',$scope.uname);
-								
+								$cookieStore.put('customername',response.data.firstName);
 								$cookieStore.put('usertoken',response.data.id)
+								if($scope.password.length==4){
+									oldpassword=$scope.password;
+									$location.path('/password');
+									
+								}
+								else
 								$location.path('/userpage');
 							}
 							
@@ -560,6 +560,27 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		}
 	}
 	//loginAction find user or bm ends
+	
+	
+	//changepassword
+	$scope.changePassword=function(){
+		if($scope.ocpassword!=oldpassword)
+	{
+		//	$scope.ocpasswordalert='Wrong Old Password';
+			bootbox.alert('Wrong Old Password');
+	}
+		
+		else if($scope.rcpassword!=$scope.ncpassword){
+			//$scope.rcpasswordalert='Password do not Match';
+			bootbox.alert('Password do not Match');
+		}
+		
+		else{
+			
+			///rest call
+			
+		}
+	}
 	
 	
 	//login admin starts
@@ -650,7 +671,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 			}
 			else{
 				$cookieStore.remove('role');
-				$cookieStore.remove('branchmanagertoken')
+				$cookieStore.remove('branchmanagertoken');
+				$cookieStore.remove('bmbranch');
 				$location.path('/');
 		
 			}
@@ -767,6 +789,10 @@ inbapp.config(function($routeProvider){
 			controller: 'MainController',
 			templateUrl: 'uploaddocuments.html'
 		})
+		.when('/password', {
+			controller: 'MainController',
+			templateUrl: 'changepassword.html'
+		})
 	.when('/verification/:i', {
 			controller: function($scope, $routeParams, $http,$cookieStore) 
 			{
@@ -778,13 +804,76 @@ inbapp.config(function($routeProvider){
 						var branch = $cookieStore.get('bmbranch');
 						if(value.branch.branchName == branch)
 						{
-							console.log(value.branch.branchName + "\n" + branch);
-							UnregisteredUserDetails.push(value);
-							console.log($scope.UnregisteredUserDetails);
+							//console.log(value.branch.branchName + "\n" + branch);
+							if(value.applicationStatus != "Rejected")
+								UnregisteredUserDetails.push(value);
+							//console.log($scope.UnregisteredUserDetails);
+							 
 						}
 					});
 					$scope.item = UnregisteredUserDetails[index];
 					console.log(index+"\n"+UnregisteredUserDetails[index]+"\n"+$scope.item);
+					 
+					///Get Age document, pass users objectid;     
+			        $scope.getAgeDoc=function(userId)
+			        {
+			        	
+			        	var url='http://10.20.14.83:9000/ageproofdocument/'+userId;
+			        	$http({
+			            	    method : 'GET',
+			        		url : url,
+			        		headers : {
+			        			'Content-Type' : 'application/json',
+			        			'Access-Control-Allow-Origin': 'http://10.20.14.83:9000'
+			        		}
+			        	    }).then(function successCallback(response) {
+			        		var msg = response.data;
+			        		
+			        		if(msg.length!=undefined)
+			        			$scope.agesrcname="data:image/png;base64,"+msg;
+			        		
+				        		
+			        	}, function errorCallback(response) {
+			        		mymessage("Server Error. Try After Some time: " + response);
+			        	});
+			        }
+
+			        
+			      ///Get Address document, pass users objectid;     
+			        $scope.getAddDoc=function(userId)
+			        {
+			        	
+			        	var url='http://10.20.14.83:9000/addressproofdocument/'+userId;
+			        	$http({
+			            	    method : 'GET',
+			        		url : url,
+			        		headers : {
+			        			'Content-Type' : 'application/json',
+			        			'Access-Control-Allow-Origin': 'http://10.20.14.83:9000'
+			        		}
+			        	    }).then(function successCallback(response) {
+			        		var msg = response.data;
+			        		if(msg.length!=undefined)
+			        			$scope.addsrcname="data:image/png;base64,"+msg;
+			        			
+			        	}, function errorCallback(response) {
+			        		mymessage("Server Error. Try After Some time: " + response);
+			        	});
+			        }
+
+			        function mymessage(x){
+			    		$scope.mycustomMessage=x;
+			    		  $scope.loginAlertMessage=false; 
+			    	         $timeout(function () { $scope.loginAlertMessage = true;
+			    	          }, 3000);   
+			    		
+			    	}
+			        console.log("id" + $scope.item.id);
+			        $scope.addsrcname="images/ina.png";
+			        $scope.agesrcname="images/ina.png";
+			        
+					$scope.getAgeDoc($scope.item.id);
+					 $scope.getAddDoc($scope.item.id);
 				});
 				
 				
