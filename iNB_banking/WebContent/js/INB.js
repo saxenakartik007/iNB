@@ -12,6 +12,7 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']).directive('ngFiles',
     }
 } ]);
 
+
 function readURL(input,k) {
     if(k){
 	if (input.files && input.files[0]) {
@@ -59,8 +60,9 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	$scope.unregisterusers = true;
 	$scope.adminheading='Branch List';
 	$scope.Branchheading='Unregistered Users';
-	$scope.branchmanagername=$cookieStore.get('username');
+	$scope.branchmanagername=$cookieStore.get('branchmanagername');
 	$scope.username=$cookieStore.get('customername');
+	
 	console.log("Initially"+$scope.branchmanagername);
 	$scope.accountdetails = false;			
 	$scope.userdetails = false;			
@@ -220,35 +222,47 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	//approve or disapprove
 	$scope.verifyUser=function(state,user){
 		if(state==1){
-			var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/verify';
-			$http({
-				method : 'PUT',
-				url :url,
-				headers : {
-					'Content-Type' : 'application/json',
-					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-				}
-			}).then(function successCallBack(response){
-				mymessage("Email Sent");
-				$location.path('/manager');
-			},function errorCallBack(response){
-				alert("Some error occured");
-			})
+			bootbox.confirm("Are you sure of approving the applicant?", function(result) {
+				 if(result==true){
+					 var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/verify';
+						$http({
+							method : 'PUT',
+							url :url,
+							headers : {
+								'Content-Type' : 'application/json',
+								'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+							}
+						}).then(function successCallBack(response){
+							bootbox.alert("Email Sent");
+							$location.path('/manager');
+						},function errorCallBack(response){
+							bootbox.alert("Some error occured");
+						})
+				 }
+				 
+				}); 
+			
 		}
 		else{
-			var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/reject';
-			$http({
-				method : 'PUT',
-				url :url,
-				headers : {
-					'Content-Type' : 'application/json',
-					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-				}
-			}).then(function successCallBack(response){
-				$location.path('/manager');
-			},function errorCallBack(response){
-				alert("Some error occured");
-			});
+			bootbox.confirm("Are you sure of disapproving the applicant?", function(result) {
+				 if(result==true){
+					 var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/reject';
+						$http({
+							method : 'PUT',
+							url :url,
+							headers : {
+								'Content-Type' : 'application/json',
+								'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+							}
+						}).then(function successCallBack(response){
+							bootbox.alert("Rejection successful.")
+							$location.path('/manager');
+						},function errorCallBack(response){
+							bootbox.alert("Some error occured");
+						});
+				 } 
+				 });
+				 
 		}
 	}
 	
@@ -331,51 +345,58 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	
 	//add new account
 	$scope.createAccount = function(){
-		var type=$scope.accounttype.toUpperCase();
 		
-		var branchitem;
-		$scope.getAllBranches();
-		
-		var branchDetails =$scope.branchDetails;
-		for(i in branchDetails) {
-			//console.log(branchDetails[i]+"\n"+branchDetails[i].branchName);
-		    if(branchDetails[i].branchName == $scope.userbranch)
-		    {
-		    	branchitem = branchDetails[i];
-		    	break;
-		    }
-		}
-		$http({
-			method : 'POST',
-			url :'http://10.20.14.83:9000/unregistereduser',
-			headers : {
-				'Content-Type' : 'application/json',
-				'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-			},
-			data : { 
-				"firstName": $scope.userfname,
-				"lastName": $scope.userlname,
-				"email": $scope.useremail,
-				"phone": $scope.userphone,
-				"account":{
-					"accountType":type+"ACCOUNT"
-				},
-				"address": $scope.useraddress,
-				"dateOfBirth": ($scope.userdate).getTime(),
-				"branchPOJO": branchitem
-			}
-		}).then(function successCallback(response) {
-			mymessage("Registered Details.wait for confirmation");
-			console.log(response);
-			console.log(response);
-			console.log(response.data.email)
-			$cookieStore.put('newusermail', $scope.useremail); 
-			$location.path('/uploaddoc');
+		bootbox.confirm("Information once entered cannot be changed.\n\nDo you Want to Continue ?", function(result) 
+		{
+			if(result==true)
+			{
+				var type=$scope.accounttype.toUpperCase();
 				
-		},function successCallback(response){
-			mymessage("Error in adding account");
-		},function errorCallback(response) {
-			console.log(response.data);
+				var branchitem;
+				$scope.getAllBranches();
+				
+				var branchDetails =$scope.branchDetails;
+				for(i in branchDetails) {
+					//console.log(branchDetails[i]+"\n"+branchDetails[i].branchName);
+				    if(branchDetails[i].branchName == $scope.userbranch)
+				    {
+				    	branchitem = branchDetails[i];
+				    	break;
+				    }
+				}
+				$http({
+					method : 'POST',
+					url :'http://10.20.14.83:9000/unregistereduser',
+					headers : {
+						'Content-Type' : 'application/json',
+						'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+					},
+					data : { 
+						"firstName": $scope.userfname,
+						"lastName": $scope.userlname,
+						"email": $scope.useremail,
+						"phone": $scope.userphone,
+						"account":{
+							"accountType":type+"ACCOUNT"
+						},
+						"address": $scope.useraddress,
+						"dateOfBirth": ($scope.userdate).getTime(),
+						"branchPOJO": branchitem
+					}
+				}).then(function successCallback(response) {
+					mymessage("Registered Details.wait for confirmation");
+					console.log(response);
+					console.log(response);
+					console.log(response.data.email)
+					$cookieStore.put('newusermail', $scope.useremail); 
+					$location.path('/uploaddoc');
+						
+				},function successCallback(response){
+					mymessage("Error in adding account");
+				},function errorCallback(response) {
+					console.log(response.data);
+				});
+			}
 		});
 	}
 
@@ -583,6 +604,8 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 								console.log(response);
 								$cookieStore.put('role','branchmanager');
 								$cookieStore.put('username',$scope.buname);
+								$cookieStore.put('branchmanagername',(response.data.firstName));
+								
 								$cookieStore.put('branchmanagertoken',response.data.id);
 								$cookieStore.put('bmbranch',$scope.bbranch);
 								$location.path('/manager');
@@ -730,6 +753,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 			}
 			else{
 				$cookieStore.remove('role');
+				$cookieStore.remove('branchmanagername');
 				$cookieStore.remove('branchmanagertoken');
 				$cookieStore.remove('bmbranch');
 				$location.path('/');
