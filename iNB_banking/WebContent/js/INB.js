@@ -630,7 +630,11 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 					});
 		}
 		else{
+			if(role==0)
 			$scope.loginformalert="Please enter proper credentials";
+			else
+				$scope.loginformalert1="Please enter proper credentials";
+					
 		}
 	}
 	//loginAction find user or bm ends
