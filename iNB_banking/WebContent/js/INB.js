@@ -430,7 +430,7 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 					else{
 					var data = response.data;
 					console.log(response.data);
-				
+					$scope.getAllBranches();
 						 mymessage("Branch added");	
 					}
 					
