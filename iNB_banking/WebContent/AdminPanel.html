@@ -174,7 +174,7 @@
 	<p></p></div>
 	<div class="col-xs-6"><p style="color: gray;">Select Branch</p>
 	<select style="max-width: 350px;" class="form-control" ng-model="mgrbranch" name="mgrbranch" required>
-		<option value="" disabled selected hidden></option>
+		<option value="" disabled selected hidden>Select Branch</option>
 		<option ng-repeat="i in branchDetails">{{ i.branchName }}</option>
 	</select>
 	<p style="max-width: 350px;" class="text-danger" ng-show="Mgrform.mgrbranch.$touched && Mgrform.mgrbranch.$invalid">Branch is required!</p>
