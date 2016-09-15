@@ -22,9 +22,10 @@
 <div class="wrapper row2">
   <nav id="mainav" class="hoc clear"> 
     <ul class="clear">
-      <li class="active"><a href="#/">Home</a></li>
-      <li><a data-target="#pageintro">Services</a></li>
-      <li><a>How Do I</a></li>
+      <li class="active" ng-click="gotoAnchor(1)"><a ">Home</a></li>
+      <li ng-click="gotoAnchor(2)"><a '>Why Net Banking</a></li>
+      <li ng-click="gotoAnchor(3)"><a '>Contact Us</a></li>
+      
     </ul>
   </nav>
 </div>
@@ -73,7 +74,7 @@
 <div class="wrapper row3">
   <div class="hoc container clear"> 
     <div class="center btmspace-50">
-      <h3 class="font-x2 nospace">Why NetBanking</h3>
+      <h3 id='anchor2' class="font-x2 nospace">Why NetBanking</h3>
    </div>
     <ul class="nospace group services">
       <li class="one_third first">

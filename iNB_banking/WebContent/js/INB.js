@@ -10,7 +10,9 @@ var inbapp=angular.module('iNBapp',['ngRoute','ngCookies']).directive('ngFiles',
     return {
         link: fn_link
     }
-} ]);
+} ]).run(['$anchorScroll', function($anchorScroll) {
+  $anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
+}]);
 
 
 function readURL(input,k) {
@@ -43,7 +45,7 @@ function readURL(input,k) {
 var oldpassword;
 var userdetails;
 
-function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,$window,$route){
+function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,$window,$route,$anchorScroll){
 	
 	$scope.branchDetails;
 	$scope.branchManagerDetails;
@@ -86,6 +88,21 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 		$scope.showAdminloginform=false;
 		$scope.showBranchManagerloginform=false;
 	}
+	
+	
+	$scope.gotoAnchor = function(x) {
+	      var newHash = 'anchor' + x;
+	      if ($location.hash() !== newHash) {
+	        // set the $location.hash to `newHash` and
+	        // $anchorScroll will automatically scroll to it
+	        $location.hash('anchor' + x);
+	      } else {
+	        // call $anchorScroll() explicitly,
+	        // since $location.hash hasn't changed
+	        $anchorScroll();
+	      }
+	    }
+	
 	
 $scope.viewAdminloginForm=function(){
 		

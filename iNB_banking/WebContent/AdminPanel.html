@@ -29,11 +29,11 @@
 			  <li class="breadcrumb-item active"><strong>{{ breadcrumheading }}</strong></li>
 		</ol>
 		<div class="fl_left" style="margin-right: 10px;" >
-			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getAllBranches()">View Branches</button>
+			<button style="width: 100%;" type="button"  class="btn medium inverse" ng-click="getAllBranches()">View Branches</button>
 			<p></p>
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranch()">Add a Branch</button>
 			<p></p>
-			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getBranchManagers()">View Branch Managers</button>
+			<button style="width: 100%;" type="button"  class="btn medium inverse" ng-click="getBranchManagers()">View Branch Managers</button>
 			<p></p>
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranchMgr()">Add Branch Manager</button>
 			<p></p>
@@ -88,7 +88,7 @@
 	<p></p>
 	
 	<input type="text" class="form-control" ng-model="badd"  name="badd" placeholder="Enter Branch Address" required>
-	<p  style="font-size: " class="text-danger" ng-show="AddBranchForm.badd.$touched && AddBranchForm.badd.$invalid"></p>
+	<p  style="font-size: " class="text-danger" ng-show="AddBranchForm.badd.$touched && AddBranchForm.badd.$invalid">Branch address is required.</p>
 	<p></p>
 	
 	<input type="number" pattern=".{10,10}"   class="form-control" ng-model="bcontact"  name="bcontact" placeholder="Enter Contact No." required>
