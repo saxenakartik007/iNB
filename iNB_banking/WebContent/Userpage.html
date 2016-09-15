@@ -28,7 +28,11 @@
 	
 	<div class="wrapper row3" style="height: 100%">
 		<div class="hoc clear">
-			<br>
+		<p></p>
+			<ol  class="breadcrumb">
+			  <li class="breadcrumb-item"><strong>Dashboard</strong></li>
+			  <li class="breadcrumb-item active"><strong>{{ ubreadcrumheading }}</strong></li>
+			</ol>
 			<div class="fl_left" style="margin-right: 10px;" >
 				<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getAccountSummary()">Account Summary</button>
 				<p></p>
@@ -40,7 +44,7 @@
 			</div>
 			<div>
 			<h1 style="margin-left: 10%">{{ Userheading }}</h1>
-				<div ng-show="accountdetails" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+				<div ng-show="accountdetails" class="table-responsive" style='overflow: auto;  height: 365px ;'>
 					<table class="table" >
 						<tr>
 							<th>Fields</th>
@@ -61,7 +65,7 @@
 						</tr> 			
 					</table>
 				</div>
-				<div ng-show="userdetails" class="table-responsive" style='overflow: auto;  height: 370px ;'>
+				<div ng-show="userdetails" class="table-responsive" style='overflow: auto;  height: 365px ;'>
 					<table class="table" >
 						<tr>
 							<th>Fields</th>
@@ -104,9 +108,9 @@
 				</div>
 				
 			</div>
-			<div ng-show="moneytransfer" class="table-responsive" style='height: 370px ;'>		
+			<div ng-show="moneytransfer" class="table-responsive" style='height: 365px ;'>		
 
-				<form name="moneytransferform" novalidate style="margin-bottom: 20px;">
+				<form id="moneytransferform" name="moneytransferform" novalidate style="margin-bottom: 20px;">
 					<p>User Account Number</p>
 					<input type="number" class="form-control" ng-model="uaccount"  name="uaccount" ng-readonly = "true">
 					<p></p>

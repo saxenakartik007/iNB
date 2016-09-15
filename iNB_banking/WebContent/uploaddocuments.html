@@ -18,9 +18,12 @@
   </header>
 </div>
 <div class="wrapper row3"style=" text-align: center;">
-
+<p></p>
+			<ol  class="breadcrumb">
+			  <li class="breadcrumb-item">Create Account</li>
+			  <li class="breadcrumb-item active"><strong>Upload Documents</strong></li>
+			</ol>
     <div class=""style="
-  padding-top: 20px;
     text-align: center;
 " >     
            <h3 style="text-decoration: underline;">Address proof</h3>  
@@ -32,9 +35,7 @@
       
    </div>
    <div class="" style="
-    
     text-align: center;
-    margin-top: 20px;
 " >
         <h3 style="text-decoration: underline;">Age proof</h3>
 		
@@ -43,7 +44,7 @@
 		<img id="agepre"  style="max-width: 200px;
     max-height: 200px; width: 200px; height: 200px;"src="http://placehold.it/350x150?text=Age+Proof"/>
   </div><p></p>
-  
+  <p class="text-danger">{{ uploaderror }}</p>
  <input  class="btn medium inverse"  type="button" ng-click="uploadFiles()" value="Upload" />
 </div>
 
