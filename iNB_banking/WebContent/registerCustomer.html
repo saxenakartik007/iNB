@@ -44,7 +44,7 @@
 				<input type="text" class="form-control" ng-model="userlname"  name="userlname" placeholder="Enter Last Name" required>
 				<p style="font-size: .8em" class="text-danger" ng-show="userform.userlname.$touched && userform.userlname.$invalid">Last Name is required!</p>
 				<p></p>
-				<input type="email" class="form-control" ng-model="useremail"  name="useremail" placeholder="Enter Email" required>
+				<input type="email" class="form-control" ng-model="useremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  name="useremail" placeholder="Enter Email" required>
 				<p style="font-size: .8em" class="text-danger" ng-show="userform.useremail.$touched && userform.useremail.$error.required">Email is required!</p>
 				<p style="font-size: .8em" class="text-danger" ng-if="!(userform.useremail.$touched && userform.useremail.$error.required)" ng-show="userform.useremail.$dirty && userform.useremail.$invalid">Email is INVALID!</p>
 				<p></p>
