@@ -158,7 +158,7 @@
 	<input style="max-width: 800px;" type="password" class="form-control" ng-model="mgrpsw2"  name="mgrpsw2" placeholder="Confirm Password" required>
 	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrpsw2.$touched && Mgrform.mgrpsw2.$invalid">Password is required!</p>
 	<p></p>
-	<input type="email" class="form-control" ng-model="mgremail"  name="mgremail" placeholder="Enter Email" required>
+	<input type="email" class="form-control" ng-model="mgremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name="mgremail" placeholder="Enter Email" required>
 	<p style="max-width: 800px" class="text-danger" ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$error.required">Email is required!</p>
 	<p style="max-width: 800px" class="text-danger" ng-if="!(Mgrform.mgremail.$touched && Mgrform.mgremail.$error.required)" ng-show="Mgrform.mgremail.$dirty && Mgrform.mgremail.$invalid">Email is INVALID!</p>
 	<p></p>
