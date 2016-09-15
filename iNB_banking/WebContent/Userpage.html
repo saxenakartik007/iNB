@@ -60,8 +60,8 @@
 						</tr>
 						
 						<tr>
-							<td><h6>Account Balance</h6></td>
-							<td><h6>Rs. {{ accountDetails.balance}}</h6></td>
+							<td><h3>Account Balance</h3></td>
+							<td><h3>Rs. {{ accountDetails.balance}}</h3></td>
 						</tr> 			
 					</table>
 				</div>
@@ -112,7 +112,7 @@
 
 				<form id="moneytransferform" name="moneytransferform" novalidate style="margin-bottom: 20px;">
 					<p>User Account Number</p>
-					<input type="number" class="form-control" ng-model="uaccount"  name="uaccount" ng-readonly = "true">
+					<input type="number" class="form-control" ng-model="uaccount"  id="uaccount" name="uaccount" ng-readonly = "true">
 					<p></p>
 					<p>Transfer Account Number</p>
 					<input type="number" class="form-control" ng-model="raccount"  name="raccount" placeholder="Enter Transfer Account number" ng-blur="getusername()"required>
@@ -125,7 +125,7 @@
 					<input type="number" class="form-control" ng-model="mtamount"  name="mtamount" placeholder="Enter Transfer Amount" required>
 					<p class="text-danger" ng-show="moneytransferform.mtamount.$touched && moneytransferform.mtamount.$invalid">Transfer Amount is required!</p>
 					<p></p>
-					<p class="text-danger">{{ transfermoneyerror }}</p>
+					<p class="text-danger" ng-if="!(moneytransferform.raccount.$touched && moneytransferform.raccount.$invalid)">{{ transfermoneyerror }}</p>
 					<input style="float: right;" type="button"  ng-disabled="moneytransferform.$invalid" class="btn medium inverse" value="Transfer Money" ng-click="moneytransferfun()">
 				</form>
 			</div>

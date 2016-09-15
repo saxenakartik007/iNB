@@ -45,17 +45,21 @@
 				<p style="font-size: .8em" class="text-danger" ng-show="userform.userlname.$touched && userform.userlname.$invalid">Last Name is required!</p>
 				<p></p>
 				<input type="email" class="form-control" ng-model="useremail"  name="useremail" placeholder="Enter Email" required>
-				<p  style="font-size: .8em"class="text-danger" ng-show="userform.useremail.$touched && userform.useremail.$invalid">Invalid Email</p>
+				<p style="font-size: .8em" class="text-danger" ng-show="userform.useremail.$touched && userform.useremail.$error.required">Email is required!</p>
+				<p style="font-size: .8em" class="text-danger" ng-if="!(userform.useremail.$touched && userform.useremail.$error.required)" ng-show="userform.useremail.$dirty && userform.useremail.$invalid">Email is INVALID!</p>
 				<p></p>
-				<input type="number"   pattern=".{10,10}" class="form-control" ng-model="userphone"  name="userphone" placeholder="Enter Phone number" required>
-				<p style="font-size: .8em" class="text-danger" ng-show="userform.userphone.$touched && userform.userphone.$invalid">Phone number is required!</p>
+				<input type="number"   pattern=".{10,10}" class="form-control" ng-model="userphone"  name="userphone" placeholder="Enter Contact number" required>
+				<p style="font-size: .8em" class="text-danger" ng-show="userform.userphone.$touched && userform.userphone.$error.required">Contact number is required!</p>
+				<p style="font-size: .8em" class="text-danger" ng-if="!(userform.userphone.$touched && userform.userphone.$error.required)" ng-show="userform.userphone.$dirty && userform.userphone.$invalid">Contact number is INVALID!</p>
+				
 				<p></p>
 				<input type="text" class="form-control" ng-model="useraddress"  name="useraddress" placeholder="Enter Address" required>
 				<p style="font-size: .8em" class="text-danger" ng-show="userform.useraddress.$touched && userform.useraddress.$invalid">Address is required!</p>
 				<br>
 		
 						<div class="col-xs-6"><p style="color: gray;">Select Date of Birth</p><input style="    margin-left: -15px;" type="date" class="form-control" ng-model="userdate" max="{{minAge | date:'yyyy-MM-dd'}}"  min="{{minDate | date:'yyyy-MM-dd'}}" name="userdate" placeholder="Enter Date of Birth" required>
-				<p style="font-size: .8em" class="text-danger" ng-show="userform.userdate.$touched && userform.userdate.$invalid">Date of birth is required!</p>
+				<p style="font-size: .8em" class="text-danger" ng-show="userform.userdate.$touched && userform.userdate.$error.required">Date of birth is required!</p>
+				<p style="font-size: .8em" class="text-danger" ng-if="!(userform.userdate.$touched && userform.userdate.$error.required)" ng-show="userform.userdate.$dirty && userform.userdate.$invalid">Date of birth is INVALID!</p>
 				<p></p></div>
 				<div class="col-xs-6">
 				<p style="color: gray;">Select Branch</p>

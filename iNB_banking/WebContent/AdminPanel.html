@@ -155,7 +155,8 @@
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrpsw2.$touched && Mgrform.mgrpsw2.$invalid">Password is required!</p>
 	<p></p>
 	<input type="email" class="form-control" ng-model="mgremail"  name="mgremail" placeholder="Enter Email" required>
-	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$invalid">Email is required!</p>
+	<p style="font-size: .8em" class="text-danger" ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$error.required">Email is required!</p>
+	<p style="font-size: .8em" class="text-danger" ng-if="!(Mgrform.mgremail.$touched && Mgrform.mgremail.$error.required)" ng-show="Mgrform.mgremail.$dirty && Mgrform.mgremail.$invalid">Email is INVALID!</p>
 	<p></p>
 	<input type="text" pattern=".{10,10}" class="form-control" ng-model="mgrphone"  name="mgrphone" placeholder="Enter Phone number" required>
 	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrphone.$touched && Mgrform.mgrphone.$error.required">Contact number is required!</p>

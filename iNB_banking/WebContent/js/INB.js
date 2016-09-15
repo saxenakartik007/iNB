@@ -557,7 +557,7 @@ $scope.viewBranchManagerloginForm=function(){
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
 			$scope.uaccount = data[0].accounthash[0].accountNumber;
-			
+			$("#moneytransferform #uaccount").val( $scope.uaccount );
 		});
 		
 		
@@ -602,6 +602,7 @@ $scope.viewBranchManagerloginForm=function(){
 				}
 				else*/
 					bootbox.alert("Transferred Rs."+$scope.mtamount+" from account no. "+ $scope.uaccount +" to account no. "+$scope.raccount+" successfully.");
+					$scope.getAccountSummary();
 			},function errorCallback(response){
 				bootbox.alert("Some error occured on server side.").find('.modal-body').css({'color': 'red'});	
 			});
