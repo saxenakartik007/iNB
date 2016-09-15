@@ -622,7 +622,7 @@ $scope.viewBranchManagerloginForm=function(){
 	
 	//loginAction find user or bm
 	$scope.loginAction=function(role){
-		if(($scope.uname!=null && $scope.password!=null )||($scope.buname!=null && $scope.bpassword!=null ||$scope.bbranch!=null)){
+		if(($scope.uname!=null && $scope.password!=null )||($scope.buname!=null && $scope.bpassword!=null &&$scope.bbranch!=null)){
 			var name,pass,branch;
 			if(role==0){
 				url="http://10.20.14.83:9000/registeredcustomer"

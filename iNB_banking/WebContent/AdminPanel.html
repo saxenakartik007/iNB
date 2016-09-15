@@ -138,44 +138,52 @@
 	<div ng-show="adminaddmanager"  style='overflow: auto;  height: 365px ;'>
 		
 		
-	<form id="Mgrform" name="Mgrform" novalidate style="margin-bottom: 20px;">
-	<input type="text" class="form-control" ng-model="mgrfname"  name="mgrfname" placeholder="Enter First Name" required>
-	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrfname.$touched && Mgrform.mgrfname.$invalid">First Name is required!</p>
+
+	<form name="Mgrform" id='Mgrform' novalidate style="margin-bottom: 20px; " >
+		<div class='container' style="margin-top: -40px; max-width: 780px; margin-left: 0px;"><div class='row'>
+	
+	<input style="max-width: 800px;" type="text" class="form-control" ng-model="mgrfname"  name="mgrfname" placeholder="Enter First Name" required>
+	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrfname.$touched && Mgrform.mgrfname.$invalid">First Name is required!</p>
+
 	<p></p>
-	<input type="text" class="form-control" ng-model="mgrlname"  name="mgrlname" placeholder="Enter Last Name" required>
-	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrlname.$touched && Mgrform.mgrlname.$invalid">Last Name is required!</p>
+	<input style="max-width: 800px;" type="text" class="form-control" ng-model="mgrlname"  name="mgrlname" placeholder="Enter Last Name" required>
+	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrlname.$touched && Mgrform.mgrlname.$invalid">Last Name is required!</p>
 	<p></p>
-	<input type="text" class="form-control" ng-model="mgruname"  name="mgruname" placeholder="Enter User Name" required>
-	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgruname.$touched && Mgrform.mgruname.$invalid">User Name is required!</p>
+	<input style="max-width: 800px;" type="text" class="form-control" ng-model="mgruname"  name="mgruname" placeholder="Enter User Name" required>
+	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgruname.$touched && Mgrform.mgruname.$invalid">User Name is required!</p>
 	<p></p>
-	<input type="password" class="form-control" ng-model="mgrpsw1"  name="mgrpsw1" placeholder="Enter Password" required>
-	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrpsw1.$touched && Mgrform.mgrpsw1.$invalid">Password is required!</p>
+	<input style="max-width: 800px;" type="password" class="form-control" ng-model="mgrpsw1"  name="mgrpsw1" placeholder="Enter Password" required>
+	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrpsw1.$touched && Mgrform.mgrpsw1.$invalid">Password is required!</p>
 	<p></p>
-	<input type="password" class="form-control" ng-model="mgrpsw2"  name="mgrpsw2" placeholder="Confirm Password" required>
-	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrpsw2.$touched && Mgrform.mgrpsw2.$invalid">Password is required!</p>
+	<input style="max-width: 800px;" type="password" class="form-control" ng-model="mgrpsw2"  name="mgrpsw2" placeholder="Confirm Password" required>
+	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrpsw2.$touched && Mgrform.mgrpsw2.$invalid">Password is required!</p>
 	<p></p>
 	<input type="email" class="form-control" ng-model="mgremail"  name="mgremail" placeholder="Enter Email" required>
-	<p style="font-size: .8em" class="text-danger" ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$error.required">Email is required!</p>
-	<p style="font-size: .8em" class="text-danger" ng-if="!(Mgrform.mgremail.$touched && Mgrform.mgremail.$error.required)" ng-show="Mgrform.mgremail.$dirty && Mgrform.mgremail.$invalid">Email is INVALID!</p>
+	<p style="max-width: 800px" class="text-danger" ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$error.required">Email is required!</p>
+	<p style="max-width: 800px" class="text-danger" ng-if="!(Mgrform.mgremail.$touched && Mgrform.mgremail.$error.required)" ng-show="Mgrform.mgremail.$dirty && Mgrform.mgremail.$invalid">Email is INVALID!</p>
 	<p></p>
-	<input type="text" pattern=".{10,10}" class="form-control" ng-model="mgrphone"  name="mgrphone" placeholder="Enter Phone number" required>
-	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrphone.$touched && Mgrform.mgrphone.$error.required">Contact number is required!</p>
-	<p style="font-size: " class="text-danger" ng-if="!(Mgrform.mgrphone.$touched && Mgrform.mgrphone.$error.required)" ng-show="Mgrform.mgrphone.$dirty && Mgrform.mgrphone.$invalid">Contact number is INVALID!</p>
+	<input style="max-width: 800px;" pattern=".{10,10}" type="text" class="form-control" ng-model="mgrphone"  name="mgrphone" placeholder="Enter Phone number" required>
+	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrphone.$touched && Mgrform.mgrphone.$error.required">Contact number is required!</p>
+	<p style="max-width: 800px;" class="text-danger" ng-if="!(Mgrform.mgrphone.$touched && Mgrform.mgrphone.$error.required)" ng-show="Mgrform.mgrphone.$dirty && Mgrform.mgrphone.$invalid">Contact number is INVALID!</p>
 	<p></p>
-	<input type="text" class="form-control" ng-model="mgraddress"  name="mgraddress" placeholder="Enter Address" required>
-	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgraddress.$touched && Mgrform.mgraddress.$invalid">Address is required!</p>
-	<p></p>
-	<input type="date" class="form-control" ng-model="mgrdate"  name="mgrdate" placeholder="Enter Date" required>
-	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrdate.$touched && Mgrform.mgrdate.$invalid" >Date is required!</p>
-	<p></p>
-	<select class="form-control" ng-model="mgrbranch" name="mgrbranch" required>
-		<option value="" disabled selected hidden>Select Branch</option>
+	<input style="max-width: 800px;" type="text" class="form-control" ng-model="mgraddress"  name="mgraddress" placeholder="Enter Address" required>
+	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgraddress.$touched && Mgrform.mgraddress.$invalid">Address is required!</p>
+	<div class="col-xs-6"><p style="color: gray;">Select Date of Birth</p>
+	<input style="max-width: 350px;" type="date" class="form-control" ng-model="mgrdate"  max="{{minAge | date:'yyyy-MM-dd'}}"  min="{{minDate | date:'yyyy-MM-dd'}}"   name="mgrdate" placeholder="Enter Date" required>
+	<p style="max-width: 350px;" class="text-danger" ng-show="Mgrform.mgrdate.$touched && Mgrform.mgrdate.$invalid" >Date is required!</p>
+	<p></p></div>
+	<div class="col-xs-6"><p style="color: gray;">Select Branch</p>
+	<select style="max-width: 350px;" class="form-control" ng-model="mgrbranch" name="mgrbranch" required>
+		<option value="" disabled selected hidden></option>
 		<option ng-repeat="i in branchDetails">{{ i.branchName }}</option>
 	</select>
-	<p style="font-size: " class="text-danger" ng-show="Mgrform.mgrbranch.$touched && Mgrform.mgrbranch.$invalid">Branch is required!</p>
+	<p style="max-width: 350px;" class="text-danger" ng-show="Mgrform.mgrbranch.$touched && Mgrform.mgrbranch.$invalid">Branch is required!</p>
 	<p></p>
+
 	<p class="text-danger">{{ addmanagererror }}</p>
 	<p></p>
+	</div>
+				</div></div>
 	<input style="float: right;" type="button"  ng-disabled="Mgrform.$invalid" class="btn medium inverse" value="ADD Branch Manager" ng-click="addbranchmgr()">
 				</form>
 			
