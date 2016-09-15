@@ -589,7 +589,14 @@ $scope.viewBranchManagerloginForm=function(){
 	}
 	//money transfer function call ends
 	
-	
+	  var today = new Date();
+	  var minAge = 18;
+	  $scope.minAge = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
+	 minAge=100;
+	 
+	  $scope.minDate=new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
+
+		  
 	
 	
 	//loginAction find user or bm
