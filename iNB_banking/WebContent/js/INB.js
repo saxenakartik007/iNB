@@ -75,6 +75,31 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	$scope.changepasswordhead=$cookieStore.get('customername');
 	$scope.regex="\INB0";
 	
+	$scope.showUserloginform=true;
+	$scope.showAdminloginform=false;
+	$scope.showBranchManagerloginform=false;
+	
+	
+	$scope.viewUserloginForm=function(){
+		
+		$scope.showUserloginform=true;
+		$scope.showAdminloginform=false;
+		$scope.showBranchManagerloginform=false;
+	}
+	
+$scope.viewAdminloginForm=function(){
+		
+		$scope.showUserloginform=false;
+		$scope.showAdminloginform=true;
+		$scope.showBranchManagerloginform=false;
+	}
+$scope.viewBranchManagerloginForm=function(){
+	
+	$scope.showUserloginform=false;
+	$scope.showAdminloginform=false;
+	$scope.showBranchManagerloginform=true;
+}
+	
 	//settting the date parameters
 	var today = new Date();
 	$scope.maxDate = new Date(today.getFullYear(),today.getMonth() , today.getDate());
@@ -584,82 +609,138 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	}
 	//money transfer function call ends
 	
+	  var today = new Date();
+	  var minAge = 18;
+	  $scope.minAge = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
+	 minAge=100;
+	 
+	  $scope.minDate=new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
+
+		  
+	
 	
 	//loginAction find user or bm
 	$scope.loginAction=function(role){
-		if(($scope.uname!=null && $scope.password!=null && $scope.branch!=null)||($scope.buname!=null && $scope.bpassword!=null && $scope.bbranch!=null)){
+		if(($scope.uname!=null && $scope.password!=null )||($scope.buname!=null && $scope.bpassword!=null ||$scope.bbranch!=null)){
 			var name,pass,branch;
 			if(role==0){
 				url="http://10.20.14.83:9000/registeredcustomer"
 				name= $scope.uname;
 			   pass= $scope.password;
-				branch=$scope.branch;
+				
+				
+				
+				$http({
+					method : 'PUT',
+					url :url,
+					headers : {
+						'Content-Type' : 'application/json',
+						'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+					},
+					data:{
+						userName : name,
+						password : pass
+						
+					}
+				}).then(function successCallback(response) {
+					if(response.data["Exception"]!=null){
+						if(role==1)
+						$scope.loginformalert1=response.data["Exception"];
+						else
+							$scope.loginformalert=response.data["Exception"];
+							
+						console.log(response);
+					}
+					else{
+							console.log(response);
+							$cookieStore.put('role','user');
+							$cookieStore.put('username',$scope.uname);
+							$cookieStore.put('customername',response.data.firstName);
+							$cookieStore.put('usertoken',response.data.id)
+							if($scope.password.length==4){
+								oldpassword=$scope.password;
+								$location.path('/password');
+							}		
+							else
+							$location.path('/userpage');
+						
+					}
+						
+				});
+				
 			}
 					else
 				{
+						
 						url= "http://10.20.14.83:9000/branchmanager/login";
 							name= $scope.buname;
 						pass= $scope.bpassword;
-							branch=$scope.bbranch;			
-				}
-					$http({
-						method : 'PUT',
-						url :url,
-						headers : {
-							'Content-Type' : 'application/json',
-							'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-						},
-						data:{
-							userName : name,
-							password : pass,
-							branchName:branch
+							branch=$scope.bbranch;
+							console.log($scope.bbranch);
 							
-						}
-					}).then(function successCallback(response) {
-						if(response.data["Exception"]!=null){
-							if(role==1)
-							$scope.loginformalert1=response.data["Exception"];
-							else
-								$scope.loginformalert=response.data["Exception"];
-								
-							console.log(response);
-						}
-						else{
-							if(role==1){
-								console.log(response);
-								$cookieStore.put('role','branchmanager');
-								$cookieStore.put('username',$scope.buname);
-								$cookieStore.put('branchmanagername',(response.data.firstName));
-								
-								$cookieStore.put('branchmanagertoken',response.data.id);
-								$cookieStore.put('bmbranch',$scope.bbranch);
-								$location.path('/manager');
-							}
-							else{
-								console.log(response);
-								$cookieStore.put('role','user');
-								$cookieStore.put('username',$scope.uname);
-								$cookieStore.put('customername',response.data.firstName);
-								$cookieStore.put('usertoken',response.data.id)
-								if($scope.password.length==4){
-									oldpassword=$scope.password;
-									$location.path('/password');
+							$http({
+								method : 'PUT',
+								url :url,
+								headers : {
+									'Content-Type' : 'application/json',
+									'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+								},
+								data:{
+									userName : name,
+									password : pass,
+									branchName:branch
 									
 								}
-								else
-								$location.path('/userpage');
-							}
+							}).then(function successCallback(response) {
+								if(response.data["Exception"]!=null){
+									if(role==1){
+									$scope.loginformalert1=response.data["Exception"];
+										
+									}else
+										$scope.loginformalert=response.data["Exception"];
+									
+									console.log(response);
+								}
+								else{
+										console.log(response);
+										$cookieStore.put('role','branchmanager');
+										$cookieStore.put('username',$scope.buname);
+										$cookieStore.put('branchmanagername',(response.data.firstName));
+										
+										$cookieStore.put('branchmanagertoken',response.data.id);
+										$cookieStore.put('bmbranch',$scope.bbranch);
+										$location.path('/manager');
+								}
+									
+							});
 							
-						}
 							
-					});
+							
+							
+							
+							
+				}
 		}
 		else{
-			if(role==0)
-			$scope.loginformalert="Please enter proper credentials";
-			else
-			$scope.loginformalert1="Please enter proper credentials";
+			if(role==0){
+				if($scope.uname==null)
+					$scope.loginformalert="Please enter customer id";
+						else if($scope.password==null)
+							$scope.loginformalert="Please enter password";
+						
+						}
+			else{
+				if(role==1){
+					if($scope.buname==null)
+				$scope.loginformalert1="Please enter username";
+					else if($scope.bpassword==null)
+						$scope.loginformalert1="Please enter password";
+					else
+						$scope.loginformalert1="Please Select Branch";
+
 					
+				}
+				}	
 		}
 	}
 	//loginAction find user or bm ends
