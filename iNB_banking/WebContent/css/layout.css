@@ -37,7 +37,7 @@ File: Layout CSS
 #header{padding:30px 0;}
 
 #header #logo{margin-top:8px; font-variant:small-caps;}
-#header #logo h1{margin:0; padding:0; font-size:26px;}
+#header #logo h1{margin:0; padding-left: 100px; font-size:26px;}
 
 #header #quickinfo{font-size:.8rem; text-transform:uppercase;}
 #header #quickinfo li{margin-right:50px;}
@@ -62,7 +62,7 @@ File: Layout CSS
 
 /* Content Area
 --------------------------------------------------------------------------------------------------------------- */
-.container{padding-top:80px;}
+.container{padding-top:55px;}
 
 /* Content */
 .container .content{}
@@ -372,7 +372,7 @@ table a, #comments a{background-color:inherit;}
 /* Max Wrapper Width - Laptop, Desktop etc.
 --------------------------------------------------------------------------------------------------------------- */
 @media screen and (min-width:978px){
-	.hoc{max-width:978px;}
+	.hoc{max-width:1100px;}
 }
 
 

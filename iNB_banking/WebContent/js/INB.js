@@ -68,7 +68,12 @@ function mainController($scope,$http,$cookieStore,$location,$timeout,$rootScope,
 	$scope.userdetails = false;			
 	$scope.moneytransfer = false;			
 	$scope.transfermoneyerror = "";
+	$scope.changepswerror = "";
+	$scope.uploaderror = "";
+	$scope.breadcrumheading = "";
+	$scope.ubreadcrumheading = "";
 	$scope.changepasswordhead=$cookieStore.get('customername');
+	$scope.regex="\INB0";
 	
 	$scope.showUserloginform=true;
 	$scope.showAdminloginform=false;
@@ -129,6 +134,8 @@ $scope.viewBranchManagerloginForm=function(){
 	
 	//getallbranches
 	$scope.getAllBranches=function(){
+		
+		$scope.breadcrumheading = "View Branches";
 		$scope.adminheading='Branch List';
 		$scope.adminbranch=true;
 		$scope.adminnewbranch=false;
@@ -144,9 +151,9 @@ $scope.viewBranchManagerloginForm=function(){
 	
 	//getbranchmanager
 	$scope.getBranchManagers=function(){
-		$scope.adminheading='Branch Managers List';
 		 
-			
+		$scope.breadcrumheading = "View Branch Managers";
+		$scope.adminheading='Branch Managers List';
 			$scope.adminbranch=false;
 			$scope.adminnewbranch=false;
 			$scope.adminmanager=true;
@@ -170,7 +177,7 @@ $scope.viewBranchManagerloginForm=function(){
 
      // NOW UPLOAD THE FILES.
      $scope.uploadFiles = function () {
-
+    	 $scope.uploaderror = "";
     	 var formdata = new FormData();
     	 var file1 = document.getElementById('file1').files[0];
     	 var file2 = document.getElementById('file2').files[0];
@@ -182,12 +189,16 @@ $scope.viewBranchManagerloginForm=function(){
     	 formdata.append("email", $cookieStore.get('newusermail'));
     	 //var myurl = 'http://10.20.14.83:9000/document?addressProof='+formdata.get("addressProof")+'&ageProof='+formdata.get("ageProof")+'&email=saxenakartik007@gmail.com';
     	 //var myurl = 'http://10.20.14.83:9000/document?email=saxenakartik007@gmail.com';
-    	 if(file1==undefined||file1==null){
-    		 mymessage('Please Add Address Document');
+    	 if((file1==undefined||file1==null) && (file2==undefined||file2==null))
+    	 {
+    		 $scope.uploaderror = 'Please add both documents.';
     	 }
-    	 else if(file2==undefined||file2==null){
-    		 mymessage('Please Add Age Document');
-    	 }
+    	 else if(file1==undefined||file1==null){
+	    		$scope.uploaderror = 'Please add address document.';
+	     }
+	     else if(file2==undefined||file2==null){
+	    		$scope.uploaderror = 'Please add age document.';
+	     }
     	 else{
     	 var myurl = 'http://10.20.14.83:9000/document';
          
@@ -208,7 +219,7 @@ $scope.viewBranchManagerloginForm=function(){
              // SEND THE FILES.
              $http(request).then(function successCallback(response) {	
 			 console.log(response);
-			 bootbox.alert('Thankyou For connecting with us.We will get back to u shortly.')
+			 bootbox.alert('Thank you '+$cookieStore.get('newusername') +' for connecting with us.We will get back to you shortly.')
 			 $location.path('/');
 			});
 			
@@ -247,7 +258,7 @@ $scope.viewBranchManagerloginForm=function(){
 	//approve or disapprove
 	$scope.verifyUser=function(state,user){
 		if(state==1){
-			bootbox.confirm("Are you sure of approving the applicant?", function(result) {
+			bootbox.confirm("Are you sure of approving the application of "+user.firstName+" "+user.lastName+" ?", function(result) {
 				 if(result==true){
 					 var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/verify';
 						$http({
@@ -258,10 +269,10 @@ $scope.viewBranchManagerloginForm=function(){
 								'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
 							}
 						}).then(function successCallBack(response){
-							bootbox.alert("Email Sent");
+							bootbox.alert("Application of "+user.firstName+" "+user.lastName +" has been approved. Email sent successfully to : "+user.email);
 							$location.path('/manager');
 						},function errorCallBack(response){
-							bootbox.alert("Some error occured");
+							bootbox.alert("Some error occured").find('.modal-body').css({'color': 'red'});;
 						})
 				 }
 				 
@@ -269,7 +280,7 @@ $scope.viewBranchManagerloginForm=function(){
 			
 		}
 		else{
-			bootbox.confirm("Are you sure of disapproving the applicant?", function(result) {
+			bootbox.confirm("Are you sure of disapproving the application of "+user.firstName+" "+user.lastName+" ?", function(result) {
 				 if(result==true){
 					 var url='http://10.20.14.83:9000/unregistereduser/email/'+user.id+'/reject';
 						$http({
@@ -280,10 +291,10 @@ $scope.viewBranchManagerloginForm=function(){
 								'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
 							}
 						}).then(function successCallBack(response){
-							bootbox.alert("Rejection successful.")
+							bootbox.alert("Application of "+user.firstName+" "+user.lastName +" has been disapproved.")
 							$location.path('/manager');
 						},function errorCallBack(response){
-							bootbox.alert("Some error occured");
+							bootbox.alert("Some error occured").find('.modal-body').css({'color': 'red'});;
 						});
 				 } 
 				 });
@@ -293,7 +304,9 @@ $scope.viewBranchManagerloginForm=function(){
 	
 	
 	$scope.createBranchMgr = function(){
+		document.getElementById("Mgrform").reset(); 
 		//$location.path("/BranchMgr");
+		$scope.breadcrumheading = "Add Branch Manager";
 		$scope.adminheading='Add New Branch Manager';
 		$scope.adminbranch=false;
 		$scope.adminnewbranch=false;
@@ -308,7 +321,9 @@ $scope.viewBranchManagerloginForm=function(){
 	
 	//gotocreateBranch
 	$scope.createBranch=function(){
+		document.getElementById("AddBranchForm").reset(); 
 		//$location.path("/addBranch");
+		$scope.breadcrumheading = "Add a Branch";
 		$scope.adminheading='Add New Branch';
 		$scope.adminbranch=false;
 		$scope.adminnewbranch=true;
@@ -362,11 +377,11 @@ $scope.viewBranchManagerloginForm=function(){
 					}
 				}).then(function successCallback(response) 
 				{	
-					bootbox.alert("Branch Manager Added successfully");
+					bootbox.alert("Branch Manager "+$scope.mgrfname+" "+$scope.mgrlname +" Added successfully.");
 					$scope.getBranchManagers();
 				},function errorCallback(response)
 				{
-					$scope.addmanagererror="Error in Adding Branch Manager";	
+					bootbox.alert("Error in Adding Branch Manager").find('.modal-body').css({'color': 'red'});	
 				});
 		}
 		else
@@ -414,16 +429,12 @@ $scope.viewBranchManagerloginForm=function(){
 						"branchPOJO": branchitem
 					}
 				}).then(function successCallback(response) {
-					mymessage("Registered Details.wait for confirmation");
-					console.log(response);
-					console.log(response);
-					console.log(response.data.email)
-					$cookieStore.put('newusermail', $scope.useremail); 
+					$cookieStore.put('newusermail', $scope.useremail);
+					$cookieStore.put('newusername', ($scope.userfname + " "+ $scope.userlname));
 					$location.path('/uploaddoc');
 						
-				},function successCallback(response){
-					mymessage("Error in adding account");
 				},function errorCallback(response) {
+					bootbox.alert("Error in adding account").find('.modal-body').css({'color': 'red'});
 					console.log(response.data);
 				});
 			}
@@ -432,6 +443,7 @@ $scope.viewBranchManagerloginForm=function(){
 
 	//add branch
 	$scope.addNewBranch=function(){
+		 
 		var ifsc=$scope.bifsc;
 		var name=$scope.bname;
 		var add=$scope.badd;
@@ -454,18 +466,18 @@ $scope.viewBranchManagerloginForm=function(){
 				}).then(function successCallback(response) {
 					if(response.data['Exception ']=='BranchAlreadyExistException'){
 						console.log(response.data);
-						$scope.errormsg = "Branch Already Exists";	
+						bootbox.alert(name+" branch already exists.").find('.modal-body').css({'color': 'red'});;	
 					}
 					else{
 					var data = response.data;
 						console.log(response.data);
-						bootbox.alert("Branch added");
+						bootbox.alert(name +" branch added");
 						$scope.getAllBranches();
 
 					}
 					
 				}, function errorCallback(response) {
-					alert("An Error Occoured");
+					bootbox.alert("Some error occoured on server side.").find('.modal-body').css({'color': 'red'});
 					
 				});
 
@@ -473,7 +485,9 @@ $scope.viewBranchManagerloginForm=function(){
 	
 	//get user details
 	$scope.getUserDetails=function(){
-		$scope.Userheading = "My Details";
+		 
+		$scope.ubreadcrumheading = "My Profile ";
+		$scope.Userheading = "My Profile";
 		$scope.userdetails = true;
 		$scope.accountdetails = false;
 		$scope.moneytransfer = false;
@@ -488,6 +502,8 @@ $scope.viewBranchManagerloginForm=function(){
 	
 	//get account summary
 	$scope.getAccountSummary=function(){
+		 
+		$scope.ubreadcrumheading = "Account Summary";
 		$scope.Userheading="Account Details";
 		$scope.userdetails = false;
 		$scope.accountdetails = true;
@@ -531,6 +547,8 @@ $scope.viewBranchManagerloginForm=function(){
 	
 	//money transfer tab call
 	$scope.transferMoney = function(){
+		document.getElementById("moneytransferform").reset(); 
+		$scope.ubreadcrumheading = "Money Transfer";
 		$scope.Userheading="Money Transfer";
 		$scope.accountdetails = false;
 		$scope.userdetails = false;
@@ -577,13 +595,15 @@ $scope.viewBranchManagerloginForm=function(){
 				}
 			}).then(function successCallback(response) {
 				
-				if(response.data["Status"]=='Failed'){
+				/*if(response.data["Status"]=='Failed'){
 					console.log(response.data["Message"]);
 					//mymessage(response.data["Message"]);
-					$scope.transfermoneyerror = "Invalid Account Number"
+					//$scope.transfermoneyerror = "Invalid Account Number"
 				}
-				else
-					bootbox.alert(response.data["Message"]);
+				else*/
+					bootbox.alert("Transferred Rs."+$scope.mtamount+" from account no. "+ $scope.uaccount +" to account no. "+$scope.raccount+" successfully.");
+			},function errorCallback(response){
+				bootbox.alert("Some error occured on server side.").find('.modal-body').css({'color': 'red'});	
 			});
 		}
 	}
@@ -601,7 +621,7 @@ $scope.viewBranchManagerloginForm=function(){
 	
 	//loginAction find user or bm
 	$scope.loginAction=function(role){
-		if(($scope.uname!=null && $scope.password!=null )||($scope.buname!=null && $scope.bpassword!=null ||$scope.bbranch!=null)){
+		if(($scope.uname!=null && $scope.password!=null )||($scope.buname!=null && $scope.bpassword!=null &&$scope.bbranch!=null)){
 			var name,pass,branch;
 			if(role==0){
 				url="http://10.20.14.83:9000/registeredcustomer"
@@ -717,6 +737,7 @@ $scope.viewBranchManagerloginForm=function(){
 						$scope.loginformalert1="Please enter password";
 					else
 						$scope.loginformalert1="Please Select Branch";
+
 					
 				}
 				}	
@@ -727,13 +748,14 @@ $scope.viewBranchManagerloginForm=function(){
 	
 	//changepassword
 	$scope.changePassword=function(){
+		$scope.changepswerror = "";
 		if($scope.ocpassword!=oldpassword)
 		{
 			console.log("old pass"+$scope.ocpassword+" "+oldpassword);
-			bootbox.alert('Wrong Old Password');
+			$scope.changepswerror = 'Please enter correct OTP.';
 		}
 		else if($scope.rcpassword!=$scope.ncpassword){
-			bootbox.alert('Password do not Match');
+			$scope.changepswerror = 'Passwords do not match.';
 		}
 		else{
 			$http({
@@ -781,7 +803,18 @@ $scope.viewBranchManagerloginForm=function(){
 		});
 		}
 		else{
-			$scope.aloginformalert="Please enter credentials"
+			if($scope.aname==null && $scope.apassword==null)
+				$scope.aloginformalert="Please enter credentials";
+			else
+			{
+				if($scope.aname==null)
+					$scope.aloginformalert="Please enter username";
+				else
+				{
+					if($scope.apassword==null)
+						$scope.aloginformalert="Please enter password";		
+				}
+			}
 		}
 	};
 	//login admin ends
@@ -804,10 +837,11 @@ $scope.viewBranchManagerloginForm=function(){
 				id: $cookieStore.get('admintoken') 
 			}
 		}).then(function successCallback(response) {
-			console.log(response.data);
+			//console.log(response.data);
 			if(response.data.error!=null){
-				console.log(response.data);
-			console.log("An error occoured");
+				//console.log(response.data);
+				//console.log("An error occoured");
+				bootbox.alert("Some error occured on server side.").find('.modal-body').css({'color': 'red'});
 			}
 			else{
 				$cookieStore.remove('role');
@@ -835,10 +869,11 @@ $scope.viewBranchManagerloginForm=function(){
 				id: $cookieStore.get('branchmanagertoken') 
 			}
 		}).then(function successCallback(response) {
-			console.log(response.data);
+			//console.log(response.data);
 			if(response.data.error!=null){
-				console.log(response.data);
-			console.log("An error occoured");
+				/*console.log(response.data);
+				console.log("An error occoured");*/
+				bootbox.alert("Some error occured on server side.").find('.modal-body').css({'color': 'red'});
 			}
 			else{
 				$cookieStore.remove('role');
@@ -862,49 +897,6 @@ $scope.logoutUser=function(){
 		
 	};
 	//users logout ends
-	
-	//register user starts
-	$scope.registerCustomer=function(){
-		if($scope.password1==$scope.password2){
-		$http({
-			method : 'POST',
-			url :'http://10.20.14.83:9000/registeredcustomer',
-			headers : {
-				'Content-Type' : 'application/json',
-				'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-			},
-			data : {				
-				firstName : $scope.firstname,
-				lastName : $scope.lastname,
-				email : $scope.email,
-				phone : $scope.phone,
-				address : $scope.addr,
-				dateOfBirth : $scope.dob,
-				 customerId : $scope.custid,
-				 userName : $scope.username,
-				 password : $scope.password1
-			}
-		}).then(function successCallback(response) {
-			$scope.aloginform="Registered successfully.Wait for confirmation"
-			
-				
-		},function successCallback(response){
-			console.log("Error in registration"+response.data);
-		});
-		}
-		else
-			$scope.errormsg="Passwords do not  match";
-	};
-	
-	
-	function mymessage(x){
-		$scope.mycustomMessage=x;
-		  $scope.loginAlertMessage=false; 
-	         $timeout(function () { $scope.loginAlertMessage = true;
-	          }, 3000);   
-		
-	}
-	
 
 }
 
@@ -984,7 +976,7 @@ inbapp.config(function($routeProvider){
 						}
 					});
 					$scope.item = UnregisteredUserDetails[index];
-					console.log(index+"\n"+UnregisteredUserDetails[index]+"\n"+$scope.item);
+					//console.log(index+"\n"+UnregisteredUserDetails[index]+"\n"+$scope.item);
 					 
 					///Get Age document, pass users objectid;     
 			        $scope.getAgeDoc=function(userId)
@@ -1006,7 +998,7 @@ inbapp.config(function($routeProvider){
 			        		
 				        		
 			        	}, function errorCallback(response) {
-			        		mymessage("Server Error. Try After Some time: " + response);
+			        		bootbox.alert("Some error occured on server side.").find('.modal-body').css({'color': 'red'});
 			        	});
 			        }
 
@@ -1029,18 +1021,11 @@ inbapp.config(function($routeProvider){
 			        			$scope.addsrcname="data:image/png;base64,"+msg;
 			        			
 			        	}, function errorCallback(response) {
-			        		mymessage("Server Error. Try After Some time: " + response);
+			        		bootbox.alert("Some error occured on server side.").find('.modal-body').css({'color': 'red'});
 			        	});
 			        }
 
-			        function mymessage(x){
-			    		$scope.mycustomMessage=x;
-			    		  $scope.loginAlertMessage=false; 
-			    	         $timeout(function () { $scope.loginAlertMessage = true;
-			    	          }, 3000);   
-			    		
-			    	}
-			        console.log("id" + $scope.item.id);
+			        //console.log("id" + $scope.item.id);
 			        $scope.addsrcname="images/ina.png";
 			        $scope.agesrcname="images/ina.png";
 			        

@@ -13,3 +13,7 @@
 	-ms-transform: scale(2);
 	transform: scale(2);
 } 
+
+ol {
+	    background-image: url("../images/texture.png");
+}

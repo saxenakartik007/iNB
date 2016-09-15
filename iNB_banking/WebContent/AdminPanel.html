@@ -23,23 +23,28 @@
 
 <div class="wrapper row3" style="height: 100%">
 	<div class="hoc clear">
-		<br>
+		<p></p>
+		<ol  class="breadcrumb">
+			  <li class="breadcrumb-item"><strong>Admin</strong></li>
+			  <li class="breadcrumb-item active"><strong>{{ breadcrumheading }}</strong></li>
+		</ol>
 		<div class="fl_left" style="margin-right: 10px;" >
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getAllBranches()">View Branches</button>
 			<p></p>
 			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranch()">Add a Branch</button>
 			<p></p>
-			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getBranchManagers()">View Managers</button>
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="getBranchManagers()">View Branch Managers</button>
 			<p></p>
-			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranchMgr()">Add Manager</button>
+			<button style="width: 100%;" type="button" class="btn medium inverse" ng-click="createBranchMgr()">Add Branch Manager</button>
 			<p></p>
 			<p></p>
 		</div>
 	<div>
 	
+		
 	<h1 style="margin-left: 10%">{{adminheading}}</h1>
-
-	<div ng-show="adminbranch" class="table-responsive" style='overflow: auto;  height: 450px ;'>
+	
+	<div ng-show="adminbranch" class="table-responsive" style='overflow: auto;  height: 365px ;'>
 						  <table class="table" >
 						    <thead>
 						      <tr>
@@ -70,22 +75,25 @@
 	<div>
 			
 		
-					<div ng-show="adminnewbranch" style='overflow: auto;  height: 450px ;'>
+					<div ng-show="adminnewbranch" style='overflow: auto;  height: 365px ;'>
 						 
-	<form name="AddBranchForm"  style="margin-bottom: 20px;">
-	<input type="text" class="form-control" ng-model="bifsc"  name="bifsc" placeholder="Enter IFSC code" required>
-	<p style="font-size: 1em" id="bifscval" class="text-danger" ng-show="AddBranchForm.bifsc.$touched && AddBranchForm.bifsc.$invalid">IFSC code is required!</p>
+	<form id="AddBranchForm" name="AddBranchForm"  style="margin-bottom: 20px;">
+	
+	<input ng-pattern="/^\b(INB0\d\d\d\d)$/" type="text" class="form-control" ng-model="bifsc"  name="bifsc" placeholder="Enter IFSC code. For example: INB00001" required>
+	<p style="font-size: 1em" ng-model="bifscval" id="bifscval" class="text-danger" ng-show="AddBranchForm.bifsc.$touched && AddBranchForm.bifsc.$error.required">IFSC code is required!</p>
+	<p style="font-size: 1em" id="cifscval" class="text-danger" ng-if="!(AddBranchForm.bifsc.$touched && AddBranchForm.bifsc.$error.required)" ng-show="AddBranchForm.bifsc.$dirty && AddBranchForm.bifsc.$invalid">IFSC code is INVALID!</p>
 	<p></p>
 	<input type="text" class="form-control" ng-model="bname"  name="bname" placeholder="Enter Branch Name" required>
 	<p style="font-size: " id="bnameval" class="text-danger" ng-show="AddBranchForm.bname.$touched && AddBranchForm.bname.$invalid">Branch name is required!</p>
 	<p></p>
 	
 	<input type="text" class="form-control" ng-model="badd"  name="badd" placeholder="Enter Branch Address" required>
-	<p  style="font-size: " id="baddval" class="text-danger" ng-show="AddBranchForm.badd.$touched && AddBranchForm.badd.$invalid">Branch address is required!</p>
+	<p  style="font-size: " class="text-danger" ng-show="AddBranchForm.badd.$touched && AddBranchForm.badd.$invalid"></p>
 	<p></p>
 	
 	<input type="number" pattern=".{10,10}"   class="form-control" ng-model="bcontact"  name="bcontact" placeholder="Enter Contact No." required>
-	<p style="font-size: " id="bcontval" class="text-danger" ng-show="AddBranchForm.bcontact.$touched && AddBranchForm.bcontact.$invalid">Contact number is required!</p>
+	<p style="font-size: 1em" class="text-danger" ng-show="AddBranchForm.bcontact.$touched && AddBranchForm.bcontact.$error.required">Contact number is required!</p>
+	<p style="font-size: 1em" class="text-danger" ng-if="!(AddBranchForm.bcontact.$touched && AddBranchForm.bcontact.$error.required)" ng-show="AddBranchForm.bcontact.$dirty && AddBranchForm.bcontact.$invalid">Contact number is INVALID!</p>
 	<p></p>
 	<p></p>
 	<div class="text-danger">
@@ -98,7 +106,7 @@
 	
 	
 				  	
-				  	<div ng-show="adminmanager" class="table-responsive" style='overflow: auto;  height: 450px ;'>
+				  	<div ng-show="adminmanager" class="table-responsive" style='overflow: auto;  height: 365px ;'>
 	 <table class="table" >
 	   <thead>
 	     <tr>
@@ -127,14 +135,16 @@
 	</div>
 
 	
-	<div ng-show="adminaddmanager"  style='overflow: auto;  height: 450px ;'>
+	<div ng-show="adminaddmanager"  style='overflow: auto;  height: 365px ;'>
 		
 		
-	<form name="Mgrform" novalidate style="margin-bottom: 20px; " >
-		<div class='container' style="margin-top: -80px; max-width: 780px; "><div class='row'>
+
+	<form name="Mgrform" id='Mgrform' novalidate style="margin-bottom: 20px; " >
+		<div class='container' style="margin-top: -40px; max-width: 780px; margin-left: 0px;"><div class='row'>
 	
 	<input style="max-width: 800px;" type="text" class="form-control" ng-model="mgrfname"  name="mgrfname" placeholder="Enter First Name" required>
 	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrfname.$touched && Mgrform.mgrfname.$invalid">First Name is required!</p>
+
 	<p></p>
 	<input style="max-width: 800px;" type="text" class="form-control" ng-model="mgrlname"  name="mgrlname" placeholder="Enter Last Name" required>
 	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrlname.$touched && Mgrform.mgrlname.$invalid">Last Name is required!</p>
@@ -151,8 +161,10 @@
 	<input style="max-width: 800px;" type="email" class="form-control" ng-model="mgremail"  name="mgremail" placeholder="Enter Email" required>
 	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$invalid">Email is required!</p>
 	<p></p>
-	<input style="max-width: 800px;" type="text" class="form-control" ng-model="mgrphone"  name="mgrphone" placeholder="Enter Phone number" required>
-	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrphone.$touched && Mgrform.mgrphone.$invalid">Phone number is required!</p>
+	<input style="max-width: 800px;" pattern=".{10,10}" type="text" class="form-control" ng-model="mgrphone"  name="mgrphone" placeholder="Enter Phone number" required>
+	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrphone.$touched && Mgrform.mgrphone.$error.required">Contact number is required!</p>
+	<p style="max-width: 800px;" class="text-danger" ng-if="!(Mgrform.mgrphone.$touched && Mgrform.mgrphone.$error.required)" ng-show="Mgrform.mgrphone.$dirty && Mgrform.mgrphone.$invalid">Contact number is INVALID!</p>
+
 	<p></p>
 	<input style="max-width: 800px;" type="text" class="form-control" ng-model="mgraddress"  name="mgraddress" placeholder="Enter Address" required>
 	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgraddress.$touched && Mgrform.mgraddress.$invalid">Address is required!</p>
