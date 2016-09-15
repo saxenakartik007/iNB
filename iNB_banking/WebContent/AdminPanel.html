@@ -159,7 +159,9 @@
 	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrpsw2.$touched && Mgrform.mgrpsw2.$invalid">Password is required!</p>
 	<p></p>
 	<input style="max-width: 800px;" type="email" class="form-control" ng-model="mgremail"  name="mgremail" placeholder="Enter Email" required>
-	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$invalid">Email is required!</p>
+	<p style="max-width: 800px;" class="text-danger" ng-model='mgremail' ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$error.required">Email is required!</p>
+	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgremail.$touched && Mgrform.mgremail.$invalid && !Mgrform.mgremail.$error.required">Invalid Email!</p>
+	
 	<p></p>
 	<input style="max-width: 800px;" pattern=".{10,10}" type="text" class="form-control" ng-model="mgrphone"  name="mgrphone" placeholder="Enter Phone number" required>
 	<p style="max-width: 800px;" class="text-danger" ng-show="Mgrform.mgrphone.$touched && Mgrform.mgrphone.$error.required">Contact number is required!</p>
