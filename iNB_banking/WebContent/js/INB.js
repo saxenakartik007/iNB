@@ -590,40 +590,40 @@ $scope.viewBranchManagerloginForm=function(){
 		var url='http://10.20.14.83:9000/registeredcustomer/details/'+id;
 		$http.get(url).success(function(data,status){
 			balance = data[0].accounthash[0].balance;
-			
+			if($scope.mtamount > balance)
+			{
+				$scope.transfermoneyerror = 'Insufficient balance for Money Transfer';
+			}
+			else
+			{
+				$http({
+					method : 'PUT',
+					url : 'http://10.20.14.83:9000/registeredcustomer/transfer',
+					headers : {
+						'Content-Type' : 'application/json',
+						'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
+					},
+					data:{
+						clientAccount : $scope.uaccount,
+						recevierAccount : $scope.raccount,
+						amount: $scope.mtamount
+					}
+				}).then(function successCallback(response) {
+					
+					/*if(response.data["Status"]=='Failed'){
+						console.log(response.data["Message"]);
+						//mymessage(response.data["Message"]);
+						//$scope.transfermoneyerror = "Invalid Account Number"
+					}
+					else*/
+						bootbox.alert("Transferred Rs."+$scope.mtamount+" from account no. "+ $scope.uaccount +" to account no. "+$scope.raccount+" successfully.");
+						$scope.getAccountSummary();
+				},function errorCallback(response){
+					bootbox.alert("Some error occured on server side.").find('.modal-body').css({'color': 'red'});	
+				});
+			}
 		});
-		if($scope.mtamount > balance)
-		{
-			$scope.transfermoneyerror = 'Insufficient balance for Money Transfer';
-		}
-		else
-		{
-			$http({
-				method : 'PUT',
-				url : 'http://10.20.14.83:9000/registeredcustomer/transfer',
-				headers : {
-					'Content-Type' : 'application/json',
-					'Access-Control-Allow-Origin': 'http://10.20.14.83:9000/'
-				},
-				data:{
-					clientAccount : $scope.uaccount,
-					recevierAccount : $scope.raccount,
-					amount: $scope.mtamount
-				}
-			}).then(function successCallback(response) {
-				
-				/*if(response.data["Status"]=='Failed'){
-					console.log(response.data["Message"]);
-					//mymessage(response.data["Message"]);
-					//$scope.transfermoneyerror = "Invalid Account Number"
-				}
-				else*/
-					bootbox.alert("Transferred Rs."+$scope.mtamount+" from account no. "+ $scope.uaccount +" to account no. "+$scope.raccount+" successfully.");
-					$scope.getAccountSummary();
-			},function errorCallback(response){
-				bootbox.alert("Some error occured on server side.").find('.modal-body').css({'color': 'red'});	
-			});
-		}
+		
 	}
 	//money transfer function call ends
 	
